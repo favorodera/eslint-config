@@ -1,18 +1,13 @@
 import { defu } from 'defu'
-import {  type Awaitable } from "eslint-flat-config-utils";
+import { type Awaitable } from 'eslint-flat-config-utils'
+import type { TypedFlatConfigItem } from './types/utils'
 
 /**
- * Safely extracts the default export from a module.
+ * Return the default export from a module-like object.
+ * If the module has no default export, return the original resolved value.
  *
- * This function handles both standard objects and asynchronous promises.\
- * If the input object has a `default` property, that property is returned.\
- * If there is no `default` property, the entire input object is returned.\
- *
- * @template TModule - The type of the input module or object.
- * @template TModuleDefault - The inferred type of the default export if it exists.
- *
- * @param module - The module object or a promise that resolves to the module.
- * @returns The default export or the original module.
+ * @param module - module or promise resolving to a module
+ * @returns resolved module default or original module
  */
 export async function getModuleDefault<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
   const resolvedModule = await module
@@ -21,10 +16,69 @@ export async function getModuleDefault<TModule>(module: Awaitable<TModule>): Pro
 }
 
 /**
- * Resolves a boolean | options value into options or null.
- * Returns null if disabled (false or undefined), merged options if enabled.
+ * Normalize boolean or options value into merged options or null.
+ * Returns null when the input is false or undefined.
+ *
+ * @param value - boolean, options object, or undefined
+ * @param defaults - defaults to merge with
+ * @returns merged options or false
  */
-export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined,defaults: TOptions): TOptions | null {
-  if (!value) return null
+export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined, defaults: TOptions): TOptions | false {
+  if (!value) return false
+
   return defu(value === true ? {} : value, defaults) as TOptions
+}
+
+/**
+ * Rename rules by replacing configured plugin prefixes.
+ *
+ * @param rules - rules object to rename
+ * @param map - prefix map used for renaming
+ * @returns renamed rules object
+ */
+export function renameRules(rules: Record<string, any>, map: Record<string, string>): Record<string, any> {
+  return Object
+    .fromEntries(
+      Object
+        .entries(rules)
+        .map(([key, value]) => {
+          for (const [from, to] of Object.entries(map)) {
+            if (key.startsWith(`${from}/`)) {
+              return [to + key.slice(from.length), value]
+            }
+          }
+
+          return [key, value]
+        }),
+    )
+}
+
+/**
+ * Rename plugins and rule keys inside flat config items.
+ *
+ * @param configs - flat config items
+ * @param map - plugin rename map
+ * @returns renamed config items
+ */
+export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Record<string, string>): TypedFlatConfigItem[] {
+  return configs.map((config) => {
+    const clone = { ...config }
+
+    if (clone.rules) {
+      clone.rules = renameRules(clone.rules, map)
+    }
+
+    if (clone.plugins) {
+      clone.plugins = Object
+        .fromEntries(
+          Object
+            .entries(clone.plugins)
+            .map(([key, value]) => {
+              return key in map ? [map[key], value] : [key, value]
+            }),
+        )
+    }
+
+    return clone
+  })
 }

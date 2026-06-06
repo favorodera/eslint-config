@@ -1,6 +1,15 @@
-import type { ConfigOptions } from "./factory";
+import type { ConfigOptions } from './factory'
 
-export const allConfigOptionsTrue:ConfigOptions = {
+/** Preset configuration with all options enabled */
+export const allConfigOptionsTrue: ConfigOptions = {
   vue: true,
-  typescript:true
+  typescript: true,
+  stylistic: true,
+}
+
+/** Preset configuration with all options disabled */
+export const allConfigOptionsFalse: ConfigOptions = {
+  vue: false,
+  typescript: false,
+  stylistic: false,
 }

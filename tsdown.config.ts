@@ -6,5 +6,5 @@ export default defineConfig({
   },
   exports: true,
   format: ['esm', 'cjs'],
-    clean: true,
+  clean: true,
 })

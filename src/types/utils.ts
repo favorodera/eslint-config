@@ -2,8 +2,7 @@ import type { Linter } from 'eslint'
 import type { ConfigWithExtends } from 'eslint-flat-config-utils'
 import type { RuleOptions } from './rules'
 
-export type FlatConfig = Linter.Config
-
+/** ESLint rules configuration with type-safe autocompletion */
 export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOptions
 
 /**
@@ -27,7 +26,10 @@ export type TypedFlatConfigItem = Omit<ConfigWithExtends, 'plugins' | 'rules'> &
   rules?: Rules
 }
 
+/** Shared configuration options for ESLint rules */
 export interface SharedOptions {
-  overrides?: TypedFlatConfigItem['rules'],
+  /** Override rules configuration */
+  overrides?: TypedFlatConfigItem['rules']
+  /** File glob patterns to apply configuration to */
   files?: string[]
 }

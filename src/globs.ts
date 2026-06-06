@@ -1,7 +1,13 @@
-export const vueGlob = '**/*.vue' 
+/** Glob pattern for Vue template files */
+export const vueGlob = '**/*.vue'
 
-export const tsGlob = '**/*.?([cm])ts' 
+/** Glob pattern for TypeScript files (*.ts, *.cts, *.mts) */
+export const tsGlob = '**/*.?([cm])ts'
 
+/**
+ * Default glob patterns for files and directories to ignore
+ * Includes common build outputs, dependencies, caches, and temporary files
+ */
 export const ignoresGlob = [
   '**/node_modules',
   '**/dist',
@@ -44,4 +50,4 @@ export const ignoresGlob = [
   '**/.claude',
   '**/.agents',
   '**/.*/skills',
-] 
+]

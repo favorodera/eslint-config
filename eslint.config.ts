@@ -1,6 +1,7 @@
-import { favorodera } from "./src";
+import { factory } from './src'
 
-export default favorodera({
-vue:true,
-typescript:true
+export default factory({
+  vue: true,
+  typescript: true,
+  stylistic: true,
 })

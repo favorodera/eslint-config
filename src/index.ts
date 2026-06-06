@@ -1,10 +1,18 @@
-import {favorodera} from './factory'
+// factory
+export { factory, type ConfigOptions } from './factory'
 
-export * from './config-presets'
-export * from './configs'
-export * from './factory'
-export * from './globs'
-export * from './types'
-export * from './utils'
+// configs — individually importable
+export { ignores, type IgnoresPatterns } from './configs/ignores'
+export { vue, type VueConfigOptions } from './configs/vue'
+export { typescript, type TypescriptConfigOptions } from './configs/typescript'
+export { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 
-export default favorodera
+// globs — useful when extending configs
+export { vueGlob, tsGlob, ignoresGlob } from './globs'
+
+// types
+export type { TypedFlatConfigItem, SharedOptions, Rules } from './types/utils'
+export type { RuleOptions, ConfigNames } from './types/rules'
+
+// utils — useful for consumers building on top
+export { renameRules, renamePluginInConfigs } from './utils'

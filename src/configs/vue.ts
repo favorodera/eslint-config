@@ -1,10 +1,11 @@
 import { defu } from 'defu'
 import { vueGlob } from '../globs'
-import { getModuleDefault } from '../utils'
+import { getModuleDefault, resolveOptions } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
-import tseslint from 'typescript-eslint'
+import { mergeProcessors } from 'eslint-merge-processors'
 
+/** Configuration options for Vue ESLint rules */
 export type VueConfigOptions = SharedOptions & {
   /**
    * Create virtual files for Vue SFC blocks to enable linting.
@@ -15,26 +16,41 @@ export type VueConfigOptions = SharedOptions & {
   sfcBlocks?: boolean | VueBlocksOptions
 }
 
-const vueDefaults: VueConfigOptions = {
-  files: [vueGlob],
-  sfcBlocks: {
-    blocks: { styles: true, customBlocks: true, template: false },
-  },
+/** Default SFC blocks configuration for Vue linting */
+const sfcBlocksDefaults: VueBlocksOptions = {
+  blocks: { styles: true, customBlocks: true, template: false },
 }
 
+/** Default configuration for Vue linting */
+const vueDefaults: VueConfigOptions = {
+  files: [vueGlob],
+  sfcBlocks: sfcBlocksDefaults,
+}
+
+/**
+ * Vue SFC linting — `vue-eslint-parser`, `eslint-plugin-vue`, `typescript-eslint` and opinionated rules.
+ * @param options - Vue configuration options
+ * @returns Promise resolving to Vue ESLint config items
+ */
 export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, vueDefaults)
+  const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)
 
-  const [pluginVue, parserVue] = await Promise.all([
+  const [vuePlugin, vueParser, tsEsLint, vueBlocksProcessor] = await Promise.all([
     getModuleDefault(import('eslint-plugin-vue')),
     getModuleDefault(import('vue-eslint-parser')),
-  ] as const)
+    getModuleDefault(import('typescript-eslint')),
+    getModuleDefault(import('eslint-processor-vue-blocks')),
+  ])
 
   return [
     {
-      // This allows Vue plugin to work with auto imports
-      // https://github.com/vuejs/eslint-plugin-vue/pull/2422
+      name: 'favorodera/vue/rules',
+      plugins: { vue: vuePlugin },
+      files: resolved.files,
       languageOptions: {
+        // This allows Vue plugin to work with auto imports
+      // https://github.com/vuejs/eslint-plugin-vue/pull/2422
         globals: {
           computed: 'readonly',
           defineEmits: 'readonly',
@@ -51,46 +67,40 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
           watch: 'readonly',
           watchEffect: 'readonly',
         },
-      },
-      name: 'favorodera/vue/setup',
-      plugins: { vue: pluginVue },
-    },
-    {
-      name: 'favorodera/vue/rules',
-      files:  resolved.files,
-      languageOptions: {
-        parser: parserVue,
+        parser: vueParser,
         parserOptions: {
-          ecmaFeatures: {
-            jsx: true,
-          },
-          parser: tseslint.parser,
+          parser: tsEsLint.parser,
           extraFileExtensions: ['.vue'],
           sourceType: 'module',
         },
       },
+
+      processor: sfcBlocks === false
+        ? vuePlugin.processors['.vue']
+        : mergeProcessors([
+            vuePlugin.processors['.vue'],
+            vueBlocksProcessor(sfcBlocks),
+          ]),
+
       rules: {
-        ...pluginVue.configs.base.rules as any,
+        ...vuePlugin.configs.base.rules as any,
 
-        ...pluginVue.configs['flat/essential']
-        .map(config => config.rules)
-        .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
+        ...vuePlugin.configs['flat/essential']
+          .map(config => config.rules)
+          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
 
-        ...pluginVue.configs['flat/strongly-recommended']
-        .map(config => config.rules)
-        .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
+        ...vuePlugin.configs['flat/strongly-recommended']
+          .map(config => config.rules)
+          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
 
-        ...pluginVue.configs['flat/recommended']
-        .map(config => config.rules)
-        .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
+        ...vuePlugin.configs['flat/recommended']
+          .map(config => config.rules)
+          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
 
         'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
         'vue/component-options-name-casing': ['error', 'PascalCase'],
 
-
-        // NOTE: To be filled
-        
         ...resolved.overrides,
       },
     },
