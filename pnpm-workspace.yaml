@@ -6,3 +6,6 @@ peerDependencyRules:
     typescript: "6"
 
 verifyDepsBeforeRun: false
+
+allowBuilds:
+  esbuild: true
