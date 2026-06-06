@@ -1,0 +1,8 @@
+shellEmulator: true
+
+peerDependencyRules:
+  allowedVersions:
+    vite: "8"
+    typescript: "6"
+
+verifyDepsBeforeRun: false

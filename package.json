@@ -1,0 +1,67 @@
+{
+  "name": "@favorodera/eslint-config",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "A starter for creating a TypeScript package.",
+  "author": "Favour Emeka <favorodera@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "homepage": "https://github.com/favorodera/eslint-config#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/favorodera/eslint-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/favorodera/eslint-config/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build",
+    "lint": "eslint . --fix",
+    "ready": "pnpm install && pnpm lint && pnpm typecheck && pnpm build && pnpm test"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "eslint": "^10.4.1",
+    "tsdown": "^0.22.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5",
+    "relizy": "^1.4.6"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "keywords": [
+    "nuxt",
+    "vue",
+    "eslint",
+    "typescript",
+    "stylistic",
+    "tooling",
+    "linter"
+  ]
+}
