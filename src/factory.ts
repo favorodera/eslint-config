@@ -8,7 +8,7 @@ import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import type { ConfigNames } from './types/rules'
 
 /** Configuration options for the ESLint flat config */
-export type ConfigOptions = {
+export interface ConfigOptions {
   /**
    * Enable Vue linting with optional configuration
    * @default false

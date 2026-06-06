@@ -36,6 +36,13 @@ export async function stylistic(options: StylisticConfigOptions): Promise<TypedF
       plugins: { style: stylePlugin },
       rules: {
         ...customizedStyleConfig.rules,
+
+        'style/quotes': ['error', 'single', { avoidEscape: true }],
+        'style/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 2, maxBOF: 0 }],
+        'style/padded-blocks': 'off',
+        'style/no-trailing-spaces': ['error', { skipBlankLines: true }],
+        'style/brace-style': 'off',
+
         ...resolved.overrides,
       },
     },

@@ -100,6 +100,9 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
         'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
         'vue/component-options-name-casing': ['error', 'PascalCase'],
+        'vue/multi-word-component-names': 'off',
+        'vue/block-tag-newline': ['error', { multiline: 'ignore', singleline: 'ignore' }],
+        'vue/multiline-html-element-content-newline': ['error', { allowEmptyLines: true, ignores: ['pre', 'textarea'] }],
 
         ...resolved.overrides,
       },

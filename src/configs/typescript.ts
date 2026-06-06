@@ -1,7 +1,7 @@
 import { defu } from 'defu'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { tsGlob } from '../globs'
-import { getModuleDefault, renameRules } from '../utils'
+import { getModuleDefault } from '../utils'
 
 /** Configuration options for TypeScript ESLint rules */
 export type TypescriptConfigOptions = SharedOptions
@@ -22,29 +22,15 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Type
   const tsEsLint = await getModuleDefault(import('typescript-eslint'))
 
   return [
+    ...tsEsLint.configs.recommended as any,
+    ...tsEsLint.configs.strict as any,
+    ...tsEsLint.configs.stylistic as any,
     {
       name: 'favorodera/typescript/rules',
-      plugins: { ts: tsEsLint.plugin },
-      languageOptions: {
-        parser: tsEsLint.parser,
-        sourceType: 'module',
-      },
       files: resolved.files,
       rules: {
-        // ...renameRules(
-        //   [
-        //     ...tsEsLint.configs.recommended,
-        //     ...tsEsLint.configs.strict,
-        //     ...tsEsLint.configs.stylistic,
-        //   ],
-        //   {
-        //     '@typescript-eslint': 'ts',
-        //     '@stylistic': 'style',
-        //    }
-        //   ),
-
-        'ts/no-explicit-any': 'warn',
         'ts/consistent-type-imports': ['error', { prefer: 'type-imports' }],
+        'ts/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
 
         ...resolved.overrides,
       },
