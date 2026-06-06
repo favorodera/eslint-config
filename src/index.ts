@@ -15,4 +15,4 @@ export type { TypedFlatConfigItem, SharedOptions, Rules } from './types/utils'
 export type { RuleOptions, ConfigNames } from './types/rules'
 
 // utils — useful for consumers building on top
-export { renameRules, renamePluginInConfigs } from './utils'
+export { renameRules } from './utils'

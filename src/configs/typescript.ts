@@ -31,8 +31,17 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Type
       },
       files: resolved.files,
       rules: {
-        ...renameRules(tsEsLint.configs.recommended, { '@typescript-eslint': 'ts' }),
-        ...renameRules(tsEsLint.configs.strict, { '@typescript-eslint': 'ts' }),
+        // ...renameRules(
+        //   [
+        //     ...tsEsLint.configs.recommended,
+        //     ...tsEsLint.configs.strict,
+        //     ...tsEsLint.configs.stylistic,
+        //   ],
+        //   {
+        //     '@typescript-eslint': 'ts',
+        //     '@stylistic': 'style',
+        //    }
+        //   ),
 
         'ts/no-explicit-any': 'warn',
         'ts/consistent-type-imports': ['error', { prefer: 'type-imports' }],

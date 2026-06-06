@@ -35,7 +35,7 @@
     "script:generate-rules-types": "tsx scripts/generate-rules-types.ts",
     "prebuild": "pnpm script:generate-rules-types",
     "build": "tsdown",
-    "dev": "tsdown --watch",
+    "dev": "pnpm prebuild && tsdown --watch",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build",

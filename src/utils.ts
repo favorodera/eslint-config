@@ -1,6 +1,5 @@
 import { defu } from 'defu'
 import { type Awaitable } from 'eslint-flat-config-utils'
-import type { TypedFlatConfigItem } from './types/utils'
 
 /**
  * Return the default export from a module-like object.
@@ -51,34 +50,4 @@ export function renameRules(rules: Record<string, any>, map: Record<string, stri
           return [key, value]
         }),
     )
-}
-
-/**
- * Rename plugins and rule keys inside flat config items.
- *
- * @param configs - flat config items
- * @param map - plugin rename map
- * @returns renamed config items
- */
-export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Record<string, string>): TypedFlatConfigItem[] {
-  return configs.map((config) => {
-    const clone = { ...config }
-
-    if (clone.rules) {
-      clone.rules = renameRules(clone.rules, map)
-    }
-
-    if (clone.plugins) {
-      clone.plugins = Object
-        .fromEntries(
-          Object
-            .entries(clone.plugins)
-            .map(([key, value]) => {
-              return key in map ? [map[key], value] : [key, value]
-            }),
-        )
-    }
-
-    return clone
-  })
 }
