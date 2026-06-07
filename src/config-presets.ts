@@ -8,6 +8,7 @@ export const allConfigOptionsTrue: ConfigOptions = {
   tailwind: true,
   comments: true,
   imports: true,
+  markdown: true,
 }
 
 /** Preset configuration with all options disabled */

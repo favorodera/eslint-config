@@ -9,6 +9,7 @@ export { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 export { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 export { comments, type CommentsConfigOptions } from './configs/comments'
 export { imports, type ImportsConfigOptions } from './configs/imports'
+export { markdown, type MarkdownConfigOptions } from './configs/markdown'
 
 // presets -- pre-configured sets of options
 export { allConfigOptionsFalse, allConfigOptionsTrue } from './config-presets'
@@ -17,7 +18,14 @@ export { allConfigOptionsFalse, allConfigOptionsTrue } from './config-presets'
 export { getModuleDefault, renameRules } from './utils'
 
 // globs — useful when extending configs
-export { vueGlob, tsGlob, ignoresGlob, tailwindGlob } from './globs'
+export {
+  vueGlob,
+  tsGlob,
+  ignoresGlob,
+  tailwindGlob,
+  mdGlob,
+  markdownInMarkdownGlob,
+} from './globs'
 
 // types
 export type { TypedFlatConfigItem, SharedOptions, Rules } from './types/utils'

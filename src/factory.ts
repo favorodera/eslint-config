@@ -17,6 +17,8 @@ import { comments } from './configs/comments'
 import type { CommentsConfigOptions } from './configs/comments'
 import { imports } from './configs/imports'
 import type { ImportsConfigOptions } from './configs/imports'
+import { markdown } from './configs/markdown'
+import type { MarkdownConfigOptions } from './configs/markdown'
 
 /** Configuration options for the ESLint flat config */
 export interface ConfigOptions {
@@ -60,6 +62,12 @@ export interface ConfigOptions {
    * @default false
    */
   imports?: boolean | ImportsConfigOptions
+
+  /**
+   * Enable Markdown linting with optional configuration
+   * @default false
+   */
+  markdown?: boolean | MarkdownConfigOptions
 }
 
 const pluginRenames = {
@@ -69,6 +77,7 @@ const pluginRenames = {
   'better-tailwindcss': 'tailwind',
   '@eslint-community/eslint-comments': 'comments',
   'import-lite': 'import',
+  'markdown': 'md',
 }
 
 /**
@@ -87,6 +96,7 @@ export function factory(options: ConfigOptions = {}) {
   const tailwindOptions = resolveOptions(options.tailwind, {})
   const commentsOptions = resolveOptions(options.comments, {})
   const importsOptions = resolveOptions(options.imports, {})
+  const markdownOptions = resolveOptions(options.markdown, {})
 
   if (vueOptions) configs.push(vue(vueOptions))
   if (typescriptOptions) configs.push(typescript(typescriptOptions))
@@ -94,6 +104,7 @@ export function factory(options: ConfigOptions = {}) {
   if (tailwindOptions) configs.push(tailwind(tailwindOptions))
   if (commentsOptions) configs.push(comments(commentsOptions))
   if (importsOptions) configs.push(imports(importsOptions))
+  if (markdownOptions) configs.push(markdown(markdownOptions))
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 
