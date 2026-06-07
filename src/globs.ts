@@ -4,6 +4,11 @@ export const vueGlob = '**/*.vue'
 /** Glob pattern for TypeScript files (*.ts, *.cts, *.mts) */
 export const tsGlob = '**/*.?([cm])ts'
 
+export const tailwindGlob = [
+  vueGlob,
+  tsGlob,
+]
+
 /**
  * Default glob patterns for files and directories to ignore
  * Includes common build outputs, dependencies, caches, and temporary files

@@ -5,6 +5,7 @@ export const allConfigOptionsTrue: ConfigOptions = {
   vue: true,
   typescript: true,
   stylistic: true,
+  tailwind: true,
 }
 
 /** Preset configuration with all options disabled */
@@ -12,4 +13,5 @@ export const allConfigOptionsFalse: ConfigOptions = {
   vue: false,
   typescript: false,
   stylistic: false,
+  tailwind: false,
 }

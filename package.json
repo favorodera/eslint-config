@@ -36,7 +36,7 @@
     "prebuild": "pnpm script:generate-rules-types",
     "build": "tsdown",
     "dev": "pnpm prebuild && tsdown --watch",
-    "test": "vitest",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",

@@ -492,6 +492,76 @@ export interface RuleOptions {
    */
   'style/yield-star-spacing'?: Linter.RuleEntry<StyleYieldStarSpacing>
   /**
+   * Enforce canonical class names.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-canonical-classes.md
+   */
+  'tailwind/enforce-canonical-classes'?: Linter.RuleEntry<TailwindEnforceCanonicalClasses>
+  /**
+   * Enforce a consistent order for tailwind classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-class-order.md
+   */
+  'tailwind/enforce-consistent-class-order'?: Linter.RuleEntry<TailwindEnforceConsistentClassOrder>
+  /**
+   * Enforce consistent important position for classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-important-position.md
+   */
+  'tailwind/enforce-consistent-important-position'?: Linter.RuleEntry<TailwindEnforceConsistentImportantPosition>
+  /**
+   * Enforce consistent line wrapping for tailwind classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-line-wrapping.md
+   */
+  'tailwind/enforce-consistent-line-wrapping'?: Linter.RuleEntry<TailwindEnforceConsistentLineWrapping>
+  /**
+   * Enforce consistent syntax for css variables.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-variable-syntax.md
+   */
+  'tailwind/enforce-consistent-variable-syntax'?: Linter.RuleEntry<TailwindEnforceConsistentVariableSyntax>
+  /**
+   * Enforce a consistent variant order for Tailwind classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-consistent-variant-order.md
+   */
+  'tailwind/enforce-consistent-variant-order'?: Linter.RuleEntry<TailwindEnforceConsistentVariantOrder>
+  /**
+   * Enforce logical property class names instead of physical directions.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-logical-properties.md
+   */
+  'tailwind/enforce-logical-properties'?: Linter.RuleEntry<TailwindEnforceLogicalProperties>
+  /**
+   * Enforce shorthand class names instead of longhand class names.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/enforce-shorthand-classes.md
+   */
+  'tailwind/enforce-shorthand-classes'?: Linter.RuleEntry<TailwindEnforceShorthandClasses>
+  /**
+   * Disallow classes that produce conflicting styles.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-conflicting-classes.md
+   */
+  'tailwind/no-conflicting-classes'?: Linter.RuleEntry<TailwindNoConflictingClasses>
+  /**
+   * Disallow the use of deprecated Tailwind CSS classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-deprecated-classes.md
+   */
+  'tailwind/no-deprecated-classes'?: Linter.RuleEntry<TailwindNoDeprecatedClasses>
+  /**
+   * Disallow duplicate class names in tailwind classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-duplicate-classes.md
+   */
+  'tailwind/no-duplicate-classes'?: Linter.RuleEntry<TailwindNoDuplicateClasses>
+  /**
+   * Disallow restricted classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-restricted-classes.md
+   */
+  'tailwind/no-restricted-classes'?: Linter.RuleEntry<TailwindNoRestrictedClasses>
+  /**
+   * Disallow any css classes that are not registered in tailwindcss.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-unknown-classes.md
+   */
+  'tailwind/no-unknown-classes'?: Linter.RuleEntry<TailwindNoUnknownClasses>
+  /**
+   * Disallow unnecessary whitespace between Tailwind CSS classes.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/rules/no-unnecessary-whitespace.md
+   */
+  'tailwind/no-unnecessary-whitespace'?: Linter.RuleEntry<TailwindNoUnnecessaryWhitespace>
+  /**
    * Require that function overload signatures be consecutive
    * @see https://typescript-eslint.io/rules/adjacent-overload-signatures
    */
@@ -3695,6 +3765,4632 @@ type StyleYieldStarSpacing = []|[(("before" | "after" | "both" | "neither") | {
   before?: boolean
   after?: boolean
 })]
+// ----- tailwind/enforce-canonical-classes -----
+type TailwindEnforceCanonicalClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  collapse?: boolean
+  
+  ignore?: string[]
+  
+  logical?: boolean
+}]
+// ----- tailwind/enforce-consistent-class-order -----
+type TailwindEnforceConsistentClassOrder = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  componentClassOrder?: ("asc" | "desc" | "preserve")
+  
+  componentClassPosition?: ("start" | "end")
+  
+  order?: ("asc" | "desc" | "official" | "strict")
+  
+  unknownClassOrder?: ("asc" | "desc" | "preserve")
+  
+  unknownClassPosition?: ("start" | "end")
+}]
+// ----- tailwind/enforce-consistent-important-position -----
+type TailwindEnforceConsistentImportantPosition = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  position?: ("legacy" | "recommended")
+}]
+// ----- tailwind/enforce-consistent-line-wrapping -----
+type TailwindEnforceConsistentLineWrapping = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  classesPerLine?: number
+  
+  group?: ("newLine" | "emptyLine" | "never")
+  
+  indent?: ("tab" | number)
+  
+  lineBreakStyle?: ("unix" | "windows")
+  
+  preferSingleLine?: boolean
+  
+  printWidth?: number
+  
+  strictness?: ("strict" | "loose")
+  
+  tabWidth?: number
+}]
+// ----- tailwind/enforce-consistent-variable-syntax -----
+type TailwindEnforceConsistentVariableSyntax = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  syntax?: ("shorthand" | "variable")
+}]
+// ----- tailwind/enforce-consistent-variant-order -----
+type TailwindEnforceConsistentVariantOrder = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/enforce-logical-properties -----
+type TailwindEnforceLogicalProperties = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/enforce-shorthand-classes -----
+type TailwindEnforceShorthandClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/no-conflicting-classes -----
+type TailwindNoConflictingClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/no-deprecated-classes -----
+type TailwindNoDeprecatedClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/no-duplicate-classes -----
+type TailwindNoDuplicateClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+}]
+// ----- tailwind/no-restricted-classes -----
+type TailwindNoRestrictedClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  restrict?: ({
+    
+    fix?: string
+    
+    message?: string
+    
+    pattern: string
+  } | string)[]
+}]
+// ----- tailwind/no-unknown-classes -----
+type TailwindNoUnknownClasses = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  ignore?: string[]
+}]
+// ----- tailwind/no-unnecessary-whitespace -----
+type TailwindNoUnnecessaryWhitespace = []|[{
+  
+  selectors?: ({
+    
+    kind: "attribute"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  } | ({
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  } | {
+    
+    callTarget?: ("all" | "first" | "last" | number)
+    
+    kind: "callee"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+    
+    targetArgument?: ("all" | "first" | "last" | number)
+    
+    targetCall?: ("all" | "first" | "last" | number)
+  }) | ({
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+    
+    path?: string
+  } | {
+    
+    kind: "tag"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name?: string
+    
+    path: string
+  }) | {
+    
+    kind: "variable"
+    
+    match?: ({
+      
+      type: "strings"
+    } | {
+      
+      path?: string
+      
+      type: "objectKeys"
+    } | {
+      
+      path?: string
+      
+      type: "objectValues"
+    } | {
+      
+      match: ({
+        
+        type: "strings"
+      } | {
+        
+        path?: string
+        
+        type: "objectKeys"
+      } | {
+        
+        path?: string
+        
+        type: "objectValues"
+      })[]
+      
+      type: "anonymousFunctionReturn"
+    })[]
+    
+    name: string
+  })[]
+  
+  callees?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  attributes?: (string | [string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]])[]
+  
+  variables?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  tags?: ([string, ({
+    
+    match: "strings"
+  } | {
+    
+    match: "objectKeys"
+    
+    pathPattern?: string
+  } | {
+    
+    match: "objectValues"
+    
+    pathPattern?: string
+  })[]] | string)[]
+  
+  entryPoint?: string
+  
+  messageStyle?: ("visual" | "compact" | "raw")
+  
+  tailwindConfig?: string
+  
+  tsconfig?: string
+  
+  detectComponentClasses?: boolean
+  
+  rootFontSize?: number
+  
+  cwd?: string
+  
+  allowMultiline?: boolean
+}]
 // ----- ts/array-type -----
 type TsArrayType = []|[{
   
@@ -6199,4 +10895,4 @@ type VueValidVSlot = []|[{
   allowModifiers?: boolean
 }]
 // Names of all the configs
-export type ConfigNames = 'favorodera/ignores' | 'favorodera/vue/rules' | 'favorodera/typescript/rules' | 'favorodera/stylistic/rules'
+export type ConfigNames = 'favorodera/ignores' | 'favorodera/vue/rules' | 'favorodera/typescript/rules' | 'favorodera/stylistic/rules' | 'favorodera/tailwind/rules'

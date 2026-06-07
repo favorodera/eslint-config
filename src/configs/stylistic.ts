@@ -1,4 +1,3 @@
-// src/configs/stylistic.ts
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
 import { defu } from 'defu'
 import { getModuleDefault } from '../utils'

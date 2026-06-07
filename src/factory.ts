@@ -6,6 +6,7 @@ import { typescript, type TypescriptConfigOptions } from './configs/typescript'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import type { ConfigNames } from './types/rules'
+import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 
 /** Configuration options for the ESLint flat config */
 export interface ConfigOptions {
@@ -26,18 +27,24 @@ export interface ConfigOptions {
    * @default ignoresGlob
    */
   ignores?: IgnoresPatterns
-  
+
   /**
    * Enable stylistic rules with optional configuration
    * @default false
    */
   stylistic?: boolean | StylisticConfigOptions
+  /**
+   * Enable Tailwind CSS linting with optional configuration
+   * @default false
+   */
+  tailwind?: boolean | TailwindConfigOptions
 }
 
 const pluginRenames = {
   '@stylistic': 'style',
   '@typescript-eslint': 'ts',
   'n': 'node',
+  'better-tailwindcss': 'tailwind',
 }
 
 /**
@@ -53,10 +60,12 @@ export function factory(options: ConfigOptions = {}) {
   const vueOptions = resolveOptions(options.vue, {})
   const typescriptOptions = resolveOptions(options.typescript, {})
   const stylisticOptions = resolveOptions(options.stylistic, {})
+  const tailwindOptions = resolveOptions(options.tailwind, {})
 
   if (vueOptions) configs.push(vue(vueOptions))
   if (typescriptOptions) configs.push(typescript(typescriptOptions))
   if (stylisticOptions) configs.push(stylistic(stylisticOptions))
+  if (tailwindOptions) configs.push(tailwind(tailwindOptions))
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 
