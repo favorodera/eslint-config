@@ -14,16 +14,19 @@ export interface ConfigOptions {
    * @default false
   */
   vue?: boolean | VueConfigOptions
+
   /**
    * Enable TypeScript linting with optional configuration
    * @default false
    */
   typescript?: boolean | TypescriptConfigOptions
+
   /**
    * Patterns and files to ignore
    * @default ignoresGlob
    */
   ignores?: IgnoresPatterns
+  
   /**
    * Enable stylistic rules with optional configuration
    * @default false

@@ -70,8 +70,6 @@
   ],
   "dependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/eslint-plugin": "^8.60.1",
-    "@typescript-eslint/parser": "^8.60.1",
     "defu": "^6.1.7",
     "eslint-flat-config-utils": "^3.2.0",
     "eslint-merge-processors": "^2.0.0",

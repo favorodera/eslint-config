@@ -6199,4 +6199,4 @@ type VueValidVSlot = []|[{
   allowModifiers?: boolean
 }]
 // Names of all the configs
-export type ConfigNames = 'favorodera/ignores' | 'favorodera/vue/rules' | 'typescript-eslint/base' | 'typescript-eslint/eslint-recommended' | 'typescript-eslint/recommended' | 'typescript-eslint/base' | 'typescript-eslint/eslint-recommended' | 'typescript-eslint/strict' | 'typescript-eslint/base' | 'typescript-eslint/eslint-recommended' | 'typescript-eslint/stylistic' | 'favorodera/typescript/rules' | 'favorodera/stylistic/rules'
+export type ConfigNames = 'favorodera/ignores' | 'favorodera/vue/rules' | 'favorodera/typescript/rules' | 'favorodera/stylistic/rules'
