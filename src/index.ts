@@ -7,6 +7,7 @@ export { vue, type VueConfigOptions } from './configs/vue'
 export { typescript, type TypescriptConfigOptions } from './configs/typescript'
 export { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 export { tailwind, type TailwindConfigOptions } from './configs/tailwind'
+export { comments, type CommentsConfigOptions } from './configs/comments'
 
 // presets -- pre-configured sets of options
 export { allConfigOptionsFalse, allConfigOptionsTrue } from './config-presets'

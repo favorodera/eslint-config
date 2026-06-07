@@ -64,7 +64,7 @@ const tailwindDefaults: TailwindConfigOptions = {
 
 
 /**
- * Tailwind linting — `eslint-plugin-better-tailwindcss` and opinionated rules.
+ * Tailwind linting via `eslint-plugin-better-tailwindcss`.
  * @param options - Tailwind configuration options
  * @returns Promise resolving to Tailwind ESLint config items
  */

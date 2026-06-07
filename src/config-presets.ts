@@ -6,6 +6,7 @@ export const allConfigOptionsTrue: ConfigOptions = {
   typescript: true,
   stylistic: true,
   tailwind: true,
+  comments: true,
 }
 
 /** Preset configuration with all options disabled */
@@ -14,4 +15,5 @@ export const allConfigOptionsFalse: ConfigOptions = {
   typescript: false,
   stylistic: false,
   tailwind: false,
+  comments: false,
 }

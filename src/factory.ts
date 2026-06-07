@@ -7,6 +7,7 @@ import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import type { ConfigNames } from './types/rules'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
+import { comments, type CommentsConfigOptions } from './configs/comments'
 
 /** Configuration options for the ESLint flat config */
 export interface ConfigOptions {
@@ -38,6 +39,12 @@ export interface ConfigOptions {
    * @default false
    */
   tailwind?: boolean | TailwindConfigOptions
+
+  /**
+   * Enable Comments linting with optional configuration
+   * @default false
+   */
+  comments?: boolean | CommentsConfigOptions
 }
 
 const pluginRenames = {
@@ -45,6 +52,7 @@ const pluginRenames = {
   '@typescript-eslint': 'ts',
   'n': 'node',
   'better-tailwindcss': 'tailwind',
+  '@eslint-community/eslint-comments': 'comments',
 }
 
 /**
@@ -61,11 +69,13 @@ export function factory(options: ConfigOptions = {}) {
   const typescriptOptions = resolveOptions(options.typescript, {})
   const stylisticOptions = resolveOptions(options.stylistic, {})
   const tailwindOptions = resolveOptions(options.tailwind, {})
+  const commentsOptions = resolveOptions(options.comments, {})
 
   if (vueOptions) configs.push(vue(vueOptions))
   if (typescriptOptions) configs.push(typescript(typescriptOptions))
   if (stylisticOptions) configs.push(stylistic(stylisticOptions))
   if (tailwindOptions) configs.push(tailwind(tailwindOptions))
+  if (commentsOptions) configs.push(comments(commentsOptions))
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 

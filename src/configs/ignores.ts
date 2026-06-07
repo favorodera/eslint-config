@@ -11,8 +11,7 @@ export type IgnoresPatterns = string[] | ((defaults: string[]) => string[])
 const defaultPatterns = [...ignoresGlob]
 
 /**
- * Create an ESLint ignore config item.
- *
+ * Globs for ignoring files and directories from ESLint scanning.
  * @param patterns - Additional ignore patterns or a function to modify the defaults.
  * @returns An array containing the ignore flat config item.
  */

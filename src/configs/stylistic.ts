@@ -18,7 +18,7 @@ const stylisticDefaults: StylisticConfigOptions = {
 }
 
 /**
- * Code style via @stylistic, rules exposed under the `style/` prefix.
+ * Code style via `@stylistic/eslint-plugin`.
  * @param options - Stylistic configuration options
  * @returns Promise resolving to stylistic ESLint config items
  */

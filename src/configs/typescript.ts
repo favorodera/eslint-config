@@ -22,7 +22,7 @@ function extractRules(configs: CompatibleConfigArray): Record<string, any> {
 }
 
 /**
- * Typescript linting — `typescript-eslint` and opinionated rules.
+ * Typescript linting via `typescript-eslint`.
  * @param options - TypeScript configuration options
  * @returns Promise resolving to TypeScript ESLint config items
  */
