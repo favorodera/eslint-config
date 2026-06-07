@@ -28,7 +28,7 @@ const vueDefaults: VueConfigOptions = {
 }
 
 /**
- * Vue SFC linting via `vue-eslint-parser`, `eslint-plugin-vue`, `typescript-eslint(parser)`. 
+ * Vue SFC linting via `vue-eslint-parser`, `eslint-plugin-vue`, `typescript-eslint(parser)`.
  * @param options - Vue configuration options
  * @returns Promise resolving to Vue ESLint config items
  */

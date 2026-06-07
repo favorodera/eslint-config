@@ -4,7 +4,7 @@ import { getModuleDefault } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 
 /** Configuration options for stylistic ESLint rules. */
-export type StylisticConfigOptions = StylisticCustomizeOptions & SharedOptions
+export type StylisticConfigOptions = StylisticCustomizeOptions & Pick<SharedOptions, 'overrides'>
 
 /** Default stylistic configuration values. */
 const stylisticDefaults: StylisticConfigOptions = {

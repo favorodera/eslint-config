@@ -1,13 +1,22 @@
-import { FlatConfigComposer, type Awaitable } from 'eslint-flat-config-utils'
+import { FlatConfigComposer } from 'eslint-flat-config-utils'
+import type { Awaitable } from 'eslint-flat-config-utils'
 import type { TypedFlatConfigItem } from './types/utils'
 import { resolveOptions } from './utils'
-import { vue, type VueConfigOptions } from './configs/vue'
-import { typescript, type TypescriptConfigOptions } from './configs/typescript'
-import { ignores, type IgnoresPatterns } from './configs/ignores'
-import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
+import { vue } from './configs/vue'
+import type { VueConfigOptions } from './configs/vue'
+import { typescript } from './configs/typescript'
+import type { TypescriptConfigOptions } from './configs/typescript'
+import { ignores } from './configs/ignores'
+import type { IgnoresPatterns } from './configs/ignores'
+import { stylistic } from './configs/stylistic'
+import type { StylisticConfigOptions } from './configs/stylistic'
 import type { ConfigNames } from './types/rules'
-import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
-import { comments, type CommentsConfigOptions } from './configs/comments'
+import { tailwind } from './configs/tailwind'
+import type { TailwindConfigOptions } from './configs/tailwind'
+import { comments } from './configs/comments'
+import type { CommentsConfigOptions } from './configs/comments'
+import { imports } from './configs/imports'
+import type { ImportsConfigOptions } from './configs/imports'
 
 /** Configuration options for the ESLint flat config */
 export interface ConfigOptions {
@@ -45,6 +54,12 @@ export interface ConfigOptions {
    * @default false
    */
   comments?: boolean | CommentsConfigOptions
+
+  /**
+   * Enable Imports linting with optional configuration
+   * @default false
+   */
+  imports?: boolean | ImportsConfigOptions
 }
 
 const pluginRenames = {
@@ -53,6 +68,7 @@ const pluginRenames = {
   'n': 'node',
   'better-tailwindcss': 'tailwind',
   '@eslint-community/eslint-comments': 'comments',
+  'import-lite': 'import',
 }
 
 /**
@@ -70,12 +86,14 @@ export function factory(options: ConfigOptions = {}) {
   const stylisticOptions = resolveOptions(options.stylistic, {})
   const tailwindOptions = resolveOptions(options.tailwind, {})
   const commentsOptions = resolveOptions(options.comments, {})
+  const importsOptions = resolveOptions(options.imports, {})
 
   if (vueOptions) configs.push(vue(vueOptions))
   if (typescriptOptions) configs.push(typescript(typescriptOptions))
   if (stylisticOptions) configs.push(stylistic(stylisticOptions))
   if (tailwindOptions) configs.push(tailwind(tailwindOptions))
   if (commentsOptions) configs.push(comments(commentsOptions))
+  if (importsOptions) configs.push(imports(importsOptions))
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 

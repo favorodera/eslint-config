@@ -1,12 +1,12 @@
-import { factory } from './src'
+import { allConfigOptionsTrue, factory } from './src'
 
 export default factory({
-  vue: true,
-  typescript: true,
-  stylistic: true,
-  tailwind: true,
-  comments: true,
+  ...allConfigOptionsTrue,
+  tailwind: false,
 })
+  .append({
+    ignores: ['src/types/rules.d.ts'],
+  })
   .overrides({
     'favorodera/typescript/rules': {
       rules: {

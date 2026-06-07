@@ -3,12 +3,13 @@ import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { getModuleDefault, renameRules } from '../utils'
 
 /** Configuration options for comments ESLint rules */
-export type CommentsConfigOptions = SharedOptions
+export type CommentsConfigOptions = Pick<SharedOptions, 'overrides'>
 
 /** Default comments configuration values. */
 const commentsDefaults: CommentsConfigOptions = {}
 
-/** 
+
+/**
  * Comments linting via `@eslint-community/eslint-plugin-eslint-comments`
  * @param options - Comments configuration options
  * @returns Promise resolving to comments ESLint config items
@@ -23,7 +24,7 @@ export async function comments(options: CommentsConfigOptions): Promise<TypedFla
       name: 'favorodera/comments/rules',
       plugins: { comments: commentsPlugin },
       rules: {
-        ...renameRules(commentsPlugin.configs.recommended, { '@eslint-community/eslint-comments': 'comments' }),
+        ...renameRules(commentsPlugin.configs.recommended?.rules || {}, { '@eslint-community/eslint-comments': 'comments' }),
 
         'comments/no-aggregating-enable': 'error',
         'comments/no-duplicate-disable': 'error',
@@ -32,6 +33,6 @@ export async function comments(options: CommentsConfigOptions): Promise<TypedFla
 
         ...resolved.overrides,
       },
-    }
+    },
   ]
 }

@@ -1,5 +1,5 @@
 import { defu } from 'defu'
-import { type Awaitable } from 'eslint-flat-config-utils'
+import type { Awaitable } from 'eslint-flat-config-utils'
 
 /**
  * Return the default export from a module-like object.
