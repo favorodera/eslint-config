@@ -40,7 +40,7 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",
-    "ready": "pnpm install && pnpm lint && pnpm typecheck && pnpm build && pnpm test"
+    "ready": "pnpm install && pnpm build && pnpm lint && pnpm typecheck && pnpm test"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",
