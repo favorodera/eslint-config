@@ -1,20 +1,14 @@
-/** Glob pattern for Vue linting */
-export const vueGlob = '**/*.vue'
+/** Glob pattern for JavaScript linting */
+export const jsGlob = '**/*.?([cm])js'
 
 /** Glob pattern for TypeScript linting */
 export const tsGlob = '**/*.?([cm])ts'
 
+/** Glob pattern for Vue linting */
+export const vueGlob = '**/*.vue'
+
 /** Glob pattern for Markdown linting */
 export const mdGlob = '**/*.md'
-
-/** Glob pattern for Markdown linting inside Markdown files */
-export const markdownInMarkdownGlob = '**/*.md/*.md'
-
-/** Glob pattern for Tailwind CSS linting */
-export const tailwindGlob = [
-  vueGlob,
-  tsGlob,
-]
 
 /**
  * Default glob patterns for files and directories to ignore

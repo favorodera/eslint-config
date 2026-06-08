@@ -7,7 +7,6 @@ import type { CompatibleConfigArray } from 'typescript-eslint'
 /** Configuration options for TypeScript ESLint rules */
 export type TypescriptConfigOptions = SharedOptions
 
-/** Default configuration for TypeScript linting */
 const typescriptDefaults: TypescriptConfigOptions = {
   files: [tsGlob],
 }

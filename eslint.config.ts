@@ -1,4 +1,5 @@
-import { allConfigOptionsTrue, factory } from './src'
+import { factory } from './src/factory'
+import { allConfigOptionsTrue } from './src/config-presets'
 
 export default factory({
   ...allConfigOptionsTrue,

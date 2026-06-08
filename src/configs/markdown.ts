@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
-import { markdownInMarkdownGlob, mdGlob } from '../globs'
+import { mdGlob } from '../globs'
 import { getModuleDefault, renameRules } from '../utils'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
 
@@ -13,7 +13,6 @@ export type MarkdownConfigOptions = SharedOptions & {
   gfm?: boolean
 }
 
-/** Default configuration for Markdown linting */
 const markdownDefaults: MarkdownConfigOptions = {
   files: [mdGlob],
   gfm: true,
@@ -33,7 +32,6 @@ export async function markdown(options: MarkdownConfigOptions): Promise<TypedFla
     {
       name: 'favorodera/markdown/rules',
       files: resolved.files,
-      ignores: [markdownInMarkdownGlob],
       plugins: { md: markdownPlugin },
       processor: mergeProcessors([
         markdownPlugin.processors?.markdown,
@@ -41,7 +39,7 @@ export async function markdown(options: MarkdownConfigOptions): Promise<TypedFla
       ]),
       language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       rules: {
-        ...renameRules(markdownPlugin.configs.recommended[0].rules, { markdown: 'md' }),
+        ...renameRules(markdownPlugin.configs.recommended[0]?.rules || {}, { markdown: 'md' }),
 
         'md/fenced-code-language': 'off',
         'md/no-missing-label-refs': 'off',

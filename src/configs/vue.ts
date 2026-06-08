@@ -16,12 +16,10 @@ export type VueConfigOptions = SharedOptions & {
   sfcBlocks?: boolean | VueBlocksOptions
 }
 
-/** Default SFC blocks configuration for Vue linting */
 const sfcBlocksDefaults: VueBlocksOptions = {
   blocks: { styles: true, customBlocks: true, template: false },
 }
 
-/** Default configuration for Vue linting */
 const vueDefaults: VueConfigOptions = {
   files: [vueGlob],
   sfcBlocks: sfcBlocksDefaults,

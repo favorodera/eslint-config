@@ -7,15 +7,14 @@ import type { TypedFlatConfigItem } from '../types/utils'
  */
 export type IgnoresPatterns = string[] | ((defaults: string[]) => string[])
 
-/** Default ignore patterns copied from the shared ignore glob list. */
-const defaultPatterns = [...ignoresGlob]
+const defaultPatterns = ignoresGlob
 
 /**
  * Globs for ignoring files and directories from ESLint scanning.
  * @param patterns - Additional ignore patterns or a function to modify the defaults.
  * @returns An array containing the ignore flat config item.
  */
-export function ignores(patterns: string[] | ((defaults: string[]) => string[]) = []): TypedFlatConfigItem[] {
+export function ignores(patterns: IgnoresPatterns = []): TypedFlatConfigItem[] {
   const resolved = typeof patterns === 'function'
     ? patterns(defaultPatterns)
     : [...defaultPatterns, ...patterns]

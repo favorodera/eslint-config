@@ -2,7 +2,7 @@ import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { getModuleDefault, renameRules } from '../utils'
 import { defu } from 'defu'
-import { tailwindGlob } from '../globs'
+import { jsGlob, tsGlob, vueGlob } from '../globs'
 
 /**
  * Tailwind ESLint configuration options.
@@ -19,7 +19,7 @@ export type TailwindConfigOptions = SharedOptions & {
     /**
      * Working directory used to resolve Tailwind config files.
      * Useful for monorepos where linting runs from the root but each project has its own setup.
-     * Relative to the ESLint process’s cwd; defaults to that cwd if not specified.
+     * Relative to the ESLint process's cwd; defaults to that cwd if not specified.
      */
     cwd?: string
 
@@ -44,7 +44,7 @@ export type TailwindConfigOptions = SharedOptions & {
      *
      * Defaults to `"visual"`, or `"compact"` in CI environments.
      */
-    messageFormat?: 'visual' | 'compact' | 'raw'
+    messageStyle?: 'visual' | 'compact' | 'raw'
 
     /**
      * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
@@ -54,9 +54,8 @@ export type TailwindConfigOptions = SharedOptions & {
   }
 }
 
-/** Default configuration for Tailwind linting */
 const tailwindDefaults: TailwindConfigOptions = {
-  files: [...tailwindGlob],
+  files: [jsGlob, tsGlob, vueGlob],
   settings: {
     detectComponentClasses: true,
   },

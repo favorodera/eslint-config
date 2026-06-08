@@ -9,6 +9,7 @@ export const allConfigOptionsTrue: ConfigOptions = {
   comments: true,
   imports: true,
   markdown: true,
+  javascript: true,
 }
 
 /** Preset configuration with all options disabled */

@@ -4,16 +4,13 @@ import { getModuleDefault } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 
 /** Configuration options for stylistic ESLint rules. */
-export type StylisticConfigOptions = StylisticCustomizeOptions & Pick<SharedOptions, 'overrides'>
+export type StylisticConfigOptions = Omit<StylisticCustomizeOptions, 'pluginName'> & Pick<SharedOptions, 'overrides'>
 
-/** Default stylistic configuration values. */
 const stylisticDefaults: StylisticConfigOptions = {
   indent: 2,
-  braceStyle: 'stroustrup',
   experimental: false,
   quotes: 'single',
   semi: false,
-  pluginName: 'style',
   jsx: false,
 }
 
@@ -27,7 +24,10 @@ export async function stylistic(options: StylisticConfigOptions): Promise<TypedF
 
   const stylePlugin = await getModuleDefault(import('@stylistic/eslint-plugin'))
 
-  const customizedStyleConfig = stylePlugin.configs.customize(resolved) as TypedFlatConfigItem
+  const customizedStyleConfig = stylePlugin.configs.customize({
+    pluginName: 'style',
+    ...resolved,
+  })
 
   return [
     {
@@ -41,6 +41,8 @@ export async function stylistic(options: StylisticConfigOptions): Promise<TypedF
         'style/padded-blocks': 'off',
         'style/no-trailing-spaces': ['error', { skipBlankLines: true }],
         'style/brace-style': 'off',
+        'style/generator-star-spacing': ['error', { after: true, before: false }],
+        'style/yield-star-spacing': ['error', { after: true, before: false }],
 
         ...resolved.overrides,
       },
