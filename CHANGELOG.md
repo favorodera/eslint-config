@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.0.1...v0.0.2
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.1...v0.0.2)
+
+### Refactors
+
+- **factory:** Simplify configuration and plugin handling ([af0e923](https://github.com/favorodera/eslint-config/commit/af0e923))
+
+  - remove unused comments config and presets
+  - switch to eslint-flat-config-utils for plugin renaming
+  - unify module import utility
+  - optimize config composition and rule inheritance
+  - update glob patterns and factory defaults
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.0...v0.0.1
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/73447b8c21af27d21014ce495a551e74e524a585...v0.0.1)
