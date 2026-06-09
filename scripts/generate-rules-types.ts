@@ -1,9 +1,14 @@
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
-import { allConfigOptionsTrue } from '../src/config-presets'
 import { writeFile } from 'node:fs/promises'
+import { builtinRules } from 'eslint/use-at-your-own-risk'
 import { factory } from '../src/factory'
 
-const configs = await factory(allConfigOptionsTrue)
+const configs = await factory()
+  .prepend({
+    plugins: {
+      '': { rules: Object.fromEntries(builtinRules.entries()) },
+    },
+  })
 
 const configNames = configs
   .map(config => config.name)

@@ -1,15 +1,12 @@
 import { defu } from 'defu'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { mdGlob } from '../globs'
-import { getModuleDefault, renameRules } from '../utils'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
+import { renamePluginsInRules } from 'eslint-flat-config-utils'
+import { importModule } from '../utils'
 
-/** Configuration options for Markdown ESLint rules */
 export type MarkdownConfigOptions = SharedOptions & {
-  /**
-   * Enable GFM (GitHub Flavored Markdown) support.
-   * @default true
-   */
+  /** github flavoured markdown */
   gfm?: boolean
 }
 
@@ -18,19 +15,21 @@ const markdownDefaults: MarkdownConfigOptions = {
   gfm: true,
 }
 
-/**
- * Markdown linting via `@eslint/markdown`.
- * @param options - Markdown configuration options
- * @returns Promise resolving to Markdown ESLint config items
- */
 export async function markdown(options: MarkdownConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, markdownDefaults)
 
-  const markdownPlugin = await getModuleDefault(import('@eslint/markdown'))
+  const markdownPlugin = await importModule(import('@eslint/markdown'))
+
+  const inheritedRules = Object.assign(
+    {},
+    ...[
+      ...markdownPlugin.configs.recommended,
+    ].map(config => config?.rules || {}),
+  )
 
   return [
     {
-      name: 'favorodera/markdown/rules',
+      name: 'favorodera/markdown',
       files: resolved.files,
       plugins: { md: markdownPlugin },
       processor: mergeProcessors([
@@ -39,7 +38,7 @@ export async function markdown(options: MarkdownConfigOptions): Promise<TypedFla
       ]),
       language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       rules: {
-        ...renameRules(markdownPlugin.configs.recommended[0]?.rules || {}, { markdown: 'md' }),
+        ...renamePluginsInRules(inheritedRules, { markdown: 'md' }),
 
         'md/fenced-code-language': 'off',
         'md/no-missing-label-refs': 'off',

@@ -2,16 +2,23 @@ import { defu } from 'defu'
 import type { Awaitable } from 'eslint-flat-config-utils'
 
 /**
- * Return the default export from a module-like object.
- * If the module has no default export, return the original resolved value.
+ * Resolves a module (or a promise of one) and returns its default export
+ * if present, otherwise returns the module itself.
  *
- * @param module - module or promise resolving to a module
- * @returns resolved module default or original module
+ * Handles both ESM modules (which wrap exports under `.default`) and
+ * CJS / plain-object modules uniformly.
+ *
+ * @param module - A module or a promise that resolves to one
+ * @returns The `.default` export if it exists, otherwise the module itself
  */
-export async function getModuleDefault<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
-  const resolvedModule = await module
+export async function importModule<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
+  const resolved = await module
 
-  return (resolvedModule as any).default || resolvedModule
+  if (resolved !== null && typeof resolved === 'object' && 'default' in resolved) {
+    return (resolved as any).default
+  }
+
+  return resolved as any
 }
 
 /**
@@ -22,34 +29,8 @@ export async function getModuleDefault<TModule>(module: Awaitable<TModule>): Pro
  * @param defaults - defaults to merge with
  * @returns merged options or false
  */
-export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined, defaults: TOptions): TOptions | false {
+export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined, defaults: TOptions) {
   if (!value) return false
 
   return defu(value === true ? {} : value, defaults) as TOptions
-}
-
-/**
- * Rename rules by replacing configured plugin prefixes.
- *
- * @param rules - rules object to rename
- * @param map - prefix map used for renaming
- * @returns renamed rules object
- */
-export function renameRules(rules: Record<string, any>, map: Record<string, string>): Record<string, any> {
-  return Object
-    .fromEntries(
-      Object
-        .entries(rules)
-        .map(([key, value]) => {
-          for (const [from, to] of Object.entries(map)) {
-
-            if (key.startsWith(`${from}/`)) {
-              return [to + key.slice(from.length), value]
-            }
-
-          }
-
-          return [key, value]
-        }),
-    )
 }

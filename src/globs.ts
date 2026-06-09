@@ -1,8 +1,8 @@
 /** Glob pattern for JavaScript linting */
-export const jsGlob = '**/*.?([cm])js'
+export const jsGlob = '**/*.{js,cjs,mjs}'
 
 /** Glob pattern for TypeScript linting */
-export const tsGlob = '**/*.?([cm])ts'
+export const tsGlob = '**/*.{ts,cts,mts}'
 
 /** Glob pattern for Vue linting */
 export const vueGlob = '**/*.vue'
@@ -10,13 +10,16 @@ export const vueGlob = '**/*.vue'
 /** Glob pattern for Markdown linting */
 export const mdGlob = '**/*.md'
 
+/** Glob pattern for scripts */
+export const scriptsGlob = '**/*.?([cm])[jt]s'
+
 /**
  * Default glob patterns for files and directories to ignore
  * Includes common build outputs, dependencies, caches, and temporary files
  */
 export const ignoresGlob = [
-  '**/node_modules',
-  '**/dist',
+  '**/node_modules/**',
+  '**/dist/**',
   '**/package-lock.json',
   '**/yarn.lock',
   '**/pnpm-lock.yaml',

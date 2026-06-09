@@ -1,38 +1,35 @@
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import { getModuleDefault, renameRules } from '../utils'
+import { importModule } from '../utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
-/** Configuration options for imports & unused imports ESLint rules. */
 export type ImportsConfigOptions = SharedOptions
 
 const importsDefaults: ImportsConfigOptions = {
   files: [jsGlob, tsGlob, vueGlob],
 }
 
-/**
- * Imports & unused imports linting via `eslint-plugin-import-lite` and `eslint-plugin-unused-imports`.
- * @param options - Imports & unused imports configuration options
- * @returns Promise resolving to imports & unused imports ESLint config items
- */
 export async function imports(options: ImportsConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, importsDefaults)
 
   const [importPlugin, unusedImportsPlugin] = await Promise.all([
-    getModuleDefault(import('eslint-plugin-import-lite')),
-    getModuleDefault(import('eslint-plugin-unused-imports')),
+    importModule(import('eslint-plugin-import-lite')),
+    importModule(import('eslint-plugin-unused-imports')),
   ])
+
+  const inheritedRules = importPlugin.configs.recommended?.rules || {}
 
   return [
     {
-      name: 'favorodera/imports/rules',
+      name: 'favorodera/imports',
       files: resolved.files,
       plugins: {
         'import': importPlugin,
         'unused-imports': unusedImportsPlugin,
       },
       rules: {
-        ...renameRules(importPlugin.configs.recommended?.rules || {}, { 'import-lite': 'import' }),
+        ...renamePluginsInRules(inheritedRules, { 'import-lite': 'import' }),
 
         'import/consistent-type-specifier-style': ['error', 'top-level'],
         'import/first': 'error',

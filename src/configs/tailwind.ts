@@ -1,13 +1,10 @@
 import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
-import { getModuleDefault, renameRules } from '../utils'
 import { defu } from 'defu'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
+import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
-/**
- * Tailwind ESLint configuration options.
- * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
- */
 export type TailwindConfigOptions = SharedOptions & {
   settings?: {
     /**
@@ -61,7 +58,6 @@ const tailwindDefaults: TailwindConfigOptions = {
   },
 }
 
-
 /**
  * Tailwind linting via `eslint-plugin-better-tailwindcss`.
  * @param options - Tailwind configuration options
@@ -70,19 +66,23 @@ const tailwindDefaults: TailwindConfigOptions = {
 export async function tailwind(options: TailwindConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, tailwindDefaults)
 
-  const tailwindPlugin = await getModuleDefault(import('eslint-plugin-better-tailwindcss'))
+  const tailwindPlugin = await importModule(import('eslint-plugin-better-tailwindcss'))
+
+  const inheritedRules = {
+    ...tailwindPlugin.configs['recommended-error'].rules,
+    ...tailwindPlugin.configs['stylistic-error'].rules,
+  }
 
   return [
     {
-      name: 'favorodera/tailwind/rules',
-      plugins: { tailwind: tailwindPlugin },
+      name: 'favorodera/tailwind',
       files: resolved.files,
+      plugins: { tailwind: tailwindPlugin },
       settings: {
         tailwindcss: resolved.settings,
       },
       rules: {
-        ...renameRules(tailwindPlugin.configs['recommended-error'].rules, { 'better-tailwindcss': 'tailwind' }),
-        ...renameRules(tailwindPlugin.configs['stylistic-error'].rules, { 'better-tailwindcss': 'tailwind' }),
+        ...renamePluginsInRules(inheritedRules, { 'better-tailwindcss': 'tailwind' }),
 
         'tailwind/no-unregistered-classes': 'off',
         'tailwind/enforce-consistent-line-wrapping': ['error', { group: 'emptyLine' }],

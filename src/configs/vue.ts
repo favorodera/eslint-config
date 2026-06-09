@@ -1,18 +1,12 @@
 import { defu } from 'defu'
 import { vueGlob } from '../globs'
-import { getModuleDefault, resolveOptions } from '../utils'
+import { importModule, resolveOptions } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
-import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 import { mergeProcessors } from 'eslint-merge-processors'
+import vueBlocksProcessor from 'eslint-processor-vue-blocks'
+import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 
-/** Configuration options for Vue ESLint rules */
 export type VueConfigOptions = SharedOptions & {
-  /**
-   * Create virtual files for Vue SFC blocks to enable linting.
-   *
-   * @see https://github.com/antfu/eslint-processor-vue-blocks
-   * @default true
-   */
   sfcBlocks?: boolean | VueBlocksOptions
 }
 
@@ -25,30 +19,31 @@ const vueDefaults: VueConfigOptions = {
   sfcBlocks: sfcBlocksDefaults,
 }
 
-/**
- * Vue SFC linting via `vue-eslint-parser`, `eslint-plugin-vue`, `typescript-eslint(parser)`.
- * @param options - Vue configuration options
- * @returns Promise resolving to Vue ESLint config items
- */
 export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, vueDefaults)
   const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)
 
-  const [vuePlugin, vueParser, tsEsLint, vueBlocksProcessor] = await Promise.all([
-    getModuleDefault(import('eslint-plugin-vue')),
-    getModuleDefault(import('vue-eslint-parser')),
-    getModuleDefault(import('typescript-eslint')),
-    getModuleDefault(import('eslint-processor-vue-blocks')),
+  const [vuePlugin, vueParser, tsEsLint] = await Promise.all([
+    importModule(import('eslint-plugin-vue')),
+    importModule(import('vue-eslint-parser')),
+    importModule(import('typescript-eslint')),
   ])
+
+  const inheritedRules = Object.assign(
+    {},
+    ...[
+      ...vuePlugin.configs['flat/essential'],
+      ...vuePlugin.configs['flat/strongly-recommended'],
+      ...vuePlugin.configs['flat/recommended'],
+    ].map(config => config?.rules || {}),
+  )
 
   return [
     {
-      name: 'favorodera/vue/rules',
+      name: 'favorodera/vue',
       plugins: { vue: vuePlugin },
       files: resolved.files,
       languageOptions: {
-        // This allows Vue plugin to work with auto imports
-      // https://github.com/vuejs/eslint-plugin-vue/pull/2422
         globals: {
           computed: 'readonly',
           defineEmits: 'readonly',
@@ -81,19 +76,7 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
           ]),
 
       rules: {
-        ...vuePlugin.configs.base.rules as any,
-
-        ...vuePlugin.configs['flat/essential']
-          .map(config => config.rules)
-          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
-
-        ...vuePlugin.configs['flat/strongly-recommended']
-          .map(config => config.rules)
-          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
-
-        ...vuePlugin.configs['flat/recommended']
-          .map(config => config.rules)
-          .reduce((accumulator, currentConfig) => ({ ...accumulator, ...currentConfig }), {}),
+        ...inheritedRules,
 
         'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],

@@ -2,7 +2,7 @@
 export { factory, type ConfigOptions } from './factory'
 
 // utils - useful for consumers building on top
-export { getModuleDefault, renameRules } from './utils'
+export { importModule } from './utils'
 
 // types
 export type { TypedFlatConfigItem, SharedOptions, Rules } from './types/utils'

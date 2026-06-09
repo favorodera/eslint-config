@@ -5,6 +5,7 @@ import type { TypedFlatConfigItem } from '../types/utils'
  * Patterns used to ignore files and directories from ESLint scanning.
  * Can be a list of glob patterns or a function that receives default patterns.
  */
+// eslint-disable-next-line no-unused-vars
 export type IgnoresPatterns = string[] | ((defaults: string[]) => string[])
 
 const defaultPatterns = ignoresGlob

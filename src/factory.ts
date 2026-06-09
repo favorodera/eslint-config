@@ -1,38 +1,37 @@
 import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { Awaitable } from 'eslint-flat-config-utils'
-import type { TypedFlatConfigItem } from './types/utils'
-import { resolveOptions } from './utils'
 import { vue } from './configs/vue'
 import type { VueConfigOptions } from './configs/vue'
-import { typescript } from './configs/typescript'
-import type { TypescriptConfigOptions } from './configs/typescript'
 import { ignores } from './configs/ignores'
 import type { IgnoresPatterns } from './configs/ignores'
-import { stylistic } from './configs/stylistic'
-import type { StylisticConfigOptions } from './configs/stylistic'
-import type { ConfigNames } from './types/rules'
-import { tailwind } from './configs/tailwind'
-import type { TailwindConfigOptions } from './configs/tailwind'
-import { comments } from './configs/comments'
-import type { CommentsConfigOptions } from './configs/comments'
 import { imports } from './configs/imports'
 import type { ImportsConfigOptions } from './configs/imports'
-import { markdown } from './configs/markdown'
-import type { MarkdownConfigOptions } from './configs/markdown'
 import { javascript } from './configs/javascript'
 import type { JavascriptConfigOptions } from './configs/javascript'
+import { markdown } from './configs/markdown'
+import type { MarkdownConfigOptions } from './configs/markdown'
+import { stylistic } from './configs/stylistic'
+import type { StylisticConfigOptions } from './configs/stylistic'
+import { tailwind } from './configs/tailwind'
+import type { TailwindConfigOptions } from './configs/tailwind'
+import { typescript } from './configs/typescript'
+import type { TypescriptConfigOptions } from './configs/typescript'
+import type { ConfigNames } from './types/rules'
+import type { TypedFlatConfigItem } from './types/utils'
+import { resolveOptions } from './utils'
+
 
 /** Configuration options for the ESLint flat config */
 export interface ConfigOptions {
   /**
    * Enable Vue linting with optional configuration
-   * @default false
+   * @default true
   */
   vue?: boolean | VueConfigOptions
 
   /**
    * Enable TypeScript linting with optional configuration
-   * @default false
+   * @default true
    */
   typescript?: boolean | TypescriptConfigOptions
 
@@ -44,36 +43,30 @@ export interface ConfigOptions {
 
   /**
    * Enable stylistic rules with optional configuration
-   * @default false
+   * @default true
    */
   stylistic?: boolean | StylisticConfigOptions
   /**
    * Enable Tailwind CSS linting with optional configuration
-   * @default false
+   * @default true
    */
   tailwind?: boolean | TailwindConfigOptions
 
   /**
-   * Enable Comments linting with optional configuration
-   * @default false
-   */
-  comments?: boolean | CommentsConfigOptions
-
-  /**
    * Enable Imports linting with optional configuration
-   * @default false
+   * @default true
    */
   imports?: boolean | ImportsConfigOptions
 
   /**
    * Enable Markdown linting with optional configuration
-   * @default false
+   * @default true
    */
   markdown?: boolean | MarkdownConfigOptions
 
   /**
    * Enable Javascript linting with optional configuration
-   * @default false
+   * @default true
    */
   javascript?: boolean | JavascriptConfigOptions
 }
@@ -88,27 +81,32 @@ export function factory(options: ConfigOptions = {}) {
 
   configs.push(ignores(options.ignores))
 
-  const vueOptions = resolveOptions(options.vue, {})
-  const typescriptOptions = resolveOptions(options.typescript, {})
-  const stylisticOptions = resolveOptions(options.stylistic, {})
-  const tailwindOptions = resolveOptions(options.tailwind, {})
-  const commentsOptions = resolveOptions(options.comments, {})
-  const importsOptions = resolveOptions(options.imports, {})
-  const markdownOptions = resolveOptions(options.markdown, {})
-  const javascriptOptions = resolveOptions(options.javascript, {})
+  const configFunctions = {
+    vue,
+    typescript,
+    stylistic,
+    tailwind,
+    imports,
+    markdown,
+    javascript,
+  }
 
-  if (vueOptions) configs.push(vue(vueOptions))
-  if (typescriptOptions) configs.push(typescript(typescriptOptions))
-  if (stylisticOptions) configs.push(stylistic(stylisticOptions))
-  if (tailwindOptions) configs.push(tailwind(tailwindOptions))
-  if (commentsOptions) configs.push(comments(commentsOptions))
-  if (importsOptions) configs.push(imports(importsOptions))
-  if (markdownOptions) configs.push(markdown(markdownOptions))
-  if (javascriptOptions) configs.push(javascript(javascriptOptions))
+  for (const [key, configFunction] of Object.entries(configFunctions)) {
+    const configOption = (options as Record<string, unknown>)[key]
+    const resolved = resolveOptions(configOption ?? true, {})
+    if (resolved) configs.push(configFunction(resolved))
+  }
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 
-  composer = composer.append(...configs)
+  composer = composer
+    .append(...configs)
+    .renamePlugins({
+      'better-tailwindcss': 'tailwind',
+      '@typescript-eslint': 'ts',
+      'markdown': 'md',
+      'import-lite': 'import',
+    })
 
   return composer
 }

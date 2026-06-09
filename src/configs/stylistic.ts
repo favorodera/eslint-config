@@ -1,40 +1,43 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
 import { defu } from 'defu'
-import { getModuleDefault } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
+import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
-/** Configuration options for stylistic ESLint rules. */
-export type StylisticConfigOptions = Omit<StylisticCustomizeOptions, 'pluginName'> & Pick<SharedOptions, 'overrides'>
-
-const stylisticDefaults: StylisticConfigOptions = {
-  indent: 2,
-  experimental: false,
-  quotes: 'single',
-  semi: false,
-  jsx: false,
+export type StylisticConfigOptions = SharedOptions & {
+  settings?: Omit<StylisticCustomizeOptions, 'pluginName'>
 }
 
-/**
- * Code style via `@stylistic/eslint-plugin`.
- * @param options - Stylistic configuration options
- * @returns Promise resolving to stylistic ESLint config items
- */
+const stylisticDefaults: StylisticConfigOptions = {
+  settings: {
+    indent: 2,
+    experimental: false,
+    quotes: 'single',
+    semi: false,
+    jsx: false,
+  },
+  files: [jsGlob, tsGlob, vueGlob],
+}
+
 export async function stylistic(options: StylisticConfigOptions): Promise<TypedFlatConfigItem[]> {
   const resolved = defu(options, stylisticDefaults)
 
-  const stylePlugin = await getModuleDefault(import('@stylistic/eslint-plugin'))
+  const stylePlugin = await importModule(import('@stylistic/eslint-plugin'))
 
-  const customizedStyleConfig = stylePlugin.configs.customize({
+  const config = stylePlugin.configs.customize({
     pluginName: 'style',
-    ...resolved,
+    ...resolved.settings,
   })
+
+  const inheritedRules = config?.rules || {}
 
   return [
     {
-      name: 'favorodera/stylistic/rules',
-      plugins: { style: stylePlugin },
+      ...config,
+      name: 'favorodera/stylistic',
+      files: resolved.files,
       rules: {
-        ...customizedStyleConfig.rules,
+        ...inheritedRules,
 
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         'style/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 2, maxBOF: 0 }],
