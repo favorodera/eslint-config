@@ -1,5 +1,62 @@
 # Changelog
 
+## v0.0.5...v0.0.6
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.5...v0.0.6)
+
+### Added
+
+- **config:** Add yaml linting support ([0b48491](https://github.com/favorodera/eslint-config/commit/0b48491))
+
+  - Add eslint-plugin-yml and yaml-eslint-parser
+  - Implement new yaml configuration factory
+  - Update factory to include yaml support
+  - Expand base javascript linting rules
+
+- **pnpm:** Add support for pnpm workspace linting ([9dbe73d](https://github.com/favorodera/eslint-config/commit/9dbe73d))
+
+  - Add eslint-plugin-pnpm configuration
+  - Migrate package dependencies to pnpm catalogs
+  - Integrate pnpm rules into the factory
+  - Update pnpm-workspace.yaml with catalog definitions
+
+- **test:** Add Vitest linting support ([fa8b826](https://github.com/favorodera/eslint-config/commit/fa8b826))
+
+  - Add @vitest/eslint-plugin for test linting
+  - Implement test configuration factory
+  - Define test file glob patterns
+  - Add test:watch script to package.json
+  - Expand factory tests to verify configuration
+
+
+### Refactors
+
+- **index:** Export extractRules and simplify imports ([df5fd1c](https://github.com/favorodera/eslint-config/commit/df5fd1c))
+
+  - Export extractRules from entry point
+  - Simplify entry path in eslint.config.ts
+
+- **yaml:** Rename plugin to yaml and add pnpm-workspace support ([7a1ba93](https://github.com/favorodera/eslint-config/commit/7a1ba93))
+
+  - Rename yml plugin prefix to yaml
+  - Add pnpm-workspace.yaml linting support
+  - Implement key sorting for pnpm-workspace.yaml
+
+
+### Documentation
+
+- **readme:** Update code block language to typescript ([e459d2c](https://github.com/favorodera/eslint-config/commit/e459d2c))
+
+### Chores
+
+- Add licence to the project ([ddafe59](https://github.com/favorodera/eslint-config/commit/ddafe59))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+- Favour  Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.4...v0.0.5
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.4...v0.0.5)
