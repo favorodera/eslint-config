@@ -120,6 +120,7 @@ export function factory(options: ConfigOptions = {}) {
       'import-lite': 'import',
       'markdown': 'md',
       'n': 'node',
+      'yml': 'yaml',
     })
 
   return composer

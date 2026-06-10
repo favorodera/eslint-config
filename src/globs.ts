@@ -34,6 +34,9 @@ export const tsConfigGlob = [
 /** Glob pattern for matching YAML files */
 export const yamlGlob = '**/*.{yml,yaml}'
 
+/** Glob pattern for matching pnpm-workspace.yaml file */
+export const pnpmWorkspaceGlob = 'pnpm-workspace.yaml'
+
 /** Glob pattern for matching package.json files */
 export const packageJsonGlob = '**/package.json'
 
