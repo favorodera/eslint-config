@@ -1,4 +1,4 @@
-import { factory } from './src/factory'
+import { factory } from './src'
 
 export default factory({
   tailwind: false,
