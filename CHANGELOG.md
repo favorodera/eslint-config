@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.0.2...v0.0.3
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.2...v0.0.3)
+
+### Added
+
+- Add jsonc support and dev inspector ([efc0652](https://github.com/favorodera/eslint-config/commit/efc0652))
+
+  - Add jsonc configuration with standard rules
+  - Integrate jsonc into factory
+  - Update scripts to include eslint config inspector
+  - Add concurrently for development workflow
+  - Refactor config rules extraction for consistency
+
+- **jsonc:** Add sorting rules for package.json and tsconfig.json ([aaceed5](https://github.com/favorodera/eslint-config/commit/aaceed5))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.1...v0.0.2
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.1...v0.0.2)
