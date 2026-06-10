@@ -81,7 +81,7 @@ bun add -D eslint @favorodera/eslint-config
 
 Create an `eslint.config.ts` file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something:
 
-```javascript
+```ts
 import { factory } from '@favorodera/eslint-config'
 
 export default factory({
