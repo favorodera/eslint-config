@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.0.4...v0.0.5
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.4...v0.0.5)
+
+### Added
+
+- **config:** Add perfectionist and unicorn support ([1be53ee](https://github.com/favorodera/eslint-config/commit/1be53ee))
+
+  - Add perfectionist for auto-sorting code
+  - Add unicorn for best practice rules
+  - Update factory with new modules
+  - Refactor existing configs for consistency
+
+- **node:** Add node.js linting configuration ([0a6990d](https://github.com/favorodera/eslint-config/commit/0a6990d))
+
+  - create node config module
+  - integrate node rules via eslint-plugin-n
+  - expose node configuration in factory
+
+
+### Refactors
+
+- **config:** Group imports and update rule style ([9038ad0](https://github.com/favorodera/eslint-config/commit/9038ad0))
+
+  - consolidate import statements in factory
+  - update consistent-type-specifier-style rule
+
+
+### Documentation
+
+- **factory:** Add missing newline in JSDoc comment ([658bd94](https://github.com/favorodera/eslint-config/commit/658bd94))
+- **readme:** Add new supported plugins to features list ([7a914c8](https://github.com/favorodera/eslint-config/commit/7a914c8))
+
+  - Add unicorn, perfectionist, and node plugins
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.3...v0.0.4
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.3...v0.0.4)
