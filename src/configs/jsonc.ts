@@ -3,12 +3,20 @@ import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { importModule } from '../utils'
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
 
+/** Options for configuring JSON and JSONC linting rules. */
 export type JSONCConfigOptions = SharedOptions
 
 const jsoncDefaults: JSONCConfigOptions = {
   files: [json5Glob, jsoncGlob, jsonGlob],
 }
 
+
+/**
+ * Constructs the flat config items for JSON, JSON5, and JSONC linting, setting up
+ * the custom parser, rule validations, and sorting rules for package.json/tsconfig.json.
+ * @param options JSONC configuration options.
+ * @returns Promise resolving to JSONC ESLint config items.
+ */
 export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, jsoncDefaults)
 

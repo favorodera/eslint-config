@@ -4,12 +4,19 @@ import { importModule } from '../utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
+/** Options for configuring imports linting rules. */
 export type ImportsConfigOptions = SharedOptions
 
 const importsDefaults: ImportsConfigOptions = {
   files: [jsGlob, tsGlob, vueGlob],
 }
 
+/**
+ * Constructs the flat config items for imports linting, providing plugin setup and
+ * specific rules to enforce consistent import ordering and unused variable checks.
+ * @param options Configuration options for imports linting.
+ * @returns Promise resolving to imports ESLint config items.
+ */
 export async function imports(options: ImportsConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, importsDefaults)
 

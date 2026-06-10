@@ -4,6 +4,7 @@ import { tsGlob } from '../globs'
 import { extractRules, importModule } from '../utils'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
+/** Options for configuring TypeScript linting rules. */
 export type TypescriptConfigOptions = SharedOptions
 
 const typescriptDefaults: TypescriptConfigOptions = {
@@ -11,9 +12,10 @@ const typescriptDefaults: TypescriptConfigOptions = {
 }
 
 /**
- * Typescript linting via `typescript-eslint`.
- * @param options - TypeScript configuration options
- * @returns Array of TypeScript ESLint config items
+ * Constructs the flat config items for TypeScript linting, initializing the parser
+ * and extending the recommended and strict type-aware rule sets.
+ * @param options TypeScript configuration options.
+ * @returns Promise resolving to TypeScript ESLint config items.
  */
 export async function typescript(options: TypescriptConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, typescriptDefaults)

@@ -12,7 +12,7 @@ const defaultPatterns = ignoresGlob
 
 /**
  * Globs for ignoring files and directories from ESLint scanning.
- * @param patterns - Additional ignore patterns or a function to modify the defaults.
+ * @param patterns Additional ignore patterns or a function to modify the defaults.
  * @returns An array containing the ignore flat config item.
  */
 export function ignores(patterns: IgnoresPatterns = []): Array<TypedFlatConfigItem> {

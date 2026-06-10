@@ -1,26 +1,43 @@
+/** Glob pattern for matching JavaScript files */
 export const jsGlob = '**/*.{js,cjs,mjs}'
 
+/** Glob pattern for matching TypeScript files */
 export const tsGlob = '**/*.{ts,cts,mts}'
 
+/** Glob pattern for matching Vue single-file components */
 export const vueGlob = '**/*.vue'
 
+/** Glob pattern for matching Markdown files */
 export const mdGlob = '**/*.md'
 
-// virtual files extracted from markdown by the processor
+/** Glob pattern for matching virtual files extracted from Markdown */
 export const mdInMdGlob = '**/*.md/*.md'
+
+/** Glob pattern for matching code blocks embedded in Markdown files */
 export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue}'
 
+/** Glob pattern for matching JSON files */
 export const jsonGlob = '**/*.json'
+
+/** Glob pattern for matching JSON5 files */
 export const json5Glob = '**/*.json5'
+
+/** Glob pattern for matching JSON with Comments files */
 export const jsoncGlob = '**/*.jsonc'
 
+/** Glob patterns for matching TypeScript configuration files */
 export const tsConfigGlob = [
   '**/tsconfig.json',
   '**/tsconfig.*.json',
 ]
 
+/** Glob pattern for matching package.json files */
 export const packageJsonGlob = '**/package.json'
 
+/**
+ * Common glob patterns for files and directories that should be ignored by ESLint.
+ * Includes node_modules, build outputs, lock files, temporary files, and tool-specific caches.
+ */
 export const ignoresGlob = [
   '**/node_modules/**',
   '**/dist/**',

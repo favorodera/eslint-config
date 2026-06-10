@@ -4,6 +4,7 @@ import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
+/** Options for configuring Stylistic formatting rules. */
 export type StylisticConfigOptions = SharedOptions & {
   settings?: Omit<StylisticCustomizeOptions, 'pluginName'>
 }
@@ -19,6 +20,12 @@ const stylisticDefaults: StylisticConfigOptions = {
   files: [jsGlob, tsGlob, vueGlob],
 }
 
+/**
+ * Constructs the flat config items for Stylistic linting, applying customized
+ * formatting settings such as quotes, indentation, and spacing.
+ * @param options Stylistic configuration options.
+ * @returns Promise resolving to stylistic ESLint config items.
+ */
 export async function stylistic(options: StylisticConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, stylisticDefaults)
 

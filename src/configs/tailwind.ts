@@ -5,6 +5,7 @@ import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
+/** Options for configuring Tailwind CSS linting rules. */
 export type TailwindConfigOptions = SharedOptions & {
   settings?: {
     /**
@@ -59,9 +60,10 @@ const tailwindDefaults: TailwindConfigOptions = {
 }
 
 /**
- * Tailwind linting via `eslint-plugin-better-tailwindcss`.
- * @param options - Tailwind configuration options
- * @returns Promise resolving to Tailwind ESLint config items
+ * Constructs the flat config items for Tailwind CSS linting, providing custom settings
+ * to parse and lint utility classes, and enforcing consistent ordering.
+ * @param options Tailwind configuration options.
+ * @returns Promise resolving to Tailwind ESLint config items.
  */
 export async function tailwind(options: TailwindConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, tailwindDefaults)

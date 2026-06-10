@@ -5,6 +5,7 @@ import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
 import { extractRules, importModule } from '../utils'
 
+/** Options for configuring Markdown linting rules. */
 export type MarkdownConfigOptions = SharedOptions & {
   /** github flavoured markdown */
   gfm?: boolean
@@ -15,6 +16,12 @@ const markdownDefaults: MarkdownConfigOptions = {
   gfm: true,
 }
 
+/**
+ * Constructs the flat config items for Markdown linting, extracting and linting
+ * embedded code blocks within the document according to specified rules.
+ * @param options Markdown configuration options.
+ * @returns Promise resolving to Markdown ESLint config items.
+ */
 export async function markdown(options: MarkdownConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, markdownDefaults)
 

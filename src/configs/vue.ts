@@ -6,6 +6,7 @@ import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor from 'eslint-processor-vue-blocks'
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 
+/** Options for configuring Vue single-file component linting rules. */
 export type VueConfigOptions = SharedOptions & {
   sfcBlocks?: boolean | VueBlocksOptions
 }
@@ -19,6 +20,12 @@ const vueDefaults: VueConfigOptions = {
   sfcBlocks: sfcBlocksDefaults,
 }
 
+/**
+ * Constructs the flat config items for Vue linting, setting up the custom template parser,
+ * Vue block processors, and rules to enforce recommended component syntax.
+ * @param options Vue configuration options.
+ * @returns Promise resolving to Vue ESLint config items.
+ */
 export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, vueDefaults)
   const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)

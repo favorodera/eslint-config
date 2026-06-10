@@ -4,6 +4,7 @@ import globals from 'globals'
 import { importModule } from '../utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 
+/** Options for configuring JavaScript linting rules. */
 export type JavascriptConfigOptions = SharedOptions
 
 const javascriptDefaults: JavascriptConfigOptions = {
@@ -11,9 +12,10 @@ const javascriptDefaults: JavascriptConfigOptions = {
 }
 
 /**
- * Javascript linting via `eslint`
- * @param options - Javascript configuration options
- * @returns Promise resolving to javascript ESLint config items
+ * Constructs the flat config items for core JavaScript linting, setting up the required
+ * language options, globals, and recommended baseline rules.
+ * @param options Javascript configuration options.
+ * @returns Promise resolving to javascript ESLint config items.
  */
 export async function javascript(options: JavascriptConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, javascriptDefaults)
