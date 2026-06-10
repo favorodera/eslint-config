@@ -31,6 +31,9 @@ export const tsConfigGlob = [
   '**/tsconfig.*.json',
 ]
 
+/** Glob pattern for matching YAML files */
+export const yamlGlob = '**/*.{yml,yaml}'
+
 /** Glob pattern for matching package.json files */
 export const packageJsonGlob = '**/package.json'
 

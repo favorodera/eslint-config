@@ -15,6 +15,7 @@ import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 import { typescript, type TypescriptConfigOptions } from './configs/typescript'
 import { unicorn, type UnicornConfigOptions } from './configs/unicorn'
 import { vue, type VueConfigOptions } from './configs/vue'
+import { yaml, type YAMLConfigOptions } from './configs/yaml'
 import { resolveOptions } from './utils'
 
 /**
@@ -64,6 +65,9 @@ export interface ConfigOptions {
 
   /** Vue single-file components linting (via `eslint-plugin-vue`). */
   vue?: boolean | VueConfigOptions
+
+  /** YAML files linting and sorting (via `eslint-plugin-yml`). */
+  yaml?: boolean | YAMLConfigOptions
 }
 
 /**
@@ -91,6 +95,7 @@ export function factory(options: ConfigOptions = {}) {
     typescript,
     unicorn,
     vue,
+    yaml,
   }
 
   // Iterate over each configuration factory function

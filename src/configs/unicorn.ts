@@ -22,7 +22,7 @@ export async function unicorn(options: UnicornConfigOptions): Promise<Array<Type
 
   const unicornPlugin = await importModule(import('eslint-plugin-unicorn'))
 
-  const baseRules = unicornPlugin.configs['unopinionated']?.rules || {}
+  const baseRules = unicornPlugin.configs.unopinionated?.rules || {}
 
   return [
     {
