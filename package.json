@@ -2,11 +2,12 @@
   "name": "@favorodera/eslint-config",
   "type": "module",
   "version": "0.0.2",
+  "private": false,
+  "packageManager": "pnpm@11.2.2",
   "description": "A starter for creating a TypeScript package.",
   "author": "Favour Emeka <favorodera@gmail.com>",
-  "funding": "https://github.com/sponsors/favorodera",
   "license": "MIT",
-  "private": false,
+  "funding": "https://github.com/sponsors/favorodera",
   "homepage": "https://github.com/favorodera/eslint-config#readme",
   "repository": {
     "type": "git",
@@ -18,6 +19,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "nuxt",
+    "vue",
+    "eslint",
+    "typescript",
+    "stylistic",
+    "tooling",
+    "linter"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -31,6 +41,10 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=11.0.0"
+  },
   "scripts": {
     "script:generate-rules-types": "tsx scripts/generate-rules-types.ts",
     "dev:inspector": "pnpm dlx @eslint/config-inspector@latest",
@@ -43,35 +57,9 @@
     "lint": "eslint . --fix",
     "ready": "pnpm install && pnpm build && pnpm lint && pnpm typecheck && pnpm test"
   },
-  "devDependencies": {
-    "@types/node": "^25.6.2",
-    "@typescript/native-preview": "7.0.0-dev.20260509.2",
-    "concurrently": "^10.0.3",
-    "eslint": "^10.4.1",
-    "eslint-typegen": "^2.3.1",
-    "relizy": "^1.4.6",
-    "tsdown": "^0.22.0",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
-  },
   "peerDependencies": {
     "eslint": "^10.0.0"
   },
-  "engines": {
-    "node": ">=22.0.0",
-    "pnpm": ">=11.0.0"
-  },
-  "packageManager": "pnpm@11.2.2",
-  "keywords": [
-    "nuxt",
-    "vue",
-    "eslint",
-    "typescript",
-    "stylistic",
-    "tooling",
-    "linter"
-  ],
   "dependencies": {
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.2",
@@ -88,5 +76,17 @@
     "globals": "^17.6.0",
     "typescript-eslint": "^8.60.1",
     "vue-eslint-parser": "^10.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "concurrently": "^10.0.3",
+    "eslint": "^10.4.1",
+    "eslint-typegen": "^2.3.1",
+    "relizy": "^1.4.6",
+    "tsdown": "^0.22.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }
