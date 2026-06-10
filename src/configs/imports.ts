@@ -41,7 +41,7 @@ export async function imports(options: ImportsConfigOptions): Promise<Array<Type
       rules: {
         ...renamePluginsInRules(baseRules, { 'import-lite': 'import' }),
 
-        'import/consistent-type-specifier-style': ['error', 'top-level'],
+        'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         'import/first': 'error',
         'import/no-duplicates': 'error',
         'import/no-mutable-exports': 'error',
