@@ -8,6 +8,7 @@ import { javascript, type JavascriptConfigOptions } from './configs/javascript'
 import { jsdoc, type JSDocConfigOptions } from './configs/jsdoc'
 import { jsonc, type JSONCConfigOptions } from './configs/jsonc'
 import { markdown, type MarkdownConfigOptions } from './configs/markdown'
+import { node, type NodeConfigOptions } from './configs/node'
 import { perfectionist, type PerfectionistConfigOptions } from './configs/perfectionist'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
@@ -42,6 +43,9 @@ export interface ConfigOptions {
 
   /** Markdown files and embedded code blocks linting (via `@eslint/markdown`). */
   markdown?: boolean | MarkdownConfigOptions
+
+  /** Node.js specific linting rules (via `eslint-plugin-n`). */
+  node?: boolean | NodeConfigOptions
 
   /** Perfectionist rules for sorting objects, imports, classes, etc (via `eslint-plugin-perfectionist`). */
   perfectionist?: boolean | PerfectionistConfigOptions
@@ -80,6 +84,7 @@ export function factory(options: ConfigOptions = {}) {
     jsdoc,
     jsonc,
     markdown,
+    node,
     perfectionist,
     stylistic,
     tailwind,
