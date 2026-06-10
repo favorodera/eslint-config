@@ -7,7 +7,7 @@ export default factory({
     ignores: ['src/types/rules.d.ts'],
   })
   .overrides({
-    'favorodera/typescript': {
+    'favorodera/typescript/rules': {
       rules: {
         'ts/no-explicit-any': 'off',
       },

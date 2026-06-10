@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import { vueGlob } from '../globs'
-import { importModule, resolveOptions } from '../utils'
+import { extractRules, importModule, resolveOptions } from '../utils'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor from 'eslint-processor-vue-blocks'
@@ -19,7 +19,7 @@ const vueDefaults: VueConfigOptions = {
   sfcBlocks: sfcBlocksDefaults,
 }
 
-export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, vueDefaults)
   const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)
 
@@ -29,20 +29,23 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
     importModule(import('typescript-eslint')),
   ])
 
-  const inheritedRules = Object.assign(
-    {},
-    ...[
-      ...vuePlugin.configs['flat/essential'],
-      ...vuePlugin.configs['flat/strongly-recommended'],
-      ...vuePlugin.configs['flat/recommended'],
-    ].map(config => config?.rules || {}),
+  const baseRules = extractRules(
+    vuePlugin.configs['flat/essential'],
+    vuePlugin.configs['flat/strongly-recommended'],
+    vuePlugin.configs['flat/recommended'],
   )
+
+  const processor = sfcBlocks === false
+    ? vuePlugin.processors['.vue']
+    : mergeProcessors([
+        vuePlugin.processors['.vue'],
+        vueBlocksProcessor(sfcBlocks),
+      ])
 
   return [
     {
-      name: 'favorodera/vue',
+      name: 'favorodera/vue/setup',
       plugins: { vue: vuePlugin },
-      files: resolved.files,
       languageOptions: {
         globals: {
           computed: 'readonly',
@@ -60,6 +63,12 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
           watch: 'readonly',
           watchEffect: 'readonly',
         },
+      },
+    },
+    {
+      name: 'favorodera/vue/rules',
+      files: resolved.files,
+      languageOptions: {
         parser: vueParser,
         parserOptions: {
           parser: tsEsLint.parser,
@@ -67,16 +76,9 @@ export async function vue(options: VueConfigOptions): Promise<TypedFlatConfigIte
           sourceType: 'module',
         },
       },
-
-      processor: sfcBlocks === false
-        ? vuePlugin.processors['.vue']
-        : mergeProcessors([
-            vuePlugin.processors['.vue'],
-            vueBlocksProcessor(sfcBlocks),
-          ]),
-
+      processor,
       rules: {
-        ...inheritedRules,
+        ...baseRules,
 
         'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],

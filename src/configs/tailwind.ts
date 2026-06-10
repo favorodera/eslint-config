@@ -63,26 +63,29 @@ const tailwindDefaults: TailwindConfigOptions = {
  * @param options - Tailwind configuration options
  * @returns Promise resolving to Tailwind ESLint config items
  */
-export async function tailwind(options: TailwindConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function tailwind(options: TailwindConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, tailwindDefaults)
 
   const tailwindPlugin = await importModule(import('eslint-plugin-better-tailwindcss'))
 
-  const inheritedRules = {
+  const baseRules = {
     ...tailwindPlugin.configs['recommended-error'].rules,
     ...tailwindPlugin.configs['stylistic-error'].rules,
   }
 
   return [
     {
-      name: 'favorodera/tailwind',
-      files: resolved.files,
+      name: 'favorodera/tailwind/setup',
       plugins: { tailwind: tailwindPlugin },
       settings: {
         tailwindcss: resolved.settings,
       },
+    },
+    {
+      name: 'favorodera/tailwind/rules',
+      files: resolved.files,
       rules: {
-        ...renamePluginsInRules(inheritedRules, { 'better-tailwindcss': 'tailwind' }),
+        ...renamePluginsInRules(baseRules, { 'better-tailwindcss': 'tailwind' }),
 
         'tailwind/no-unregistered-classes': 'off',
         'tailwind/enforce-consistent-line-wrapping': ['error', { group: 'emptyLine' }],

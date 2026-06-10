@@ -10,7 +10,7 @@ const importsDefaults: ImportsConfigOptions = {
   files: [jsGlob, tsGlob, vueGlob],
 }
 
-export async function imports(options: ImportsConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function imports(options: ImportsConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, importsDefaults)
 
   const [importPlugin, unusedImportsPlugin] = await Promise.all([
@@ -18,18 +18,21 @@ export async function imports(options: ImportsConfigOptions): Promise<TypedFlatC
     importModule(import('eslint-plugin-unused-imports')),
   ])
 
-  const inheritedRules = importPlugin.configs.recommended?.rules || {}
+  const baseRules = importPlugin.configs.recommended?.rules || {}
 
   return [
     {
-      name: 'favorodera/imports',
-      files: resolved.files,
+      name: 'favorodera/imports/setup',
       plugins: {
         'import': importPlugin,
         'unused-imports': unusedImportsPlugin,
       },
+    },
+    {
+      name: 'favorodera/imports/rules',
+      files: resolved.files,
       rules: {
-        ...renamePluginsInRules(inheritedRules, { 'import-lite': 'import' }),
+        ...renamePluginsInRules(baseRules, { 'import-lite': 'import' }),
 
         'import/consistent-type-specifier-style': ['error', 'top-level'],
         'import/first': 'error',

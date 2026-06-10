@@ -1,22 +1,26 @@
-/** Glob pattern for JavaScript linting */
 export const jsGlob = '**/*.{js,cjs,mjs}'
 
-/** Glob pattern for TypeScript linting */
 export const tsGlob = '**/*.{ts,cts,mts}'
 
-/** Glob pattern for Vue linting */
 export const vueGlob = '**/*.vue'
 
-/** Glob pattern for Markdown linting */
 export const mdGlob = '**/*.md'
 
-/** Glob pattern for scripts */
-export const scriptsGlob = '**/*.?([cm])[jt]s'
+// virtual files extracted from markdown by the processor
+export const mdInMdGlob = '**/*.md/*.md'
+export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue}'
 
-/**
- * Default glob patterns for files and directories to ignore
- * Includes common build outputs, dependencies, caches, and temporary files
- */
+export const jsonGlob = '**/*.json'
+export const json5Glob = '**/*.json5'
+export const jsoncGlob = '**/*.jsonc'
+
+export const tsConfigGlob = [
+  '**/tsconfig.json',
+  '**/tsconfig.*.json',
+]
+
+export const packageJsonGlob = '**/package.json'
+
 export const ignoresGlob = [
   '**/node_modules/**',
   '**/dist/**',

@@ -19,6 +19,8 @@ import type { TypescriptConfigOptions } from './configs/typescript'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
 import { resolveOptions } from './utils'
+import { jsonc } from './configs/jsonc'
+import type { JSONCConfigOptions } from './configs/jsonc'
 
 
 /** Configuration options for the ESLint flat config */
@@ -69,6 +71,12 @@ export interface ConfigOptions {
    * @default true
    */
   javascript?: boolean | JavascriptConfigOptions
+
+  /**
+   * Enable JSONC/JSON/JSON5 linting with optional configuration
+   * @default true
+   */
+  jsonc?: boolean | JSONCConfigOptions
 }
 
 /**
@@ -77,7 +85,7 @@ export interface ConfigOptions {
  * @returns Flat ESLint config composer
  */
 export function factory(options: ConfigOptions = {}) {
-  const configs: Awaitable<TypedFlatConfigItem[]>[] = []
+  const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = []
 
   configs.push(ignores(options.ignores))
 
@@ -89,6 +97,7 @@ export function factory(options: ConfigOptions = {}) {
     imports,
     markdown,
     javascript,
+    jsonc,
   }
 
   for (const [key, configFunction] of Object.entries(configFunctions)) {

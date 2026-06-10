@@ -1,9 +1,9 @@
 import { defu } from 'defu'
 import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
-import { mdGlob } from '../globs'
+import { codeInMdGlob, mdGlob, mdInMdGlob } from '../globs'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import { importModule } from '../utils'
+import { extractRules, importModule } from '../utils'
 
 export type MarkdownConfigOptions = SharedOptions & {
   /** github flavoured markdown */
@@ -15,35 +15,75 @@ const markdownDefaults: MarkdownConfigOptions = {
   gfm: true,
 }
 
-export async function markdown(options: MarkdownConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function markdown(options: MarkdownConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, markdownDefaults)
 
   const markdownPlugin = await importModule(import('@eslint/markdown'))
 
-  const inheritedRules = Object.assign(
-    {},
-    ...[
-      ...markdownPlugin.configs.recommended,
-    ].map(config => config?.rules || {}),
-  )
+  const baseRules = extractRules(markdownPlugin.configs.recommended)
 
   return [
     {
-      name: 'favorodera/markdown',
-      files: resolved.files,
+      name: 'favorodera/markdown/setup',
       plugins: { md: markdownPlugin },
+    },
+    {
+      name: 'favorodera/markdown/rules',
+      files: resolved.files,
+      language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
+      ignores: [mdInMdGlob],
       processor: mergeProcessors([
         markdownPlugin.processors?.markdown,
         processorPassThrough,
       ]),
-      language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       rules: {
-        ...renamePluginsInRules(inheritedRules, { markdown: 'md' }),
+        ...renamePluginsInRules(baseRules, { markdown: 'md' }),
 
         'md/fenced-code-language': 'off',
         'md/no-missing-label-refs': 'off',
 
         ...resolved.overrides,
+      },
+    },
+    {
+      name: 'favorodera/markdown/disables/code',
+      files: [codeInMdGlob],
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: { impliedStrict: true },
+        },
+      },
+      rules: {
+        'no-alert': 'off',
+        'no-console': 'off',
+        'no-labels': 'off',
+        'no-lone-blocks': 'off',
+        'no-restricted-syntax': 'off',
+        'no-undef': 'off',
+        'no-unused-expressions': 'off',
+        'no-unused-labels': 'off',
+
+        'no-unused-vars': 'off',
+
+        'node/prefer-global/process': 'off',
+
+        'style/comma-dangle': 'off',
+        'style/eol-last': 'off',
+        'style/padding-line-between-statements': 'off',
+
+        'ts/consistent-type-imports': 'off',
+        'ts/explicit-function-return-type': 'off',
+        'ts/no-namespace': 'off',
+        'ts/no-redeclare': 'off',
+        'ts/no-require-imports': 'off',
+        'ts/no-unused-expressions': 'off',
+        'ts/no-unused-vars': 'off',
+        'ts/no-use-before-define': 'off',
+
+        'unicode-bom': 'off',
+
+        'unused-imports/no-unused-imports': 'off',
+        'unused-imports/no-unused-vars': 'off',
       },
     },
   ]

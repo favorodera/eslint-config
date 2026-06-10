@@ -34,3 +34,13 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
 
   return defu(value === true ? {} : value, defaults) as TOptions
 }
+
+
+export function extractRules(...configArrays: Array<Array<{ rules?: Record<string, unknown> }>>): Record<string, unknown> {
+  return Object.assign(
+    {},
+    ...configArrays
+      .flat()
+      .map(config => config?.rules || {}),
+  )
+}

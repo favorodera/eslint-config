@@ -19,7 +19,7 @@ const stylisticDefaults: StylisticConfigOptions = {
   files: [jsGlob, tsGlob, vueGlob],
 }
 
-export async function stylistic(options: StylisticConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function stylistic(options: StylisticConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, stylisticDefaults)
 
   const stylePlugin = await importModule(import('@stylistic/eslint-plugin'))
@@ -29,15 +29,18 @@ export async function stylistic(options: StylisticConfigOptions): Promise<TypedF
     ...resolved.settings,
   })
 
-  const inheritedRules = config?.rules || {}
+  const baseRules = config?.rules || {}
 
   return [
     {
-      ...config,
-      name: 'favorodera/stylistic',
+      name: 'favorodera/stylistic/setup',
+      plugins: { style: stylePlugin },
+    },
+    {
+      name: 'favorodera/stylistic/rules',
       files: resolved.files,
       rules: {
-        ...inheritedRules,
+        ...baseRules,
 
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         'style/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 2, maxBOF: 0 }],

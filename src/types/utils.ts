@@ -31,5 +31,5 @@ export interface SharedOptions {
   /** Override rules configuration */
   overrides?: TypedFlatConfigItem['rules']
   /** File glob patterns to apply configuration to */
-  files?: string[]
+  files?: Array<string>
 }

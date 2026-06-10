@@ -15,17 +15,16 @@ const javascriptDefaults: JavascriptConfigOptions = {
  * @param options - Javascript configuration options
  * @returns Promise resolving to javascript ESLint config items
  */
-export async function javascript(options: JavascriptConfigOptions): Promise<TypedFlatConfigItem[]> {
+export async function javascript(options: JavascriptConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, javascriptDefaults)
 
   const jsPlugin = await importModule(import('@eslint/js'))
 
-  const inheritedRules = jsPlugin.configs.recommended.rules
+  const baseRules = jsPlugin.configs.recommended.rules
 
   return [
     {
-      name: 'favorodera/javascript',
-      files: resolved.files,
+      name: 'favorodera/javascript/setup',
       languageOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
@@ -41,8 +40,12 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Type
       linterOptions: {
         reportUnusedDisableDirectives: true,
       },
+    },
+    {
+      name: 'favorodera/javascript/rules',
+      files: resolved.files,
       rules: {
-        ...inheritedRules,
+        ...baseRules,
 
         'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
         'array-callback-return': 'error',

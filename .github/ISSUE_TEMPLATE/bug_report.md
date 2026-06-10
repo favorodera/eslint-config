@@ -31,8 +31,8 @@ What actually happened instead.
 - [ ] Link to a minimal reproduction (StackBlitz, CodeSandbox, GitHub repo)
 - [ ] Code snippet below
 
-```vue
-<!-- Your code here -->
+```ts
+// Your code here
 ```
 
 ## Environment

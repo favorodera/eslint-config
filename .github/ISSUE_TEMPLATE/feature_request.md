@@ -24,8 +24,8 @@ A clear and concise description of any alternative solutions or features you've 
 
 Describe the use case for this feature. How would it benefit you and others?
 
-```vue
-<!-- Optional: Example code showing how the feature might be used -->
+```ts
+// Optional: Example code showing how the feature might be used
 ```
 
 ## Additional Context

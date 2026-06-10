@@ -6,7 +6,7 @@ import type { TypedFlatConfigItem } from '../types/utils'
  * Can be a list of glob patterns or a function that receives default patterns.
  */
 // eslint-disable-next-line no-unused-vars
-export type IgnoresPatterns = string[] | ((defaults: string[]) => string[])
+export type IgnoresPatterns = Array<string> | ((defaults: Array<string>) => Array<string>)
 
 const defaultPatterns = ignoresGlob
 
@@ -15,7 +15,7 @@ const defaultPatterns = ignoresGlob
  * @param patterns - Additional ignore patterns or a function to modify the defaults.
  * @returns An array containing the ignore flat config item.
  */
-export function ignores(patterns: IgnoresPatterns = []): TypedFlatConfigItem[] {
+export function ignores(patterns: IgnoresPatterns = []): Array<TypedFlatConfigItem> {
   const resolved = typeof patterns === 'function'
     ? patterns(defaultPatterns)
     : [...defaultPatterns, ...patterns]
