@@ -94,7 +94,6 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
         ...renamePluginsInRules(baseRules, { 'better-tailwindcss': 'tailwind' }),
 
         'tailwind/enforce-consistent-line-wrapping': ['error', { group: 'emptyLine' }],
-        'tailwind/no-unregistered-classes': 'off',
 
         ...resolved.overrides,
       },

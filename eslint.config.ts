@@ -1,8 +1,6 @@
 import { factory } from './src'
 
-export default factory({
-  tailwind: false,
-})
+export default factory()
   .append({
     ignores: ['src/types/rules.d.ts'],
   })

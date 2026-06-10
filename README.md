@@ -32,6 +32,7 @@ The following configurations are bundled and enabled by default (they can be ind
 - **Vue** — Single-file component support (`eslint-plugin-vue`, `vue-eslint-parser`)
 - **Stylistic** — Formatting rules (`@stylistic/eslint-plugin`)
 - **Tailwind CSS** — Utility class linting and sorting (`eslint-plugin-better-tailwindcss`)
+- **Test** — Test and Vitest specific linting (`@vitest/eslint-plugin`)
 - **Imports** — Auto-sorting and unused imports removal (`eslint-plugin-import-lite`, `eslint-plugin-unused-imports`)
 - **Markdown** — Linting for markdown files and embedded code blocks (`@eslint/markdown`)
 - **JSON/JSONC/JSON5** — Formatting and sorting for JSON files like `package.json` (`eslint-plugin-jsonc`)

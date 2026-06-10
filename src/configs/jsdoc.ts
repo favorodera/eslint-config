@@ -33,7 +33,7 @@ export async function jsdoc(options: JSDocConfigOptions): Promise<Array<TypedFla
     },
     {
       files: resolved.files,
-      name: 'favorodera/tailwind/rules',
+      name: 'favorodera/jsdoc/rules',
       rules: {
         ...baseRules,
 

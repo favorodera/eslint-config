@@ -16,6 +16,15 @@ export const mdInMdGlob = '**/*.md/*.md'
 /** Glob pattern for matching code blocks embedded in Markdown files */
 export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue}'
 
+/** Glob pattern for matching scripts files */
+export const scriptsGlob = '**/*.{js,cjs,mjs,ts,cts,mts}'
+
+/** Glob pattern for matching test files */
+export const testsGlob = [
+  '**/*.{tests,specs,benchmark,bench}.{js,cjs,mjs,ts,cts,mts}',
+  '**/__tests__/**/*.{js,cjs,mjs,ts,cts,mts}',
+]
+
 /** Glob pattern for matching JSON files */
 export const jsonGlob = '**/*.json'
 

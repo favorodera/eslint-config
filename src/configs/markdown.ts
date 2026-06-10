@@ -63,7 +63,7 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
           ecmaFeatures: { impliedStrict: true },
         },
       },
-      name: 'favorodera/markdown/disables/code',
+      name: 'favorodera/markdown/code-in-md/disables',
       rules: {
         'no-alert': 'off',
         'no-console': 'off',

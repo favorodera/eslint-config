@@ -52,6 +52,7 @@
     "build": "tsdown",
     "dev": "pnpm prebuild && concurrently \"tsdown --watch\" \"pnpm dev:inspector\"",
     "test": "vitest run",
+    "test:watch": "vitest --watch --ui",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",
@@ -64,6 +65,7 @@
     "@eslint/js": "catalog:prod",
     "@eslint/markdown": "catalog:prod",
     "@stylistic/eslint-plugin": "catalog:prod",
+    "@vitest/eslint-plugin": "catalog:prod",
     "defu": "catalog:prod",
     "eslint-flat-config-utils": "catalog:prod",
     "eslint-merge-processors": "catalog:prod",
@@ -87,6 +89,7 @@
   "devDependencies": {
     "@types/node": "catalog:dev",
     "@typescript/native-preview": "catalog:dev",
+    "@vitest/ui": "catalog:dev",
     "concurrently": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-typegen": "catalog:dev",

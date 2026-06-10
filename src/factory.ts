@@ -13,6 +13,7 @@ import { perfectionist, type PerfectionistConfigOptions } from './configs/perfec
 import { pnpm } from './configs/pnpm'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
+import { test, type TestConfigOptions } from './configs/test'
 import { typescript, type TypescriptConfigOptions } from './configs/typescript'
 import { unicorn, type UnicornConfigOptions } from './configs/unicorn'
 import { vue, type VueConfigOptions } from './configs/vue'
@@ -61,6 +62,9 @@ export interface ConfigOptions {
   /** Tailwind CSS class sorting and best practices (via `eslint-plugin-better-tailwindcss`). */
   tailwind?: boolean | TailwindConfigOptions
 
+  /** Test and Vitest specific linting rules (via `@vitest/eslint-plugin`). */
+  test?: boolean | TestConfigOptions
+
   /** TypeScript language linting (via `typescript-eslint`). */
   typescript?: boolean | TypescriptConfigOptions
 
@@ -97,6 +101,7 @@ export function factory(options: ConfigOptions = {}) {
     pnpm,
     stylistic,
     tailwind,
+    test,
     typescript,
     unicorn,
     vue,
@@ -125,6 +130,7 @@ export function factory(options: ConfigOptions = {}) {
       'import-lite': 'import',
       'markdown': 'md',
       'n': 'node',
+      'vitest': 'test',
       'yml': 'yaml',
     })
 
