@@ -197,14 +197,14 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
           },
           {
             order: [
-              /* Projects */
+              // Projects
               'incremental',
               'composite',
               'tsBuildInfoFile',
               'disableSourceOfProjectReferenceRedirect',
               'disableSolutionSearching',
               'disableReferencedProjectLoad',
-              /* Language and Environment */
+              // Language and Environment
               'target',
               'jsx',
               'jsxFactory',
@@ -218,7 +218,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
               'emitDecoratorMetadata',
               'experimentalDecorators',
               'libReplacement',
-              /* Modules */
+              // Modules
               'baseUrl',
               'rootDir',
               'rootDirs',
@@ -236,11 +236,11 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
               'allowArbitraryExtensions',
               'allowImportingTsExtensions',
               'allowUmdGlobalAccess',
-              /* JavaScript Support */
+              // JavaScript Support
               'allowJs',
               'checkJs',
               'maxNodeModuleJsDepth',
-              /* Type Checking */
+              // Type Checking
               'strict',
               'strictBindCallApply',
               'strictFunctionTypes',
@@ -260,7 +260,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
               'noUnusedLocals',
               'noUnusedParameters',
               'useUnknownInCatchVariables',
-              /* Emit */
+              // Emit
               'declaration',
               'declarationDir',
               'declarationMap',
@@ -284,7 +284,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
               'sourceMap',
               'sourceRoot',
               'stripInternal',
-              /* Interop Constraints */
+              // Interop Constraints
               'allowSyntheticDefaultImports',
               'esModuleInterop',
               'forceConsistentCasingInFileNames',
@@ -293,7 +293,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
               'preserveSymlinks',
               'verbatimModuleSyntax',
               'erasableSyntaxOnly',
-              /* Completeness */
+              // Completeness
               'skipDefaultLibCheck',
               'skipLibCheck',
             ],

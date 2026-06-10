@@ -10,6 +10,7 @@ import { jsonc, type JSONCConfigOptions } from './configs/jsonc'
 import { markdown, type MarkdownConfigOptions } from './configs/markdown'
 import { node, type NodeConfigOptions } from './configs/node'
 import { perfectionist, type PerfectionistConfigOptions } from './configs/perfectionist'
+import { pnpm } from './configs/pnpm'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 import { typescript, type TypescriptConfigOptions } from './configs/typescript'
@@ -51,6 +52,9 @@ export interface ConfigOptions {
   /** Perfectionist rules for sorting objects, imports, classes, etc (via `eslint-plugin-perfectionist`). */
   perfectionist?: boolean | PerfectionistConfigOptions
 
+  /** PNPM workspaces rules (via `eslint-plugin-pnpm`). */
+  pnpm?: boolean
+
   /** Stylistic code formatting rules (via `@stylistic/eslint-plugin`). */
   stylistic?: boolean | StylisticConfigOptions
 
@@ -90,6 +94,7 @@ export function factory(options: ConfigOptions = {}) {
     markdown,
     node,
     perfectionist,
+    pnpm,
     stylistic,
     tailwind,
     typescript,

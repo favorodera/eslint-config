@@ -77,8 +77,6 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
           {
             order: [
               // Settings
-              // @keep-sorted
-              
               'cacheDir',
               'catalogMode',
               'cleanupUnusedCatalogs',
@@ -129,8 +127,6 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
               'catalogs',
 
               // Other
-              // @keep-sorted
-              
               'allowedDeprecatedVersions',
               'allowNonAppliedPatches',
               'configDependencies',

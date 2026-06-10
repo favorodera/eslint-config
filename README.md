@@ -79,7 +79,7 @@ bun add -D eslint @favorodera/eslint-config
 
 ### Configure
 
-Create an `eslint.config.mjs` (or `eslint.config.ts`) file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something:
+Create an `eslint.config.ts` file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something:
 
 ```javascript
 import { factory } from '@favorodera/eslint-config'
