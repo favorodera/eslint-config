@@ -1,8 +1,8 @@
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
+import { renamePluginsInRules } from 'eslint-flat-config-utils'
 import { tsGlob } from '../globs'
 import { extractRules, importModule } from '../utils'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
 /** Options for configuring TypeScript linting rules. */
 export type TypescriptConfigOptions = SharedOptions
@@ -33,18 +33,18 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Arra
       plugins: { ts: tsEsLint.plugin },
     },
     {
-      name: 'favorodera/typescript/rules',
       files: resolved.files,
       languageOptions: {
         parser: tsEsLint.parser,
         parserOptions: { sourceType: 'module' },
       },
+      name: 'favorodera/typescript/rules',
       rules: {
         ...renamePluginsInRules(baseRules, { '@typescript-eslint': 'ts' }),
 
+        'ts/array-type': ['error', { default: 'generic', readonly: 'generic' }],
         'ts/consistent-type-imports': ['error', { prefer: 'type-imports' }],
         'ts/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
-        'ts/array-type': ['error', { default: 'generic', readonly: 'generic' }],
 
         ...resolved.overrides,
       },

@@ -1,36 +1,50 @@
-import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { Awaitable } from 'eslint-flat-config-utils'
-import { vue, type VueConfigOptions } from './configs/vue'
+import type { ConfigNames } from './types/rules'
+import type { TypedFlatConfigItem } from './types/utils'
+import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { imports, type ImportsConfigOptions } from './configs/imports'
 import { javascript, type JavascriptConfigOptions } from './configs/javascript'
+import { jsdoc, type JSDocConfigOptions } from './configs/jsdoc'
+import { jsonc, type JSONCConfigOptions } from './configs/jsonc'
 import { markdown, type MarkdownConfigOptions } from './configs/markdown'
+import { perfectionist, type PerfectionistConfigOptions } from './configs/perfectionist'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 import { typescript, type TypescriptConfigOptions } from './configs/typescript'
-import type { ConfigNames } from './types/rules'
-import type { TypedFlatConfigItem } from './types/utils'
+import { unicorn, type UnicornConfigOptions } from './configs/unicorn'
+import { vue, type VueConfigOptions } from './configs/vue'
 import { resolveOptions } from './utils'
-import { jsonc, type JSONCConfigOptions } from './configs/jsonc'
-import { jsdoc, type JSDocConfigOptions } from './configs/jsdoc'
 
 /**
  * Configuration options for the ESLint flat config.
  *
  * By default, all feature configurations are enabled (`true`).
  * You can disable any feature by setting it to `false`, or customize it by passing its options object.
- * 
+ *
  * Note: `ignores` is not a boolean toggle, but accepts patterns or a function.
  */
 export interface ConfigOptions {
-  /** Vue single-file components linting (via `eslint-plugin-vue`). */
-  vue?: boolean | VueConfigOptions
-
-  /** TypeScript language linting (via `typescript-eslint`). */
-  typescript?: boolean | TypescriptConfigOptions
-
   /** Glob patterns to exclude from linting. */
   ignores?: IgnoresPatterns
+
+  /** Imports sorting and unused imports cleanup (via `eslint-plugin-import-lite` and `eslint-plugin-unused-imports`). */
+  imports?: boolean | ImportsConfigOptions
+
+  /** Core JavaScript language rules (via `@eslint/js`). */
+  javascript?: boolean | JavascriptConfigOptions
+
+  /** JSDoc comments formatting and validation (via `eslint-plugin-jsdoc`). */
+  jsdoc?: boolean | JSDocConfigOptions
+
+  /** JSON, JSON5, and JSONC files linting and sorting (via `eslint-plugin-jsonc`). */
+  jsonc?: boolean | JSONCConfigOptions
+
+  /** Markdown files and embedded code blocks linting (via `@eslint/markdown`). */
+  markdown?: boolean | MarkdownConfigOptions
+
+  /** Perfectionist rules for sorting objects, imports, classes, etc (via `eslint-plugin-perfectionist`). */
+  perfectionist?: boolean | PerfectionistConfigOptions
 
   /** Stylistic code formatting rules (via `@stylistic/eslint-plugin`). */
   stylistic?: boolean | StylisticConfigOptions
@@ -38,20 +52,14 @@ export interface ConfigOptions {
   /** Tailwind CSS class sorting and best practices (via `eslint-plugin-better-tailwindcss`). */
   tailwind?: boolean | TailwindConfigOptions
 
-  /** Imports sorting and unused imports cleanup (via `eslint-plugin-import-lite` and `eslint-plugin-unused-imports`). */
-  imports?: boolean | ImportsConfigOptions
+  /** TypeScript language linting (via `typescript-eslint`). */
+  typescript?: boolean | TypescriptConfigOptions
 
-  /** Markdown files and embedded code blocks linting (via `@eslint/markdown`). */
-  markdown?: boolean | MarkdownConfigOptions
+  /** Unicorn rules for various code quality improvements (via `eslint-plugin-unicorn`). */
+  unicorn?: boolean | UnicornConfigOptions
 
-  /** Core JavaScript language rules (via `@eslint/js`). */
-  javascript?: boolean | JavascriptConfigOptions
-
-  /** JSON, JSON5, and JSONC files linting and sorting (via `eslint-plugin-jsonc`). */
-  jsonc?: boolean | JSONCConfigOptions
-
-  /** JSDoc comments formatting and validation (via `eslint-plugin-jsdoc`). */
-  jsdoc?: boolean | JSDocConfigOptions
+  /** Vue single-file components linting (via `eslint-plugin-vue`). */
+  vue?: boolean | VueConfigOptions
 }
 
 /**
@@ -62,22 +70,22 @@ export interface ConfigOptions {
  */
 export function factory(options: ConfigOptions = {}) {
   // Array to hold the promises of flat configuration items
-  const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = []
-
   // Always append the ignore patterns configuration first to apply it globally
-  configs.push(ignores(options.ignores))
+  const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
-    vue,
-    typescript,
+    imports,
+    javascript,
+    jsdoc,
+    jsonc,
+    markdown,
+    perfectionist,
     stylistic,
     tailwind,
-    imports,
-    markdown,
-    javascript,
-    jsonc,
-    jsdoc,
+    typescript,
+    unicorn,
+    vue,
   }
 
   // Iterate over each configuration factory function
@@ -97,10 +105,11 @@ export function factory(options: ConfigOptions = {}) {
   composer = composer
     .append(...configs)
     .renamePlugins({
-      'better-tailwindcss': 'tailwind',
       '@typescript-eslint': 'ts',
-      'markdown': 'md',
+      'better-tailwindcss': 'tailwind',
       'import-lite': 'import',
+      'markdown': 'md',
+      'n': 'node',
     })
 
   return composer

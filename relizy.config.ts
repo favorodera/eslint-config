@@ -1,28 +1,28 @@
 import { defineConfig } from 'relizy'
 
 export default defineConfig({
-  projectName: '@favorodera/eslint-config',
   excludeAuthors: [
     'dependabot[bot]',
     'renovate[bot]',
     'github-actions[bot]',
   ],
+  projectName: '@favorodera/eslint-config',
   publish: {
-    packageManager: 'pnpm',
-    registry: 'https://registry.npmjs.org',
     access: 'public',
-    packages: ['*'],
     buildCmd: 'pnpm build',
+    packageManager: 'pnpm',
+    packages: ['*'],
+    registry: 'https://registry.npmjs.org',
   },
   types: {
-    feat: { title: 'Added', semver: 'patch' },
-    fix: { title: 'Fixed', semver: 'patch' },
-    docs: { title: 'Documentation', semver: 'patch' },
-    style: { title: 'Styling', semver: 'patch' },
-    refactor: { title: 'Refactors', semver: 'patch' },
-    chore: { title: 'Chores', semver: 'patch' },
-    test: false,
     build: false,
+    chore: { semver: 'patch', title: 'Chores' },
     ci: false,
+    docs: { semver: 'patch', title: 'Documentation' },
+    feat: { semver: 'patch', title: 'Added' },
+    fix: { semver: 'patch', title: 'Fixed' },
+    refactor: { semver: 'patch', title: 'Refactors' },
+    style: { semver: 'patch', title: 'Styling' },
+    test: false,
   },
 })

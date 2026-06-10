@@ -1,19 +1,17 @@
 import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
+import { renamePluginsInRules } from 'eslint-flat-config-utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
 
 /** Options for configuring Tailwind CSS linting rules. */
 export type TailwindConfigOptions = SharedOptions & {
+  /**
+   * Custom settings for the `eslint-plugin-better-tailwindcss` plugin.
+   * Configure project paths, detection features, and rule specifics.
+   */
   settings?: {
-    /**
-     * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
-     * Falls back to the default configuration when omitted.
-     */
-    entryPoint?: string
-
     /**
      * Working directory used to resolve Tailwind config files.
      * Useful for monorepos where linting runs from the root but each project has its own setup.
@@ -29,10 +27,10 @@ export type TailwindConfigOptions = SharedOptions & {
     detectComponentClasses?: boolean
 
     /**
-     * Font size of the `<html>` element in pixels (default 16px).
-     * Used to determine if arbitrary values can be replaced with predefined sizing scales.
+     * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
+     * Falls back to the default configuration when omitted.
      */
-    rootFontSize?: number
+    entryPoint?: string
 
     /**
      * How linting messages are displayed:
@@ -42,7 +40,13 @@ export type TailwindConfigOptions = SharedOptions & {
      *
      * Defaults to `"visual"`, or `"compact"` in CI environments.
      */
-    messageStyle?: 'visual' | 'compact' | 'raw'
+    messageStyle?: 'compact' | 'raw' | 'visual'
+
+    /**
+     * Font size of the `<html>` element in pixels (default 16px).
+     * Used to determine if arbitrary values can be replaced with predefined sizing scales.
+     */
+    rootFontSize?: number
 
     /**
      * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
@@ -84,13 +88,13 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
       },
     },
     {
-      name: 'favorodera/tailwind/rules',
       files: resolved.files,
+      name: 'favorodera/tailwind/rules',
       rules: {
         ...renamePluginsInRules(baseRules, { 'better-tailwindcss': 'tailwind' }),
 
-        'tailwind/no-unregistered-classes': 'off',
         'tailwind/enforce-consistent-line-wrapping': ['error', { group: 'emptyLine' }],
+        'tailwind/no-unregistered-classes': 'off',
 
         ...resolved.overrides,
       },

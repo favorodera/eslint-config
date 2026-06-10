@@ -1,8 +1,8 @@
-import { defu } from 'defu'
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import { defu } from 'defu'
 import globals from 'globals'
-import { importModule } from '../utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
 /** Options for configuring JavaScript linting rules. */
 export type JavascriptConfigOptions = SharedOptions
@@ -26,10 +26,8 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
 
   return [
     {
-      name: 'favorodera/javascript/setup',
       languageOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module',
         globals: {
           ...globals.browser,
           ...globals.es2021,
@@ -38,14 +36,16 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
           navigator: 'readonly',
           window: 'readonly',
         },
+        sourceType: 'module',
       },
       linterOptions: {
         reportUnusedDisableDirectives: true,
       },
+      name: 'favorodera/javascript/setup',
     },
     {
-      name: 'favorodera/javascript/rules',
       files: resolved.files,
+      name: 'favorodera/javascript/rules',
       rules: {
         ...baseRules,
 

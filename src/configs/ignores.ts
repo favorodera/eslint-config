@@ -1,12 +1,12 @@
-import { ignoresGlob } from '../globs'
 import type { TypedFlatConfigItem } from '../types/utils'
+import { ignoresGlob } from '../globs'
 
 /**
  * Patterns used to ignore files and directories from ESLint scanning.
  * Can be a list of glob patterns or a function that receives default patterns.
  */
-// eslint-disable-next-line no-unused-vars
-export type IgnoresPatterns = Array<string> | ((defaults: Array<string>) => Array<string>)
+ 
+export type IgnoresPatterns = ((defaults: Array<string>) => Array<string>) | Array<string>
 
 const defaultPatterns = ignoresGlob
 
@@ -22,8 +22,8 @@ export function ignores(patterns: IgnoresPatterns = []): Array<TypedFlatConfigIt
 
   return [
     {
-      name: 'favorodera/ignores',
       ignores: resolved,
+      name: 'favorodera/ignores',
     },
   ]
 }

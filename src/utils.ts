@@ -1,5 +1,20 @@
-import { defu } from 'defu'
 import type { Awaitable } from 'eslint-flat-config-utils'
+import { defu } from 'defu'
+
+/**
+ * Extracts and merges the rules from multiple ESLint configuration arrays.
+ * @param configArrays Rest parameter representing multiple arrays of ESLint flat config items.
+ * @returns A single object containing all the merged rules from the provided configurations.
+ */
+export function extractRules(...configArrays: Array<Array<{ rules?: Record<string, unknown> }>>): Record<string, unknown> {
+  return Object.assign(
+    {},
+    // Flatten the array of config arrays, then map over each config to extract its 'rules' object (or an empty object if undefined).
+    ...configArrays
+      .flat()
+      .map(config => config?.rules || {}),
+  )
+}
 
 /**
  * Resolves a module (or a promise of one) and returns its default export
@@ -23,6 +38,7 @@ export async function importModule<TModule>(module: Awaitable<TModule>): Promise
   return resolved as any
 }
 
+
 /**
  * Normalize boolean or options value into merged options or null.
  * Returns null when the input is false or undefined.
@@ -38,20 +54,4 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
   // If value is exactly true, use an empty object to merge with defaults.
   // Otherwise, value is an options object, so merge it with the default options using defu.
   return defu(value === true ? {} : value, defaults) as TOptions
-}
-
-
-/**
- * Extracts and merges the rules from multiple ESLint configuration arrays.
- * @param configArrays Rest parameter representing multiple arrays of ESLint flat config items.
- * @returns A single object containing all the merged rules from the provided configurations.
- */
-export function extractRules(...configArrays: Array<Array<{ rules?: Record<string, unknown> }>>): Record<string, unknown> {
-  return Object.assign(
-    {},
-    // Flatten the array of config arrays, then map over each config to extract its 'rules' object (or an empty object if undefined).
-    ...configArrays
-      .flat()
-      .map(config => config?.rules || {}),
-  )
 }

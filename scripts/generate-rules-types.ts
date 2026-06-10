@@ -1,5 +1,5 @@
-import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
 import { writeFile } from 'node:fs/promises'
+import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
 import { builtinRules } from 'eslint/use-at-your-own-risk'
 import { factory } from '../src/factory'
 

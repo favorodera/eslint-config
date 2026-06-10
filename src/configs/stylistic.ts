@@ -1,6 +1,6 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
@@ -10,14 +10,14 @@ export type StylisticConfigOptions = SharedOptions & {
 }
 
 const stylisticDefaults: StylisticConfigOptions = {
+  files: [jsGlob, tsGlob, vueGlob],
   settings: {
-    indent: 2,
     experimental: false,
+    indent: 2,
+    jsx: false,
     quotes: 'single',
     semi: false,
-    jsx: false,
   },
-  files: [jsGlob, tsGlob, vueGlob],
 }
 
 /**
@@ -44,17 +44,17 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
       plugins: { style: stylePlugin },
     },
     {
-      name: 'favorodera/stylistic/rules',
       files: resolved.files,
+      name: 'favorodera/stylistic/rules',
       rules: {
         ...baseRules,
 
-        'style/quotes': ['error', 'single', { avoidEscape: true }],
-        'style/no-multiple-empty-lines': ['error', { max: 2, maxEOF: 2, maxBOF: 0 }],
-        'style/padded-blocks': 'off',
-        'style/no-trailing-spaces': ['error', { skipBlankLines: true }],
         'style/brace-style': 'off',
         'style/generator-star-spacing': ['error', { after: true, before: false }],
+        'style/no-multiple-empty-lines': ['error', { max: 2, maxBOF: 0, maxEOF: 2 }],
+        'style/no-trailing-spaces': ['error', { skipBlankLines: true }],
+        'style/padded-blocks': 'off',
+        'style/quotes': ['error', 'single', { avoidEscape: true }],
         'style/yield-star-spacing': ['error', { after: true, before: false }],
 
         ...resolved.overrides,

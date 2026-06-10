@@ -1,8 +1,8 @@
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import { importModule } from '../utils'
-import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
+import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
 /** Options for configuring imports linting rules. */
 export type ImportsConfigOptions = SharedOptions
@@ -36,17 +36,17 @@ export async function imports(options: ImportsConfigOptions): Promise<Array<Type
       },
     },
     {
-      name: 'favorodera/imports/rules',
       files: resolved.files,
+      name: 'favorodera/imports/rules',
       rules: {
         ...renamePluginsInRules(baseRules, { 'import-lite': 'import' }),
 
         'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         'import/first': 'error',
+        'import/newline-after-import': ['error', { count: 1 }],
         'import/no-duplicates': 'error',
         'import/no-mutable-exports': 'error',
         'import/no-named-default': 'error',
-        'import/newline-after-import': ['error', { count: 1 }],
 
         'unused-imports/no-unused-imports': 'error',
         'unused-imports/no-unused-vars': [

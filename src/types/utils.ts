@@ -5,6 +5,14 @@ import type { RuleOptions } from './rules'
 /** ESLint rules configuration with type-safe autocompletion */
 export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOptions
 
+/** Shared configuration options for ESLint rules */
+export interface SharedOptions {
+  /** File glob patterns to apply configuration to */
+  files?: Array<string>
+  /** Override rules configuration */
+  overrides?: TypedFlatConfigItem['rules']
+}
+
 /**
  * An updated version of ESLint's `Linter.Config`, which provides autocompletion
  * for `rules` and relaxes type limitations for `plugins` and `rules`, because
@@ -23,12 +31,4 @@ export type TypedFlatConfigItem = Omit<ConfigWithExtends, 'plugins' | 'rules'> &
    * specified, these rule configurations are only available to the matching files.
    */
   rules?: Rules
-}
-
-/** Shared configuration options for ESLint rules */
-export interface SharedOptions {
-  /** Override rules configuration */
-  overrides?: TypedFlatConfigItem['rules']
-  /** File glob patterns to apply configuration to */
-  files?: Array<string>
 }

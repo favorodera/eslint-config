@@ -1,7 +1,7 @@
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
-import { importModule } from '../utils'
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
+import { importModule } from '../utils'
 
 /** Options for configuring JSON and JSONC linting rules. */
 export type JSONCConfigOptions = SharedOptions
@@ -28,10 +28,15 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       plugins: { jsonc: jsoncPlugin },
     },
     {
-      name: 'favorodera/jsonc/rules',
       files: resolved.files,
       language: 'jsonc/x',
+      name: 'favorodera/jsonc/rules',
       rules: {
+        'jsonc/array-bracket-spacing': ['error', 'never'],
+        'jsonc/comma-dangle': ['error', 'never'],
+        'jsonc/comma-style': ['error', 'last'],
+        'jsonc/indent': ['error', 2],
+        'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
         'jsonc/no-binary-numeric-literals': 'error',
@@ -55,26 +60,21 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
         'jsonc/no-undefined-value': 'error',
         'jsonc/no-unicode-codepoint-escapes': 'error',
         'jsonc/no-useless-escape': 'error',
-        'jsonc/space-unary-ops': 'error',
-        'jsonc/valid-json-number': 'error',
-        'jsonc/vue-custom-block/no-parsing-error': 'error',
-        'jsonc/array-bracket-spacing': ['error', 'never'],
-        'jsonc/comma-dangle': ['error', 'never'],
-        'jsonc/comma-style': ['error', 'last'],
-        'jsonc/indent': ['error', 2],
-        'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
         'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
         'jsonc/object-curly-spacing': ['error', 'always'],
         'jsonc/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
         'jsonc/quote-props': 'error',
         'jsonc/quotes': 'error',
+        'jsonc/space-unary-ops': 'error',
+        'jsonc/valid-json-number': 'error',
+        'jsonc/vue-custom-block/no-parsing-error': 'error',
 
         ...resolved.overrides,
       },
     },
     {
-      name: 'favorodera/jsonc/sort/package-json',
       files: [packageJsonGlob],
+      name: 'favorodera/jsonc/sort/package-json',
       rules: {
         'jsonc/sort-array-values': [
           'error', {
@@ -144,11 +144,11 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
           },
           {
             order: { type: 'asc' },
-            pathPattern: '^workspaces\\.catalog$',
+            pathPattern: String.raw`^workspaces\.catalog$`,
           },
           {
             order: { type: 'asc' },
-            pathPattern: '^workspaces\\.catalogs\\.[^.]+$',
+            pathPattern: String.raw`^workspaces\.catalogs\.[^.]+$`,
           },
           {
             order: [
@@ -179,8 +179,8 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       },
     },
     {
-      name: 'favorodera/jsonc/sort/tsconfig-json',
       files: tsConfigGlob,
+      name: 'favorodera/jsonc/sort/tsconfig-json',
       rules: {
         'jsonc/sort-keys': [
           'error',

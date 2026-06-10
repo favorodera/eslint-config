@@ -1,13 +1,17 @@
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
-import { codeInMdGlob, mdGlob, mdInMdGlob } from '../globs'
-import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
+import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
+import { codeInMdGlob, mdGlob, mdInMdGlob } from '../globs'
 import { extractRules, importModule } from '../utils'
 
 /** Options for configuring Markdown linting rules. */
 export type MarkdownConfigOptions = SharedOptions & {
-  /** github flavoured markdown */
+  /**
+   * Enable GitHub Flavored Markdown (GFM) support.
+   * When true, applies additional linting rules specific to GFM extensions
+   * like tables, task lists, and strikethrough.
+   */
   gfm?: boolean
 }
 
@@ -35,10 +39,10 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
       plugins: { md: markdownPlugin },
     },
     {
-      name: 'favorodera/markdown/rules',
       files: resolved.files,
-      language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       ignores: [mdInMdGlob],
+      language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
+      name: 'favorodera/markdown/rules',
       processor: mergeProcessors([
         markdownPlugin.processors?.markdown,
         processorPassThrough,
@@ -53,13 +57,13 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
       },
     },
     {
-      name: 'favorodera/markdown/disables/code',
       files: [codeInMdGlob],
       languageOptions: {
         parserOptions: {
           ecmaFeatures: { impliedStrict: true },
         },
       },
+      name: 'favorodera/markdown/disables/code',
       rules: {
         'no-alert': 'off',
         'no-console': 'off',

@@ -37,6 +37,7 @@ The following configurations are bundled and enabled by default (they can be ind
 - **JSON/JSONC/JSON5** — Formatting and sorting for JSON files like `package.json` (`eslint-plugin-jsonc`)
 - **JSDoc** — Standardized comment formatting (`eslint-plugin-jsdoc`)
 
+
 ## Usage
 
 ### Install
@@ -83,16 +84,16 @@ import { factory } from '@favorodera/eslint-config'
 export default factory({
   // All configs are true by default!
   
-  // Example: Disable tailwind if you aren't using it
-  tailwind: false,
-
   // Example: Customize specific rulesets
   stylistic: {
     settings: {
+      indent: 4,
       quotes: 'double',
-      indent: 4
-    }
-  }
+    },
+  },
+
+  // Example: Disable tailwind if you aren't using it
+  tailwind: false,
 })
 ```
 

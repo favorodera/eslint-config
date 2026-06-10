@@ -1,18 +1,23 @@
+import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
-import { vueGlob } from '../globs'
-import { extractRules, importModule, resolveOptions } from '../utils'
-import type { TypedFlatConfigItem, SharedOptions } from '../types/utils'
 import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor from 'eslint-processor-vue-blocks'
-import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
+import { vueGlob } from '../globs'
+import { extractRules, importModule, resolveOptions } from '../utils'
 
 /** Options for configuring Vue single-file component linting rules. */
 export type VueConfigOptions = SharedOptions & {
+  /**
+   * Configuration for extracting and linting custom Single-File Component (SFC) blocks
+   * such as `<style>`, `<route>`, or `<i18n>`.
+   * Pass `false` to disable block processing, or an options object to customize block matching.
+   */
   sfcBlocks?: boolean | VueBlocksOptions
 }
 
 const sfcBlocksDefaults: VueBlocksOptions = {
-  blocks: { styles: true, customBlocks: true, template: false },
+  blocks: { customBlocks: true, styles: true, template: false },
 }
 
 const vueDefaults: VueConfigOptions = {
@@ -51,8 +56,6 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
 
   return [
     {
-      name: 'favorodera/vue/setup',
-      plugins: { vue: vuePlugin },
       languageOptions: {
         globals: {
           computed: 'readonly',
@@ -71,27 +74,29 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
           watchEffect: 'readonly',
         },
       },
+      name: 'favorodera/vue/setup',
+      plugins: { vue: vuePlugin },
     },
     {
-      name: 'favorodera/vue/rules',
       files: resolved.files,
       languageOptions: {
         parser: vueParser,
         parserOptions: {
-          parser: tsEsLint.parser,
           extraFileExtensions: ['.vue'],
+          parser: tsEsLint.parser,
           sourceType: 'module',
         },
       },
+      name: 'favorodera/vue/rules',
       processor,
       rules: {
         ...baseRules,
 
         'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
+        'vue/block-tag-newline': ['error', { multiline: 'ignore', singleline: 'ignore' }],
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
         'vue/component-options-name-casing': ['error', 'PascalCase'],
         'vue/multi-word-component-names': 'off',
-        'vue/block-tag-newline': ['error', { multiline: 'ignore', singleline: 'ignore' }],
         'vue/multiline-html-element-content-newline': ['error', { allowEmptyLines: true, ignores: ['pre', 'textarea'] }],
 
         ...resolved.overrides,
