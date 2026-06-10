@@ -30,6 +30,7 @@ import type { JSDocConfigOptions } from './configs/jsdoc'
  *
  * By default, all feature configurations are enabled (`true`).
  * You can disable any feature by setting it to `false`, or customize it by passing its options object.
+ * 
  * Note: `ignores` is not a boolean toggle, but accepts patterns or a function.
  */
 export interface ConfigOptions {
