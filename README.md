@@ -36,6 +36,9 @@ The following configurations are bundled and enabled by default (they can be ind
 - **Markdown** — Linting for markdown files and embedded code blocks (`@eslint/markdown`)
 - **JSON/JSONC/JSON5** — Formatting and sorting for JSON files like `package.json` (`eslint-plugin-jsonc`)
 - **JSDoc** — Standardized comment formatting (`eslint-plugin-jsdoc`)
+- **Unicorn** — Various code quality improvements (`eslint-plugin-unicorn`)
+- **Perfectionist** — Sorting objects, imports, classes, etc. (`eslint-plugin-perfectionist`)
+- **Node** — Node.js specific linting rules (`eslint-plugin-n`)
 
 
 ## Usage
