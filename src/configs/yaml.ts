@@ -42,7 +42,7 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
         ...renamePluginsInRules(baseRules, { yml: 'yaml' }),
 
         'yaml/quotes': ['error', { avoidEscape: true, prefer: 'single' }],
-        'yaml/require-string-key':'error',
+        'yaml/require-string-key': 'error',
 
         ...resolved.overrides,
       },
