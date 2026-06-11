@@ -25,7 +25,7 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
     importModule(import('yaml-eslint-parser')),
   ])
 
-  const baseRules = extractRules(yamlPlugin.configs.recommended)
+  const baseRules = extractRules(yamlPlugin.configs.standard)
 
   return [
     {
@@ -41,26 +41,8 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
       rules: {
         ...renamePluginsInRules(baseRules, { yml: 'yaml' }),
 
-        'style/spaced-comment': 'off',
-
-        'yaml/block-mapping': 'error',
-        'yaml/block-mapping-question-indicator-newline': 'error',
-        'yaml/block-sequence': 'error',
-        'yaml/block-sequence-hyphen-indicator-newline': 'error',
-        'yaml/flow-mapping-curly-newline': 'error',
-        'yaml/flow-mapping-curly-spacing': 'error',
-        'yaml/flow-sequence-bracket-newline': 'error',
-        'yaml/flow-sequence-bracket-spacing': 'error',
-        'yaml/indent': ['error', 2],
-        'yaml/key-spacing': 'error',
-        'yaml/no-empty-key': 'error',
-        'yaml/no-empty-sequence-entry': 'error',
-        'yaml/no-irregular-whitespace': 'error',
-        'yaml/no-tab-indent': 'error',
-        'yaml/plain-scalar': 'error',
         'yaml/quotes': ['error', { avoidEscape: true, prefer: 'single' }],
-        'yaml/spaced-comment': 'error',
-        'yaml/vue-custom-block/no-parsing-error': 'error',
+        'yaml/require-string-key':'error',
 
         ...resolved.overrides,
       },
