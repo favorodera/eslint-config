@@ -1,5 +1,36 @@
 # Changelog
 
+## v0.0.7...v0.0.8
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.7...v0.0.8)
+
+### Added
+
+- **config:** Update typescript rules and strictness ([f413056](https://github.com/favorodera/eslint-config/commit/f413056))
+
+  - Add stylistic config to base rules
+  - Add additional typescript linting rules
+  - Remove specific rule configurations
+
+- **test:** Add comprehensive vitest linting rules ([1a4a262](https://github.com/favorodera/eslint-config/commit/1a4a262))
+
+  - update test configuration to include new rules
+  - standardize test glob pattern
+  - refactor test files to use it instead of test
+
+
+### Refactors
+
+- **package:** Simplify exports to esm only ([b44fef3](https://github.com/favorodera/eslint-config/commit/b44fef3))
+
+  - remove cjs support from package exports
+  - update tsdown config to remove cjs format
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.6...v0.0.7
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.6...v0.0.7)
