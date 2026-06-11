@@ -23,8 +23,8 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Arra
   const tsEsLint = await importModule(import('typescript-eslint'))
 
   const baseRules = extractRules(
-    tsEsLint.configs.recommended as any,
     tsEsLint.configs.strict as any,
+    tsEsLint.configs.stylistic as any,
   )
 
   return [
@@ -43,8 +43,12 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Arra
         ...renamePluginsInRules(baseRules, { '@typescript-eslint': 'ts' }),
 
         'ts/array-type': ['error', { default: 'generic', readonly: 'generic' }],
-        'ts/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-        'ts/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
+        'ts/consistent-type-imports': 'error',
+        'ts/default-param-last': 'error',
+        'ts/method-signature-style': 'error',
+        'ts/no-import-type-side-effects': 'error',
+        'ts/no-loop-func': 'error',
+        'ts/no-redeclare': 'error',
 
         ...resolved.overrides,
       },
