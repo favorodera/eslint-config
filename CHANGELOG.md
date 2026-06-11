@@ -1,5 +1,40 @@
 # Changelog
 
+## v0.0.6...v0.0.7
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.6...v0.0.7)
+
+### Added
+
+- **vue:** Update and expand linting rules ([b8f01fe](https://github.com/favorodera/eslint-config/commit/b8f01fe))
+
+  - Update base rules to recommended-error
+  - Add comprehensive vue linting rules
+  - Improve code consistency and standards
+  - Fix spacing in yaml config
+
+- **exports:** Export glob patterns from index ([4f4f489](https://github.com/favorodera/eslint-config/commit/4f4f489))
+
+### Refactors
+
+- **yaml:** Update config and simplify rules ([e905e25](https://github.com/favorodera/eslint-config/commit/e905e25))
+
+  - Switch from recommended to standard config
+  - Remove redundant yaml rules
+  - Add require-string-key rule
+
+- **eslint:** Update unicorn config and rules ([d281041](https://github.com/favorodera/eslint-config/commit/d281041))
+
+  - Switch to recommended unicorn config
+  - Disable unicorn/prevent-abbreviations
+  - Disable unicorn/filename-case
+  - Clean up redundant rule definitions
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.5...v0.0.6
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.5...v0.0.6)
