@@ -52,7 +52,7 @@ describe('extractRules', () => {
 
   test('handles configs without rules gracefully', () => {
     const result = extractRules(
-      [{ }],
+      [{}],
       [{ rules: { 'no-undef': 'error' } }],
     )
     expect(result).toEqual({ 'no-undef': 'error' })
@@ -79,6 +79,7 @@ describe('importModule', () => {
 
   test('handles null without throwing', async () => {
     // null has no .default property check — returns as-is
+    // eslint-disable-next-line unicorn/no-null
     const result = await importModule(Promise.resolve(null))
     expect(result).toBeNull()
   })
