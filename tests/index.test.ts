@@ -142,7 +142,7 @@ describe('factory', () => {
     ]
 
     for (const name of expected) {
-      expect(names, `missing config: ${name}`).toContain(name)
+      expect(names, `"${name}" was not returned by factory()`).toContain(name)
     }
   })
 
