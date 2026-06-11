@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.8...v0.0.9
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.8...v0.0.9)
+
+### Added
+
+- **config:** Update tailwind linting rules ([ed46b3e](https://github.com/favorodera/eslint-config/commit/ed46b3e))
+
+  - Enforce consistent class and variant order
+  - Enable logical properties enforcement
+  - Disable shorthand and variable syntax checks
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.7...v0.0.8
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.7...v0.0.8)
