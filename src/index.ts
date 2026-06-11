@@ -14,7 +14,7 @@ export {
   packageJsonGlob,
   pnpmWorkspaceGlob,
   scriptsGlob,
-  testsGlob,
+  testGlob,
   tsConfigGlob,
   tsGlob,
   vueGlob,

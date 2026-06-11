@@ -20,10 +20,7 @@ export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue}'
 export const scriptsGlob = '**/*.{js,cjs,mjs,ts,cts,mts}'
 
 /** Glob pattern for matching test files */
-export const testsGlob = [
-  '**/*.{tests,specs,benchmark,bench}.{js,cjs,mjs,ts,cts,mts}',
-  '**/__tests__/**/*.{js,cjs,mjs,ts,cts,mts}',
-]
+export const testGlob = '**/*.{test,spec,bench,benchmark}.{js,cjs,mjs,ts,cts,mts}'
 
 /** Glob pattern for matching JSON files */
 export const jsonGlob = '**/*.json'
