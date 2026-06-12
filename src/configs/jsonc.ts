@@ -1,5 +1,5 @@
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
 import { importModule } from '../utils'
 

@@ -1,6 +1,6 @@
-import { writeFile } from 'node:fs/promises'
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
 import { builtinRules } from 'eslint/use-at-your-own-risk'
+import { writeFile } from 'node:fs/promises'
 import { factory } from '../src/factory'
 
 const configs = await factory()

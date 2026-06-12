@@ -1,6 +1,6 @@
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 

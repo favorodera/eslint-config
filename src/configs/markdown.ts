@@ -1,7 +1,7 @@
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { codeInMdGlob, mdGlob, mdInMdGlob } from '../globs'
 import { extractRules, importModule } from '../utils'
 

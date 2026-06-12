@@ -1,6 +1,6 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
@@ -69,7 +69,10 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
         'style/implicit-arrow-linebreak': 'error',
         'style/line-comment-position': 'error',
         'style/linebreak-style': 'error',
-        'style/multiline-comment-style': 'error',
+        'style/multiline-comment-style': [
+          'error',
+          'separate-lines',
+        ],
         'style/newline-per-chained-call': 'error',
         'style/no-confusing-arrow': 'error',
         'style/no-extra-semi': 'error',

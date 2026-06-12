@@ -1,7 +1,7 @@
 import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { defu } from 'defu'
 import { renamePluginsInRules } from 'eslint-flat-config-utils'
+import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
@@ -10,6 +10,7 @@ export type TailwindConfigOptions = SharedOptions & {
   /**
    * Custom settings for the `eslint-plugin-better-tailwindcss` plugin.
    * Configure project paths, detection features, and rule specifics.
+   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
    */
   settings?: {
     /**
@@ -107,14 +108,16 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
             unknownClassPosition: 'start',
           },
         ],
-        'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-line-wrapping': [
           'error',
           { group: 'emptyLine' },
         ],
-        'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',
+
+        // Disabled as `tailwind/enforce-canonical-classes` covers them
+        'tailwind/enforce-consistent-important-position': 'off',
+        'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-shorthand-classes': 'off',
 
         ...resolved.overrides,

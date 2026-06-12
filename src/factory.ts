@@ -1,7 +1,7 @@
 import type { Awaitable } from 'eslint-flat-config-utils'
+import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
-import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { imports, type ImportsConfigOptions } from './configs/imports'
 import { javascript, type JavascriptConfigOptions } from './configs/javascript'
@@ -85,10 +85,8 @@ export interface ConfigOptions {
  * @returns A flat config composer instance that can be exported directly or further modified.
  */
 export function factory(options: ConfigOptions = {}) {
-  /*
-   * Array to hold the promises of flat configuration items
-   * Always append the ignore patterns configuration first to apply it globally
-   */
+  // Array to hold the promises of flat configuration items
+  // Always append the ignore patterns configuration first to apply it globally
   const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions

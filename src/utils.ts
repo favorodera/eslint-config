@@ -50,9 +50,7 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
   // If the value is falsy (false, undefined, null), the feature is considered disabled
   if (!value) return false
 
-  /*
-   * If value is exactly true, use an empty object to merge with defaults.
-   * Otherwise, value is an options object, so merge it with the default options using defu.
-   */
+  // If value is exactly true, use an empty object to merge with defaults.
+  // Otherwise, value is an options object, so merge it with the default options using defu.
   return defu(value === true ? {} : value, defaults) as TOptions
 }
