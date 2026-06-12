@@ -55,8 +55,8 @@ export type PerfectionistConfigOptions = SharedOptions & {
     /**
      * Locale(s) used for locale-aware string comparison.
      * A BCP 47 language tag or an array of such tags.
-     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare#locales
      * @default 'en-US'
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare#locales
      */
     locales?: Array<string> | string
 
