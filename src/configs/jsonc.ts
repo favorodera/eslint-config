@@ -35,10 +35,12 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       language: 'jsonc/x',
       name: 'favorodera/jsonc/rules',
       rules: {
+        'jsonc/array-bracket-newline': 'error',
         'jsonc/array-bracket-spacing': [
           'error',
           'never',
         ],
+        'jsonc/array-element-newline': 'error',
         'jsonc/comma-dangle': [
           'error',
           'never',
@@ -63,6 +65,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
         'jsonc/no-floating-decimal': 'error',
         'jsonc/no-hexadecimal-numeric-literals': 'error',
         'jsonc/no-infinity': 'error',
+        'jsonc/no-irregular-whitespace': 'error',
         'jsonc/no-multi-str': 'error',
         'jsonc/no-nan': 'error',
         'jsonc/no-number-props': 'error',
@@ -88,7 +91,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
         ],
         'jsonc/object-property-newline': [
           'error',
-          { allowAllPropertiesOnSameLine: true },
+          { allowAllPropertiesOnSameLine: false },
         ],
         'jsonc/quote-props': 'error',
         'jsonc/quotes': 'error',
@@ -328,6 +331,14 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
             pathPattern: '^compilerOptions$',
           },
         ],
+      },
+    },
+    {
+      files: resolved.files,
+      language: 'jsonc/x',
+      name: 'favorodera/jsonc/disables',
+      rules: {
+        'no-irregular-whitespace': 'off',
       },
     },
   ]
