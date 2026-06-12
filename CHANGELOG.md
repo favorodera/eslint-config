@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.0.10...v0.0.11
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.10...v0.0.11)
+
+### Added
+
+- **pnpm:** Configure package.json field sorting and validation ([5933224](https://github.com/favorodera/eslint-config/commit/5933224))
+
+  - Add dependency fields to sort-package-json
+  - Enable pnpm/yaml-valid-packages rule
+
+- **jsonc:** Update rules and configuration ([5d47aff](https://github.com/favorodera/eslint-config/commit/5d47aff))
+
+  - Enable additional jsonc formatting rules
+  - Disable irregular whitespace rule for jsonc
+  - Refactor package and tsconfig formatting
+
+
+### Refactors
+
+- **configs:** Improve code style and organization ([86684be](https://github.com/favorodera/eslint-config/commit/86684be))
+
+  - standardize import ordering across files
+  - refactor perfectionist config settings
+  - update stylistic and tailwind rule configurations
+  - clean up comments in factory and utils
+
+- **node:** Update rules and configuration ([79c4e43](https://github.com/favorodera/eslint-config/commit/79c4e43))
+
+  - switch to recommended-module config
+  - enable strict node plugin rules
+  - add node/prefer-node-protocol
+  - disable missing import rules for ts and vue
+  - remove redundant process override in test config
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.9...v0.0.10
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.9...v0.0.10)
