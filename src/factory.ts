@@ -16,6 +16,7 @@ import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
 import { test, type TestConfigOptions } from './configs/test'
 import { typescript, type TypescriptConfigOptions } from './configs/typescript'
 import { unicorn, type UnicornConfigOptions } from './configs/unicorn'
+import { unusedImports, type UnusedImportsConfigOptions } from './configs/unused-imports'
 import { vue, type VueConfigOptions } from './configs/vue'
 import { yaml, type YAMLConfigOptions } from './configs/yaml'
 import { resolveOptions } from './utils'
@@ -32,7 +33,7 @@ export interface ConfigOptions {
   /** Glob patterns to exclude from linting. */
   ignores?: IgnoresPatterns
 
-  /** Imports sorting and unused imports cleanup (via `eslint-plugin-import-lite` and `eslint-plugin-unused-imports`). */
+  /** Imports sorting and quality rules (via `eslint-plugin-import-lite`). */
   imports?: boolean | ImportsConfigOptions
 
   /** Core JavaScript language rules (via `@eslint/js`). */
@@ -71,6 +72,9 @@ export interface ConfigOptions {
   /** Unicorn rules for various code quality improvements (via `eslint-plugin-unicorn`). */
   unicorn?: boolean | UnicornConfigOptions
 
+  /** Unused imports and variables detection and cleanup (via `eslint-plugin-unused-imports`). */
+  unusedImports?: boolean | UnusedImportsConfigOptions
+
   /** Vue single-file components linting (via `eslint-plugin-vue`). */
   vue?: boolean | VueConfigOptions
 
@@ -104,6 +108,7 @@ export function factory(options: ConfigOptions = {}) {
     test,
     typescript,
     unicorn,
+    unusedImports,
     vue,
     yaml,
   }
