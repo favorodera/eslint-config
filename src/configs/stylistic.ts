@@ -10,8 +10,13 @@ export type StylisticConfigOptions = SharedOptions & {
 }
 
 const stylisticDefaults: StylisticConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
   settings: {
+    braceStyle: '1tbs',
     experimental: false,
     indent: 2,
     jsx: false,
@@ -49,13 +54,30 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
       rules: {
         ...baseRules,
 
-        'style/brace-style': 'off',
-        'style/generator-star-spacing': ['error', { after: true, before: false }],
-        'style/no-multiple-empty-lines': ['error', { max: 2, maxBOF: 0, maxEOF: 2 }],
-        'style/no-trailing-spaces': ['error', { skipBlankLines: true }],
-        'style/padded-blocks': 'off',
-        'style/quotes': ['error', 'single', { avoidEscape: true }],
-        'style/yield-star-spacing': ['error', { after: true, before: false }],
+        'style/array-bracket-newline': 'error',
+        'style/array-element-newline': 'error',
+        'style/curly-newline': [
+          'error',
+          'always',
+        ],
+        'style/function-call-argument-newline': [
+          'error',
+          'consistent',
+        ],
+        'style/function-call-spacing': 'error',
+        'style/function-paren-newline': 'error',
+        'style/implicit-arrow-linebreak': 'error',
+        'style/line-comment-position': 'error',
+        'style/linebreak-style': 'error',
+        'style/multiline-comment-style': 'error',
+        'style/newline-per-chained-call': 'error',
+        'style/no-confusing-arrow': 'error',
+        'style/no-extra-semi': 'error',
+        'style/nonblock-statement-body-position': 'error',
+        'style/object-curly-newline': 'error',
+        'style/semi-style': 'error',
+        'style/switch-colon-spacing': 'error',
+        'style/wrap-regex': 'error',
 
         ...resolved.overrides,
       },
