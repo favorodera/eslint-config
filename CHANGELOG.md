@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.0.9...v0.0.10
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.9...v0.0.10)
+
+### Added
+
+- **stylistic:** Add additional style linting rules ([2574e37](https://github.com/favorodera/eslint-config/commit/2574e37))
+
+  - Add braceStyle option to defaults
+  - Enable various stylistic rule constraints
+
+
+### Styling
+
+- **lint:** Apply consistent multiline formatting ([985d088](https://github.com/favorodera/eslint-config/commit/985d088))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.8...v0.0.9
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.8...v0.0.9)
