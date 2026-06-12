@@ -85,8 +85,10 @@ export interface ConfigOptions {
  * @returns A flat config composer instance that can be exported directly or further modified.
  */
 export function factory(options: ConfigOptions = {}) {
-  // Array to hold the promises of flat configuration items
-  // Always append the ignore patterns configuration first to apply it globally
+  /*
+   * Array to hold the promises of flat configuration items
+   * Always append the ignore patterns configuration first to apply it globally
+   */
   const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions
@@ -109,12 +111,15 @@ export function factory(options: ConfigOptions = {}) {
   }
 
   // Iterate over each configuration factory function
-  for (const [key, configFunction] of Object.entries(configFunctions)) {
+  for (const [
+    key,
+    configFunction,
+  ] of Object.entries(configFunctions)) {
     const configOption = (options as Record<string, unknown>)[key]
-    
+
     // Resolve the options for the current configuration, defaulting to true if not explicitly provided
     const resolved = resolveOptions(configOption ?? true, {})
-    
+
     // If the configuration is enabled (resolved is truthy), append its resulting config items
     if (resolved) configs.push(configFunction(resolved))
   }

@@ -20,7 +20,10 @@ const yamlDefaults: YAMLConfigOptions = {
 export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, yamlDefaults)
 
-  const [yamlPlugin, yamlParser] = await Promise.all([
+  const [
+    yamlPlugin,
+    yamlParser,
+  ] = await Promise.all([
     importModule(import('eslint-plugin-yml')),
     importModule(import('yaml-eslint-parser')),
   ])
@@ -41,7 +44,10 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
       rules: {
         ...renamePluginsInRules(baseRules, { yml: 'yaml' }),
 
-        'yaml/quotes': ['error', { avoidEscape: true, prefer: 'single' }],
+        'yaml/quotes': [
+          'error',
+          { avoidEscape: true, prefer: 'single' },
+        ],
         'yaml/require-string-key': 'error',
 
         ...resolved.overrides,

@@ -7,7 +7,11 @@ import { importModule } from '../utils'
 export type JSDocConfigOptions = SharedOptions
 
 const jsdocDefaults: JSDocConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
 }
 
 /**

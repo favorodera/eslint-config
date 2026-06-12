@@ -5,7 +5,7 @@ import { ignoresGlob } from '../globs'
  * Patterns used to ignore files and directories from ESLint scanning.
  * Can be a list of glob patterns or a function that receives default patterns.
  */
- 
+
 export type IgnoresPatterns = ((defaults: Array<string>) => Array<string>) | Array<string>
 
 const defaultPatterns = ignoresGlob
@@ -18,7 +18,10 @@ const defaultPatterns = ignoresGlob
 export function ignores(patterns: IgnoresPatterns = []): Array<TypedFlatConfigItem> {
   const resolved = typeof patterns === 'function'
     ? patterns(defaultPatterns)
-    : [...defaultPatterns, ...patterns]
+    : [
+        ...defaultPatterns,
+        ...patterns,
+      ]
 
   return [
     {

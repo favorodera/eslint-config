@@ -57,7 +57,11 @@ export type TailwindConfigOptions = SharedOptions & {
 }
 
 const tailwindDefaults: TailwindConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
   settings: {
     detectComponentClasses: true,
   },
@@ -93,15 +97,21 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
       rules: {
         ...renamePluginsInRules(baseRules, { 'better-tailwindcss': 'tailwind' }),
 
-        'tailwind/enforce-consistent-class-order': ['error', {
-          componentClassOrder: 'asc',
-          componentClassPosition: 'start',
-          order: 'strict',
-          unknownClassOrder: 'asc',
-          unknownClassPosition: 'start',
-        }],
+        'tailwind/enforce-consistent-class-order': [
+          'error',
+          {
+            componentClassOrder: 'asc',
+            componentClassPosition: 'start',
+            order: 'strict',
+            unknownClassOrder: 'asc',
+            unknownClassPosition: 'start',
+          },
+        ],
         'tailwind/enforce-consistent-important-position': 'off',
-        'tailwind/enforce-consistent-line-wrapping': ['error', { group: 'emptyLine' }],
+        'tailwind/enforce-consistent-line-wrapping': [
+          'error',
+          { group: 'emptyLine' },
+        ],
         'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',

@@ -7,9 +7,12 @@ import { importModule } from '../utils'
 export type JSONCConfigOptions = SharedOptions
 
 const jsoncDefaults: JSONCConfigOptions = {
-  files: [json5Glob, jsoncGlob, jsonGlob],
+  files: [
+    json5Glob,
+    jsoncGlob,
+    jsonGlob,
+  ],
 }
-
 
 /**
  * Constructs the flat config items for JSON, JSON5, and JSONC linting, setting up
@@ -32,11 +35,26 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       language: 'jsonc/x',
       name: 'favorodera/jsonc/rules',
       rules: {
-        'jsonc/array-bracket-spacing': ['error', 'never'],
-        'jsonc/comma-dangle': ['error', 'never'],
-        'jsonc/comma-style': ['error', 'last'],
-        'jsonc/indent': ['error', 2],
-        'jsonc/key-spacing': ['error', { afterColon: true, beforeColon: false }],
+        'jsonc/array-bracket-spacing': [
+          'error',
+          'never',
+        ],
+        'jsonc/comma-dangle': [
+          'error',
+          'never',
+        ],
+        'jsonc/comma-style': [
+          'error',
+          'last',
+        ],
+        'jsonc/indent': [
+          'error',
+          2,
+        ],
+        'jsonc/key-spacing': [
+          'error',
+          { afterColon: true, beforeColon: false },
+        ],
         'jsonc/no-bigint-literals': 'error',
         'jsonc/no-binary-expression': 'error',
         'jsonc/no-binary-numeric-literals': 'error',
@@ -60,9 +78,18 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
         'jsonc/no-undefined-value': 'error',
         'jsonc/no-unicode-codepoint-escapes': 'error',
         'jsonc/no-useless-escape': 'error',
-        'jsonc/object-curly-newline': ['error', { consistent: true, multiline: true }],
-        'jsonc/object-curly-spacing': ['error', 'always'],
-        'jsonc/object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+        'jsonc/object-curly-newline': [
+          'error',
+          { consistent: true, multiline: true },
+        ],
+        'jsonc/object-curly-spacing': [
+          'error',
+          'always',
+        ],
+        'jsonc/object-property-newline': [
+          'error',
+          { allowAllPropertiesOnSameLine: true },
+        ],
         'jsonc/quote-props': 'error',
         'jsonc/quotes': 'error',
         'jsonc/space-unary-ops': 'error',
@@ -77,7 +104,8 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       name: 'favorodera/jsonc/sort/package-json',
       rules: {
         'jsonc/sort-array-values': [
-          'error', {
+          'error',
+          {
             order: { type: 'asc' },
             pathPattern: '^files$',
           },

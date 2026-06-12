@@ -8,7 +8,11 @@ import { importModule } from '../utils'
 export type NodeConfigOptions = SharedOptions
 
 const nodeDefaults: NodeConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
 }
 
 /**
@@ -35,15 +39,24 @@ export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatC
       rules: {
         ...renamePluginsInRules(baseRules, { n: 'node' }),
 
-        'node/handle-callback-err': ['error', '^(err|error)$'],
+        'node/handle-callback-err': [
+          'error',
+          '^(err|error)$',
+        ],
         'node/no-deprecated-api': 'error',
         'node/no-exports-assign': 'error',
         'node/no-missing-import': 'off',
         'node/no-new-require': 'error',
         'node/no-path-concat': 'error',
         'node/no-unpublished-import': 'off',
-        'node/prefer-global/buffer': ['error', 'never'],
-        'node/prefer-global/process': ['error', 'never'],
+        'node/prefer-global/buffer': [
+          'error',
+          'never',
+        ],
+        'node/prefer-global/process': [
+          'error',
+          'never',
+        ],
         'node/process-exit-as-throw': 'error',
 
         ...resolved.overrides,

@@ -35,7 +35,11 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
   const resolved = defu(options, vueDefaults)
   const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)
 
-  const [vuePlugin, vueParser, tsEsLint] = await Promise.all([
+  const [
+    vuePlugin,
+    vueParser,
+    tsEsLint,
+  ] = await Promise.all([
     importModule(import('eslint-plugin-vue')),
     importModule(import('vue-eslint-parser')),
     importModule(import('typescript-eslint')),
@@ -88,11 +92,28 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
       rules: {
         ...baseRules,
 
-        'vue/block-lang': ['error', { script: { lang: 'ts' } }],
-        'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
-        'vue/block-tag-newline': ['error', { multiline: 'always', singleline: 'always' }],
-        'vue/comment-directive': ['error', { reportUnusedDisableDirectives: true }],
-        'vue/define-macros-order': ['error',
+        'vue/block-lang': [
+          'error',
+          { script: { lang: 'ts' } },
+        ],
+        'vue/block-order': [
+          'error',
+          { order: [
+            'script',
+            'template',
+            'style',
+          ] },
+        ],
+        'vue/block-tag-newline': [
+          'error',
+          { multiline: 'always', singleline: 'always' },
+        ],
+        'vue/comment-directive': [
+          'error',
+          { reportUnusedDisableDirectives: true },
+        ],
+        'vue/define-macros-order': [
+          'error',
           {
             defineExposeLast: true,
             order: [
@@ -103,18 +124,31 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
               'defineProps',
               'defineModel',
             ],
-          }],
-        'vue/define-props-declaration': ['error', 'type-based'],
-        'vue/define-props-destructuring': ['error', { destructure: 'never' }],
+          },
+        ],
+        'vue/define-props-declaration': [
+          'error',
+          'type-based',
+        ],
+        'vue/define-props-destructuring': [
+          'error',
+          { destructure: 'never' },
+        ],
         'vue/multi-word-component-names': 'off',
-        'vue/next-tick-style': ['error', 'promise'],
+        'vue/next-tick-style': [
+          'error',
+          'promise',
+        ],
         'vue/no-import-compiler-macros': 'error',
         'vue/no-negated-v-if-condition': 'error',
-        'vue/no-reserved-component-names': ['error', {
-          disallowVue3BuiltInComponents: true,
-          disallowVueBuiltInComponents: true,
-          htmlElementCaseSensitive: false,
-        }],
+        'vue/no-reserved-component-names': [
+          'error',
+          {
+            disallowVue3BuiltInComponents: true,
+            disallowVueBuiltInComponents: true,
+            htmlElementCaseSensitive: false,
+          },
+        ],
         'vue/no-root-v-if': 'error',
         'vue/no-template-target-blank': 'error',
         'vue/no-unused-emit-declarations': 'error',
@@ -124,20 +158,29 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         'vue/no-useless-mustaches': 'error',
         'vue/no-useless-v-bind': 'error',
         'vue/padding-line-between-blocks': 'error',
-        'vue/padding-line-between-tags': ['error', [
-          { blankLine: 'always', next: '*:multi-line', prev: '*:single-line' },
-          { blankLine: 'always', next: '*:single-line', prev: '*:multi-line' },
-          { blankLine: 'always', next: '*:multi-line', prev: '*:multi-line' },
-          { blankLine: 'never', next: '*:single-line', prev: '*:single-line' },
-        ]],
+        'vue/padding-line-between-tags': [
+          'error',
+          [
+            { blankLine: 'always', next: '*:multi-line', prev: '*:single-line' },
+            { blankLine: 'always', next: '*:single-line', prev: '*:multi-line' },
+            { blankLine: 'always', next: '*:multi-line', prev: '*:multi-line' },
+            { blankLine: 'never', next: '*:single-line', prev: '*:single-line' },
+          ],
+        ],
         'vue/prefer-prop-type-boolean-first': 'error',
         'vue/prefer-separate-static-class': 'error',
         'vue/prefer-single-event-payload': 'error',
         'vue/prefer-use-template-ref': 'error',
         'vue/require-explicit-slots': 'error',
         'vue/require-macro-variable-name': 'error',
-        'vue/slot-name-casing': ['error', 'kebab-case'],
-        'vue/v-for-delimiter-style': ['error', 'in'],
+        'vue/slot-name-casing': [
+          'error',
+          'kebab-case',
+        ],
+        'vue/v-for-delimiter-style': [
+          'error',
+          'in',
+        ],
 
         ...resolved.overrides,
       },

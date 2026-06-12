@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 import { factory } from '../src/factory'
 import { extractRules, importModule, resolveOptions } from '../src/utils'
 
-
 describe('resolveOptions', () => {
   it('returns false when value is false', () => {
     expect(resolveOptions(false, { foo: 'bar' })).toBe(false)
@@ -26,7 +25,6 @@ describe('resolveOptions', () => {
     expect(resolveOptions({}, {})).toStrictEqual({})
   })
 })
-
 
 describe('extractRules', () => {
   it('extracts rules from a single config array', () => {
@@ -67,7 +65,6 @@ describe('extractRules', () => {
   })
 })
 
-
 describe('importModule', () => {
   it('returns .default when present (ESM interop)', async () => {
     const fakeModule = { default: { rules: {} } }
@@ -91,7 +88,6 @@ describe('importModule', () => {
     expect(result).toBeNull()
   })
 })
-
 
 describe('factory', () => {
   it('resolves to a non-empty array of configs', async () => {
@@ -274,7 +270,10 @@ describe('factory', () => {
 
   it('ignores accepts a function to transform default patterns', async () => {
     const resolved = await factory({
-      ignores: defaults => [...defaults, '**/generated/**'],
+      ignores: defaults => [
+        ...defaults,
+        '**/generated/**',
+      ],
     })
     const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
 

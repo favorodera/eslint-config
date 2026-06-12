@@ -2,14 +2,15 @@ import type { TypedFlatConfigItem } from '../types/utils'
 import { packageJsonGlob, pnpmWorkspaceGlob } from '../globs'
 import { importModule } from '../utils'
 
-
 /**
  * Constructs the flat config items for pnpm linting.
  * @returns Promise resolving to pnpm ESLint config items.
  */
 export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
-
-  const [pnpmPlugin, yamlParser] = await Promise.all([
+  const [
+    pnpmPlugin,
+    yamlParser,
+  ] = await Promise.all([
     importModule(import('eslint-plugin-pnpm')),
     importModule(import('yaml-eslint-parser')),
   ])
@@ -48,13 +49,19 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
       },
       name: 'favorodera/pnpm/pnpm-workspace-yaml',
       rules: {
-        'pnpm/yaml-enforce-settings': ['error', {
-          settings: {
-            shellEmulator: true,
-            trustPolicy: 'no-downgrade',
+        'pnpm/yaml-enforce-settings': [
+          'error',
+          {
+            settings: {
+              shellEmulator: true,
+              trustPolicy: 'no-downgrade',
+            },
           },
-        }],
-        'pnpm/yaml-no-duplicate-catalog-item': ['error', { checkDuplicates: 'exact-version' }],
+        ],
+        'pnpm/yaml-no-duplicate-catalog-item': [
+          'error',
+          { checkDuplicates: 'exact-version' },
+        ],
         'pnpm/yaml-no-unused-catalog-item': 'error',
       },
     },

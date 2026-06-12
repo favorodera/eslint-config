@@ -8,7 +8,11 @@ import { importModule } from '../utils'
 export type UnicornConfigOptions = SharedOptions
 
 const unicornDefaults: UnicornConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
 }
 
 /**

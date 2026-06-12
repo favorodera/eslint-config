@@ -42,7 +42,10 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Arra
       rules: {
         ...renamePluginsInRules(baseRules, { '@typescript-eslint': 'ts' }),
 
-        'ts/array-type': ['error', { default: 'generic', readonly: 'generic' }],
+        'ts/array-type': [
+          'error',
+          { default: 'generic', readonly: 'generic' },
+        ],
         'ts/consistent-type-imports': 'error',
         'ts/default-param-last': 'error',
         'ts/method-signature-style': 'error',

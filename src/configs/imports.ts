@@ -8,7 +8,11 @@ import { importModule } from '../utils'
 export type ImportsConfigOptions = SharedOptions
 
 const importsDefaults: ImportsConfigOptions = {
-  files: [jsGlob, tsGlob, vueGlob],
+  files: [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ],
 }
 
 /**
@@ -20,7 +24,10 @@ const importsDefaults: ImportsConfigOptions = {
 export async function imports(options: ImportsConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, importsDefaults)
 
-  const [importPlugin, unusedImportsPlugin] = await Promise.all([
+  const [
+    importPlugin,
+    unusedImportsPlugin,
+  ] = await Promise.all([
     importModule(import('eslint-plugin-import-lite')),
     importModule(import('eslint-plugin-unused-imports')),
   ])
@@ -41,9 +48,15 @@ export async function imports(options: ImportsConfigOptions): Promise<Array<Type
       rules: {
         ...renamePluginsInRules(baseRules, { 'import-lite': 'import' }),
 
-        'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+        'import/consistent-type-specifier-style': [
+          'error',
+          'prefer-top-level',
+        ],
         'import/first': 'error',
-        'import/newline-after-import': ['error', { count: 1 }],
+        'import/newline-after-import': [
+          'error',
+          { count: 1 },
+        ],
         'import/no-duplicates': 'error',
         'import/no-mutable-exports': 'error',
         'import/no-named-default': 'error',

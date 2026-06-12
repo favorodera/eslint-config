@@ -35,13 +35,19 @@ export async function test(options: TestConfigOptions): Promise<Array<TypedFlatC
       rules: {
         ...renamePluginsInRules(baseRules, { vitest: 'test' }),
 
-        'test/consistent-each-for': ['error', {
-          describe: 'for',
-          it: 'for',
-          suite: 'for',
-          test: 'for',
-        }],
-        'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
+        'test/consistent-each-for': [
+          'error',
+          {
+            describe: 'for',
+            it: 'for',
+            suite: 'for',
+            test: 'for',
+          },
+        ],
+        'test/consistent-test-it': [
+          'error',
+          { fn: 'it', withinDescribe: 'it' },
+        ],
         'test/consistent-vitest-vi': 'error',
         'test/hoisted-apis-on-top': 'error',
         'test/max-expects': 'error',
