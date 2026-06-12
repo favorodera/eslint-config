@@ -100,7 +100,6 @@ export async function test(options: TestConfigOptions): Promise<Array<TypedFlatC
       name: 'favorodera/test/disables',
       rules: {
         'no-unused-expressions': 'off',
-        'node/prefer-global/process': 'off',
       },
     },
   ]

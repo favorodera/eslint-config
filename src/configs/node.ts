@@ -26,7 +26,7 @@ export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatC
 
   const nodePlugin = await importModule(import('eslint-plugin-n'))
 
-  const baseRules = nodePlugin.configs?.['flat/recommended']?.rules || {}
+  const baseRules = nodePlugin.configs?.['flat/recommended-module']?.rules || {}
 
   return [
     {
@@ -39,27 +39,40 @@ export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatC
       rules: {
         ...renamePluginsInRules(baseRules, { n: 'node' }),
 
+        'node/callback-return': 'error',
         'node/handle-callback-err': [
           'error',
           '^(err|error)$',
         ],
-        'node/no-deprecated-api': 'error',
-        'node/no-exports-assign': 'error',
-        'node/no-missing-import': 'off',
+        'node/no-callback-literal': 'error',
         'node/no-new-require': 'error',
         'node/no-path-concat': 'error',
-        'node/no-unpublished-import': 'off',
-        'node/prefer-global/buffer': [
-          'error',
-          'never',
-        ],
-        'node/prefer-global/process': [
-          'error',
-          'never',
-        ],
-        'node/process-exit-as-throw': 'error',
+        'node/no-unpublished-import': 'error',
+        'node/prefer-global/buffer': 'error',
+        'node/prefer-global/console': 'error',
+        'node/prefer-global/crypto': 'error',
+        'node/prefer-global/process': 'error',
+        'node/prefer-global/text-decoder': 'error',
+        'node/prefer-global/text-encoder': 'error',
+        'node/prefer-global/timers': 'error',
+        'node/prefer-global/url': 'error',
+        'node/prefer-global/url-search-params': 'error',
+        'node/prefer-node-protocol': 'error',
+        'node/prefer-promises/dns': 'error',
+        'node/prefer-promises/fs': 'error',
 
         ...resolved.overrides,
+      },
+    },
+    {
+      files: [
+        tsGlob,
+        vueGlob,
+      ],
+      name: 'favorodera/node/disables',
+      rules: {
+        'node/no-missing-import': 'off',
+        'node/no-missing-require': 'off',
       },
     },
   ]
