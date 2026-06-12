@@ -29,6 +29,12 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           {
             autofix: true,
+            fields: [
+              'dependencies',
+              'devDependencies',
+              'optionalDependencies',
+              'peerDependencies',
+            ],
             ignores: ['@types/vscode'],
           },
         ],
@@ -63,6 +69,7 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           { checkDuplicates: 'exact-version' },
         ],
         'pnpm/yaml-no-unused-catalog-item': 'error',
+        'pnpm/yaml-valid-packages': 'error',
       },
     },
   ]
