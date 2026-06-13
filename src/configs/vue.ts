@@ -1,7 +1,6 @@
-import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 import { defu } from 'defu'
 import { mergeProcessors } from 'eslint-merge-processors'
-import vueBlocksProcessor from 'eslint-processor-vue-blocks'
+import vueBlocksProcessor, { type Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
 import { vueGlob } from '../globs'
 import { extractRules, importModule, resolveOptions } from '../utils'

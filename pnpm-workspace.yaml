@@ -2,6 +2,8 @@ shellEmulator: true
 
 trustPolicy: no-downgrade
 
+nodeOptions: --max_old_space_size=4096
+
 verifyDepsBeforeRun: false
 
 allowBuilds:

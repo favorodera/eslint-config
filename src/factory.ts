@@ -1,5 +1,4 @@
-import type { Awaitable } from 'eslint-flat-config-utils'
-import { FlatConfigComposer } from 'eslint-flat-config-utils'
+import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
