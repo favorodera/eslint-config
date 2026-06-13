@@ -81,7 +81,9 @@ bun add -D eslint @favorodera/eslint-config
 
 ### Configure
 
-Create an `eslint.config.ts` file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something:
+Create an `eslint.config.ts` file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something.
+
+The `factory()` function returns a `FlatConfigComposer` instance (powered by [`eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils)), which acts as a powerful composer. This makes it incredibly easy to append your own configurations, override existing rules, or insert plugins seamlessly.
 
 ```ts
 import { factory } from '@favorodera/eslint-config'
@@ -100,6 +102,19 @@ export default factory({
   // Example: Disable tailwind if you aren't using it
   tailwind: false,
 })
+  // You can seamlessly chain methods to compose your config
+  .append({
+    // Add your own custom ESLint configs
+    ignores: ['src/types/rules.d.ts'],
+  })
+  .overrides({
+    // Easily override predefined rules by their name
+    'favorodera/typescript/rules': {
+      rules: {
+        'ts/no-explicit-any': 'off',
+      },
+    },
+  })
 ```
 
 ## Development
