@@ -1,5 +1,45 @@
 # Changelog
 
+## v0.0.11...v0.0.12
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.11...v0.0.12)
+
+### Added
+
+- **imports:** Enable prefer-inline for no-duplicates ([c376d66](https://github.com/favorodera/eslint-config/commit/c376d66))
+
+### Refactors
+
+- **imports:** Extract unused-imports to separate config ([28789c2](https://github.com/favorodera/eslint-config/commit/28789c2))
+
+  - Move unused-imports logic to a new module
+  - Add dedicated unusedImports option to factory
+  - Update factory to include unusedImports config
+  - Update README documentation
+
+- **config:** Update jsdoc rules and formatting ([48f470e](https://github.com/favorodera/eslint-config/commit/48f470e))
+
+  - update jsdoc rule set to improve validation
+  - set stricter error levels for jsdoc linting
+  - reorder jsdoc configuration properties
+  - fix minor documentation alignment in perfectionist
+
+- **config:** Simplify eslint rules and optimize build ([11283e8](https://github.com/favorodera/eslint-config/commit/11283e8))
+
+  - update javascript eslint rules
+  - set node memory limit in workspace
+  - clean up type imports and exports
+
+
+### Styling
+
+- **config:** Cleanup formatting in package and ignores ([b80891a](https://github.com/favorodera/eslint-config/commit/b80891a))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.10...v0.0.11
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.10...v0.0.11)
