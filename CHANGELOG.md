@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.12...v0.0.13
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.12...v0.0.13)
+
+### Documentation
+
+- **readme:** Add documentation for config composition ([3bf5b0c](https://github.com/favorodera/eslint-config/commit/3bf5b0c))
+
+  - Explain factory return type and composition
+  - Add code examples for append and overrides
+  - Minor formatting cleanup in package.json
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.11...v0.0.12
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.11...v0.0.12)
