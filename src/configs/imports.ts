@@ -50,7 +50,10 @@ export async function imports(options: ImportsConfigOptions): Promise<Array<Type
           'error',
           { count: 1 },
         ],
-        'import/no-duplicates': 'error',
+        'import/no-duplicates': [
+          'error',
+          { 'prefer-inline': true },
+        ],
         'import/no-mutable-exports': 'error',
         'import/no-named-default': 'error',
 
