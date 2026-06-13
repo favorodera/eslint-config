@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.13...v0.0.14
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.13...v0.0.14)
+
+### Refactors
+
+- **config:** Update package files and vue rules ([e8a69ae](https://github.com/favorodera/eslint-config/commit/e8a69ae))
+
+  - format package.json files array
+  - remove vue/require-macro-variable-name rule
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.12...v0.0.13
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.12...v0.0.13)
