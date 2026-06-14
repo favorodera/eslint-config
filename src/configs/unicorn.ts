@@ -46,10 +46,10 @@ export async function unicorn(options: UnicornConfigOptions): Promise<Array<Type
         'unicorn/prevent-abbreviations': [
           'error',
           {
-            allowList: {
-              props: true,
-              utils: true,
-            },
+            ignore: [
+              /utils?/i,
+              /props?/i,
+            ],
           },
         ],
 
