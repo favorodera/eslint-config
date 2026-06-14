@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.0.16...v0.0.17
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.16...v0.0.17)
+
+### Refactors
+
+- **eslint:** Update rules and configurations ([058aed5](https://github.com/favorodera/eslint-config/commit/058aed5))
+
+  - Reorder javascript rules for better organization
+  - Disable unicorn/prevent-abbreviations
+  - Disable node/no-process-exit
+  - Fix whitespace in eslint.config.ts
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.15...v0.0.16
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.15...v0.0.16)
