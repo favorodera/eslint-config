@@ -69,21 +69,6 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
             'error',
           ] },
         ],
-        'no-empty': [
-          'error',
-          { allowEmptyCatch: true },
-        ],
-        'no-eval': 'error',
-        'no-extend-native': 'error',
-        'no-extra-bind': 'error',
-        'no-implied-eval': 'error',
-        'no-iterator': 'error',
-        'no-labels': [
-          'error',
-          { allowLoop: false, allowSwitch: false },
-        ],
-
-        'no-await-in-loop': 'error',
         'no-constructor-return': 'error',
         'no-continue': 'error',
         'no-duplicate-imports': [
@@ -93,7 +78,20 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
           },
         ],
         'no-else-return': 'error',
+        'no-empty': [
+          'error',
+          { allowEmptyCatch: true },
+        ],
         'no-eq-null': 'error',
+        'no-eval': 'error',
+        'no-extend-native': 'error',
+        'no-extra-bind': 'error',
+        'no-implied-eval': 'error',
+        'no-iterator': 'error',
+        'no-labels': [
+          'error',
+          { allowLoop: false, allowSwitch: false },
+        ],
         'no-lone-blocks': 'error',
         'no-loop-func': 'error',
         'no-multi-str': 'error',
@@ -150,7 +148,6 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
           'error',
           { initialized: 'never' },
         ],
-
         'prefer-arrow-callback': [
           'error',
           {

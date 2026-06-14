@@ -61,6 +61,9 @@ export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatC
         'node/prefer-promises/dns': 'error',
         'node/prefer-promises/fs': 'error',
 
+        // Handled by unicorn
+        'node/no-process-exit': 'off',
+
         ...resolved.overrides,
       },
     },

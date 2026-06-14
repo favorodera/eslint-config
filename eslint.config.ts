@@ -10,9 +10,4 @@ export default factory()
         'ts/no-explicit-any': 'off',
       },
     },
-    'favorodera/unicorn/rules': {
-      rules: {
-        'unicorn/prevent-abbreviations': 'off',
-      },
-    },
   })
