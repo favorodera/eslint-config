@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.14...v0.0.15
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.14...v0.0.15)
+
+### Added
+
+- **unicorn:** Add props and utils to allowList ([58696b9](https://github.com/favorodera/eslint-config/commit/58696b9))
+
+  - update unicorn config rules
+  - allow abbreviations for props and utils
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.13...v0.0.14
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.13...v0.0.14)
