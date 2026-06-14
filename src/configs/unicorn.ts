@@ -43,6 +43,15 @@ export async function unicorn(options: UnicornConfigOptions): Promise<Array<Type
         ...baseRules,
 
         'unicorn/filename-case': 'off',
+        'unicorn/prevent-abbreviations': [
+          'error',
+          {
+            allowList: {
+              props: true,
+              utils: true,
+            },
+          },
+        ],
 
         ...resolved.overrides,
       },
