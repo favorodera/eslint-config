@@ -44,6 +44,7 @@ export async function unicorn(options: UnicornConfigOptions): Promise<Array<Type
 
         'unicorn/filename-case': 'off',
         'unicorn/prevent-abbreviations': 'off',
+        'unicorn/no-process-exit': 'off',
 
         ...resolved.overrides,
       },
