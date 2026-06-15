@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.17...v0.0.18
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.17...v0.0.18)
+
+### Refactors
+
+- **eslint:** Move process-exit rule to unicorn ([f2369ee](https://github.com/favorodera/eslint-config/commit/f2369ee))
+
+  - Disable no-process-exit in node config
+  - Enable no-process-exit in unicorn config
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.16...v0.0.17
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.16...v0.0.17)
