@@ -170,7 +170,6 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         'vue/prefer-separate-static-class': 'error',
         'vue/prefer-single-event-payload': 'error',
         'vue/prefer-use-template-ref': 'error',
-        'vue/require-explicit-slots': 'error',
         'vue/slot-name-casing': [
           'error',
           'kebab-case',
