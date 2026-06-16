@@ -4,6 +4,7 @@
   <p>
     <a href="https://github.com/favorodera/eslint-config/blob/main/LICENSE"><img src="https://img.shields.io/github/license/favorodera/eslint-config.svg?style=plastic&label=License&color=blue" alt="License"></a>
     <a href="https://github.com/favorodera/eslint-config/stargazers"><img src="https://img.shields.io/github/stars/favorodera/eslint-config.svg?style=plastic&label=Stars&color=blue" alt="GitHub Stars"></a>
+    <a href="https://npmx.dev/package/@favorodera/eslint-config"><img src="https://img.shields.io/npm/dw/@favorodera/eslint-config.svg?style=plastic&label=NPM%20Downloads&color=blue" alt="NPM Downloads"></a>
     <a href="https://npmx.dev/package/@favorodera/eslint-config"><img src="https://img.shields.io/npm/v/@favorodera/eslint-config.svg?style=plastic&label=Version&color=blue" alt="NPM Version"></a>
   </p>
 </div>
