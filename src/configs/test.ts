@@ -56,7 +56,6 @@ export async function test(options: TestConfigOptions): Promise<Array<TypedFlatC
         'test/no-conditional-in-test': 'error',
         'test/no-conditional-tests': 'error',
         'test/no-duplicate-hooks': 'error',
-        'test/no-hooks': 'error',
         'test/no-large-snapshots': 'warn',
         'test/no-test-prefixes': 'error',
         'test/no-test-return-statement': 'error',
@@ -91,6 +90,8 @@ export async function test(options: TestConfigOptions): Promise<Array<TypedFlatC
         'test/require-to-throw-message': 'error',
         'test/require-top-level-describe': 'error',
         'test/warn-todo': 'warn',
+
+        'test/no-hooks': 'off',
 
         ...resolved.overrides,
       },
