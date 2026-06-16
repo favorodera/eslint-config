@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.1.0...v0.1.1
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.0...v0.1.1)
+
+### Refactors
+
+- **config:** Update linting and plugin settings ([db3fb40](https://github.com/favorodera/eslint-config/commit/db3fb40))
+
+  - Update tailwind plugin setting key
+  - Reorder unicorn rules
+  - Format package.json files array
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.19...v0.1.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.19...v0.1.0)
