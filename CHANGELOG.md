@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.0.19...v0.1.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.19...v0.1.0)
+
+### Fixed
+
+- **tailwind:** Rename tailwindcss setting to tailwind ([0fef4c9](https://github.com/favorodera/eslint-config/commit/0fef4c9))
+
+### Documentation
+
+- **readme:** Add npm downloads badge ([995ee77](https://github.com/favorodera/eslint-config/commit/995ee77))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.18...v0.0.19
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.18...v0.0.19)
