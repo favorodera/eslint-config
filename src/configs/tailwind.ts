@@ -89,7 +89,7 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
       name: 'favorodera/tailwind/setup',
       plugins: { tailwind: tailwindPlugin },
       settings: {
-        tailwindcss: resolved.settings,
+        tailwind: resolved.settings,
       },
     },
     {
