@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.0.18...v0.0.19
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.18...v0.0.19)
+
+### Added
+
+- **configs:** Enable test/no-hooks rule ([531f33e](https://github.com/favorodera/eslint-config/commit/531f33e))
+
+  - Enable test/no-hooks rule globally
+  - Remove local override disabling the rule
+
+
+### Fixed
+
+- **vue:** Remove vue/require-explicit-slots rule ([b3d0711](https://github.com/favorodera/eslint-config/commit/b3d0711))
+
+### Refactors
+
+- **configs:** Disable test/no-hooks rule ([7c264c3](https://github.com/favorodera/eslint-config/commit/7c264c3))
+
+  - Move test/no-hooks rule to off
+  - Allow usage of hooks in test files
+
+- **eslint:** Remove no-duplicate-imports rule ([528a2fc](https://github.com/favorodera/eslint-config/commit/528a2fc))
+
+  - remove duplicate imports rule from config
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.0.17...v0.0.18
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.0.17...v0.0.18)
