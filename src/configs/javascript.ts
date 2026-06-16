@@ -71,12 +71,6 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
         ],
         'no-constructor-return': 'error',
         'no-continue': 'error',
-        'no-duplicate-imports': [
-          'error',
-          {
-            includeExports: true,
-          },
-        ],
         'no-else-return': 'error',
         'no-empty': [
           'error',
