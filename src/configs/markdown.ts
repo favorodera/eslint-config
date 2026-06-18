@@ -42,6 +42,9 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
       files: resolved.files,
       ignores: [mdInMdGlob],
       language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
+      languageOptions: {
+        frontmatter: 'yaml',
+      },
       name: 'favorodera/markdown/rules',
       processor: mergeProcessors([
         markdownPlugin.processors?.markdown,
@@ -95,6 +98,8 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
         'unused-imports/no-unused-vars': 'off',
 
         'vue/no-unused-vars': 'off',
+
+        'jsdoc/require-jsdoc': 'off',
       },
     },
   ]
