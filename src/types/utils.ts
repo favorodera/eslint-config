@@ -9,6 +9,7 @@ export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOpti
 export interface SharedOptions {
   /** File glob patterns to apply configuration to */
   files?: Array<string>
+
   /** Override rules configuration */
   overrides?: TypedFlatConfigItem['rules']
 }
