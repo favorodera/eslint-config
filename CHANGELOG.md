@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.1.1...v0.1.2
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.1...v0.1.2)
+
+### Added
+
+- **configs:** Update jsdoc and markdown rules ([5fce15c](https://github.com/favorodera/eslint-config/commit/5fce15c))
+
+  - add jsdoc/lines-before-block rule
+  - disable unicode-bom in markdown
+  - disable vue/no-unused-vars in markdown
+
+- **markdown:** Add frontmatter support and disable jsdoc ([d1af7c1](https://github.com/favorodera/eslint-config/commit/d1af7c1))
+
+  - enable yaml frontmatter in markdown processing
+  - disable jsdoc requirement for markdown files
+
+
+### Fixed
+
+- **globs:** Update codeInMdGlob pattern ([a72b5a0](https://github.com/favorodera/eslint-config/commit/a72b5a0))
+
+  - fix glob to match code blocks in root of md files
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.1.0...v0.1.1
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.0...v0.1.1)
