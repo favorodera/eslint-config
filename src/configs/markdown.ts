@@ -41,23 +41,15 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
     {
       files: resolved.files,
       ignores: [mdInMdGlob],
-      name: 'favorodera/markdown/processor',
-      processor: mergeProcessors([
-        markdownPlugin.processors?.markdown,
-        processorPassThrough,
-      ]),
-    },
-    {
-      files: resolved.files,
       language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       languageOptions: {
         frontmatter: 'yaml',
       },
-      name: 'favorodera/markdown/parser',
-    },
-    {
-      files: resolved.files,
       name: 'favorodera/markdown/rules',
+      processor: mergeProcessors([
+        markdownPlugin.processors?.markdown,
+        processorPassThrough,
+      ]),
       rules: {
         ...renamePluginsInRules(baseRules, { markdown: 'md' }),
 
