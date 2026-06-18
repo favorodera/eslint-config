@@ -73,8 +73,8 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
         'no-undef': 'off',
         'no-unused-expressions': 'off',
         'no-unused-labels': 'off',
-
         'no-unused-vars': 'off',
+        'unicode-bom': 'off',
 
         'node/prefer-global/process': 'off',
 
@@ -91,10 +91,10 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
         'ts/no-unused-vars': 'off',
         'ts/no-use-before-define': 'off',
 
-        'unicode-bom': 'off',
-
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
+
+        'vue/no-unused-vars': 'off',
       },
     },
   ]

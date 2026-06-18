@@ -44,6 +44,12 @@ export async function jsdoc(options: JSDocConfigOptions): Promise<Array<TypedFla
         'jsdoc/check-indentation': 'error',
         'jsdoc/check-template-names': 'error',
         'jsdoc/imports-as-dependencies': 'error',
+        'jsdoc/lines-before-block': [
+          'error',
+          {
+            ignoreSingleLines: false,
+          },
+        ],
         'jsdoc/multiline-blocks': 'error',
         'jsdoc/no-bad-blocks': 'error',
         'jsdoc/no-blank-block-descriptions': 'error',
