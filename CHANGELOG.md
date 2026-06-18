@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.2...v0.1.3
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.2...v0.1.3)
+
+### Refactors
+
+- **markdown:** Decouple processor and rules ([4cd9c70](https://github.com/favorodera/eslint-config/commit/4cd9c70))
+
+  - Split markdown config into separate processor and parser blocks
+  - Improve rule configuration structure
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.1.1...v0.1.2
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.1...v0.1.2)
