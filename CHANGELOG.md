@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.3...v0.1.4
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.3...v0.1.4)
+
+### Refactors
+
+- **markdown:** Consolidate configuration objects ([a82aaac](https://github.com/favorodera/eslint-config/commit/a82aaac))
+
+  - merge processor into rules configuration
+  - remove redundant configuration object
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.1.2...v0.1.3
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.2...v0.1.3)
