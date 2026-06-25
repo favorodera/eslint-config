@@ -2,22 +2,22 @@ import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
-import { imports, type ImportsConfigOptions } from './configs/imports'
-import { javascript, type JavascriptConfigOptions } from './configs/javascript'
-import { jsdoc, type JSDocConfigOptions } from './configs/jsdoc'
-import { jsonc, type JSONCConfigOptions } from './configs/jsonc'
+import { imports } from './configs/imports'
+import { javascript } from './configs/javascript'
+import { jsdoc } from './configs/jsdoc'
+import { jsonc } from './configs/jsonc'
 import { markdown, type MarkdownConfigOptions } from './configs/markdown'
-import { node, type NodeConfigOptions } from './configs/node'
+import { node } from './configs/node'
 import { perfectionist, type PerfectionistConfigOptions } from './configs/perfectionist'
 import { pnpm } from './configs/pnpm'
 import { stylistic, type StylisticConfigOptions } from './configs/stylistic'
 import { tailwind, type TailwindConfigOptions } from './configs/tailwind'
-import { test, type TestConfigOptions } from './configs/test'
-import { typescript, type TypescriptConfigOptions } from './configs/typescript'
-import { unicorn, type UnicornConfigOptions } from './configs/unicorn'
-import { unusedImports, type UnusedImportsConfigOptions } from './configs/unused-imports'
+import { test } from './configs/test'
+import { typescript } from './configs/typescript'
+import { unicorn } from './configs/unicorn'
+import { unusedImports } from './configs/unused-imports'
 import { vue, type VueConfigOptions } from './configs/vue'
-import { yaml, type YAMLConfigOptions } from './configs/yaml'
+import { yaml } from './configs/yaml'
 import { resolveOptions } from './utils'
 
 /**
@@ -33,22 +33,22 @@ export interface ConfigOptions {
   ignores?: IgnoresPatterns
 
   /** Imports sorting and quality rules (via `eslint-plugin-import-lite`). */
-  imports?: boolean | ImportsConfigOptions
+  imports?: boolean
 
   /** Core JavaScript language rules (via `@eslint/js`). */
-  javascript?: boolean | JavascriptConfigOptions
+  javascript?: boolean
 
   /** JSDoc comments formatting and validation (via `eslint-plugin-jsdoc`). */
-  jsdoc?: boolean | JSDocConfigOptions
+  jsdoc?: boolean
 
   /** JSON, JSON5, and JSONC files linting and sorting (via `eslint-plugin-jsonc`). */
-  jsonc?: boolean | JSONCConfigOptions
+  jsonc?: boolean
 
   /** Markdown files and embedded code blocks linting (via `@eslint/markdown`). */
   markdown?: boolean | MarkdownConfigOptions
 
   /** Node.js specific linting rules (via `eslint-plugin-n`). */
-  node?: boolean | NodeConfigOptions
+  node?: boolean
 
   /** Perfectionist rules for sorting objects, imports, classes, etc (via `eslint-plugin-perfectionist`). */
   perfectionist?: boolean | PerfectionistConfigOptions
@@ -63,22 +63,22 @@ export interface ConfigOptions {
   tailwind?: boolean | TailwindConfigOptions
 
   /** Test and Vitest specific linting rules (via `@vitest/eslint-plugin`). */
-  test?: boolean | TestConfigOptions
+  test?: boolean
 
   /** TypeScript language linting (via `typescript-eslint`). */
-  typescript?: boolean | TypescriptConfigOptions
+  typescript?: boolean
 
   /** Unicorn rules for various code quality improvements (via `eslint-plugin-unicorn`). */
-  unicorn?: boolean | UnicornConfigOptions
+  unicorn?: boolean
 
   /** Unused imports and variables detection and cleanup (via `eslint-plugin-unused-imports`). */
-  unusedImports?: boolean | UnusedImportsConfigOptions
+  unusedImports?: boolean
 
   /** Vue single-file components linting (via `eslint-plugin-vue`). */
   vue?: boolean | VueConfigOptions
 
   /** YAML files linting and sorting (via `eslint-plugin-yml`). */
-  yaml?: boolean | YAMLConfigOptions
+  yaml?: boolean
 }
 
 /**
@@ -138,6 +138,7 @@ export function factory(options: ConfigOptions = {}) {
       'markdown': 'md',
       'n': 'node',
       'vitest': 'test',
+      'vuejs-accessibility': 'vue-a11y',
       'yml': 'yaml',
     })
 
