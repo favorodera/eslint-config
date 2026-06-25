@@ -59,6 +59,15 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           {
             settings: {
+              allowBuilds: {
+                '@parcel/watcher': true,
+                '@tailwindcss/oxide': true,
+                'better-sqlite3': true,
+                'esbuild': true,
+                'sharp': true,
+                'unrs-resolver': true,
+                'vue-demi': true,
+              },
               shellEmulator: true,
               trustPolicy: 'no-downgrade',
             },
