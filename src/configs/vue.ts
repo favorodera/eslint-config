@@ -1,12 +1,12 @@
 import { defu } from 'defu'
 import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor, { type Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { vueGlob } from '../globs'
-import { extractRules, importModule, resolveOptions } from '../utils'
+import { extractRules, importModule, omit, resolveOptions } from '../utils'
 
 /** Options for configuring Vue single-file component linting rules. */
-export type VueConfigOptions = SharedOptions & {
+export interface VueConfigOptions {
   /**
    * Configuration for extracting and linting custom Single-File Component (SFC) blocks
    * such as `<style>`, `<route>`, or `<i18n>`.
@@ -20,7 +20,6 @@ const sfcBlocksDefaults: VueBlocksOptions = {
 }
 
 const vueDefaults: VueConfigOptions = {
-  files: [vueGlob],
   sfcBlocks: sfcBlocksDefaults,
 }
 
@@ -38,13 +37,28 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
     vuePlugin,
     vueParser,
     tsEsLint,
+    a11yPlugin,
   ] = await Promise.all([
     importModule(import('eslint-plugin-vue')),
     importModule(import('vue-eslint-parser')),
     importModule(import('typescript-eslint')),
+    importModule(import('eslint-plugin-vuejs-accessibility')),
   ])
 
-  const baseRules = extractRules(vuePlugin.configs['flat/recommended-error'])
+  const vueRecommendedConfig = vuePlugin.configs['flat/recommended-error']
+  const a11yRecommendedConfig = a11yPlugin.configs['flat/recommended']
+
+  const [vueBase] = vueRecommendedConfig
+  const vueBaseRest = omit(vueBase, [
+    'rules',
+    'files',
+    'name',
+  ])
+  const vueRules = extractRules(vueRecommendedConfig as any)
+
+  const [a11yBase] = a11yRecommendedConfig
+  const a11yBaseRest = omit(a11yBase, ['name'])
+  const a11yRules = extractRules(a11yRecommendedConfig as any)
 
   const processor = sfcBlocks === false
     ? vuePlugin.processors['.vue']
@@ -55,6 +69,7 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
 
   return [
     {
+      ...vueBaseRest,
       languageOptions: {
         globals: {
           computed: 'readonly',
@@ -74,10 +89,13 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         },
       },
       name: 'favorodera/vue/setup',
-      plugins: { vue: vuePlugin },
     },
     {
-      files: resolved.files,
+      ...a11yBaseRest,
+      name: 'favorodera/vue/a11y/setup',
+    },
+    {
+      files: [vueGlob],
       languageOptions: {
         parser: vueParser,
         parserOptions: {
@@ -89,7 +107,7 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
       name: 'favorodera/vue/rules',
       processor,
       rules: {
-        ...baseRules,
+        ...vueRules,
 
         'vue/block-lang': [
           'error',
@@ -178,8 +196,17 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
           'error',
           'in',
         ],
+      },
+    },
+    {
+      files: [vueGlob],
+      name: 'favorodera/vue/a11y/rules',
+      rules: {
+        ...a11yRules,
 
-        ...resolved.overrides,
+        'vue-a11y/no-aria-hidden-on-focusable': 'error',
+        'vue-a11y/no-onchange': 'error',
+        'vue-a11y/no-role-presentation-on-focusable': 'error',
       },
     },
   ]
