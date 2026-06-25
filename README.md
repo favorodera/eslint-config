@@ -30,7 +30,7 @@ The following configurations are bundled and enabled by default (they can be ind
 
 - **JavaScript** — Core ESLint rules (`@eslint/js`)
 - **TypeScript** — Type-aware linting (`typescript-eslint`)
-- **Vue** — Single-file component support (`eslint-plugin-vue`, `vue-eslint-parser`)
+- **Vue** — Single-file component support and accessibility linting (`eslint-plugin-vue`, `vue-eslint-parser`, `eslint-plugin-vuejs-accessibility`)
 - **Stylistic** — Formatting rules (`@stylistic/eslint-plugin`)
 - **Tailwind CSS** — Utility class linting and sorting (`eslint-plugin-better-tailwindcss`)
 - **Test** — Test and Vitest specific linting (`@vitest/eslint-plugin`)
