@@ -1,71 +1,59 @@
 import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule } from '../utils'
+import { importModule, omit } from '../utils'
 
-/** Options for configuring Tailwind CSS linting rules. */
-export type TailwindConfigOptions = SharedOptions & {
+/**
+ * Options for configuring Tailwind CSS linting rules.
+ * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
+ */
+export interface TailwindConfigOptions {
   /**
-   * Custom settings for the `eslint-plugin-better-tailwindcss` plugin.
-   * Configure project paths, detection features, and rule specifics.
-   * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
+   * Working directory used to resolve Tailwind config files.
+   * Useful for monorepos where linting runs from the root but each project has its own setup.
+   * Relative to the ESLint process's cwd; defaults to that cwd if not specified.
    */
-  settings?: {
-    /**
-     * Working directory used to resolve Tailwind config files.
-     * Useful for monorepos where linting runs from the root but each project has its own setup.
-     * Relative to the ESLint process's cwd; defaults to that cwd if not specified.
-     */
-    cwd?: string
+  cwd?: string
 
-    /**
-     * Whether to detect custom component classes (like `card`, `btn`) defined in Tailwind CSS v4,
-     * so they are not reported as unknown classes.
-     * @default true
-     */
-    detectComponentClasses?: boolean
+  /**
+   * Whether to detect custom component classes (like `card`, `btn`) defined in Tailwind CSS v4,
+   * so they are not reported as unknown classes.
+   * @default true
+   */
+  detectComponentClasses?: boolean
 
-    /**
-     * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
-     * Falls back to the default configuration when omitted.
-     */
-    entryPoint?: string
+  /**
+   * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
+   * Falls back to the default configuration when omitted.
+   */
+  entryPoint?: string
 
-    /**
-     * How linting messages are displayed:
-     * - `"visual"` – visualizes whitespace/line breaks (default outside CI)
-     * - `"compact"` – single-line messages, suitable for CI
-     * - `"raw"` – raw information without visualization
-     *
-     * Defaults to `"visual"`, or `"compact"` in CI environments.
-     */
-    messageStyle?: 'compact' | 'raw' | 'visual'
+  /**
+   * How linting messages are displayed:
+   * - `"visual"` – visualizes whitespace/line breaks (default outside CI)
+   * - `"compact"` – single-line messages, suitable for CI
+   * - `"raw"` – raw information without visualization
+   *
+   * Defaults to `"visual"`, or `"compact"` in CI environments.
+   */
+  messageStyle?: 'compact' | 'raw' | 'visual'
 
-    /**
-     * Font size of the `<html>` element in pixels (default 16px).
-     * Used to determine if arbitrary values can be replaced with predefined sizing scales.
-     */
-    rootFontSize?: number
+  /**
+   * Font size of the `<html>` element in pixels (default 16px).
+   * Used to determine if arbitrary values can be replaced with predefined sizing scales.
+   */
+  rootFontSize?: number
 
-    /**
-     * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
-     * Only matches are treated as class candidates.
-     */
-    selectors?: Selectors
-  }
+  /**
+   * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
+   * Only matches are treated as class candidates.
+   */
+  selectors?: Selectors
 }
 
 const tailwindDefaults: TailwindConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-  settings: {
-    detectComponentClasses: true,
-  },
+  detectComponentClasses: true,
 }
 
 /**
@@ -76,27 +64,42 @@ const tailwindDefaults: TailwindConfigOptions = {
  */
 export async function tailwind(options: TailwindConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, tailwindDefaults)
-
   const tailwindPlugin = await importModule(import('eslint-plugin-better-tailwindcss'))
 
-  const baseRules = {
-    ...tailwindPlugin.configs['recommended-error'].rules,
-    ...tailwindPlugin.configs['stylistic-error'].rules,
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
+
+  const recommendedConfig = tailwindPlugin.configs['recommended-error']
+  const stylisticConfig = tailwindPlugin.configs['stylistic-error']
+
+  const { rules: recommendedRules } = recommendedConfig
+  const recommendedRest = omit(recommendedConfig, ['rules'])
+
+  const { rules: stylisticRules } = stylisticConfig
+  const stylisticRest = omit(stylisticConfig, ['rules'])
+
+  const rules = {
+    ...recommendedRules,
+    ...stylisticRules,
   }
 
   return [
     {
-      name: 'favorodera/tailwind/setup',
-      plugins: { tailwind: tailwindPlugin },
-      settings: {
-        'better-tailwindcss': resolved.settings,
-      },
+      ...recommendedRest,
+      name: 'favorodera/tailwind/recommended/setup',
     },
     {
-      files: resolved.files,
+      ...stylisticRest,
+      name: 'favorodera/tailwind/stylistic/setup',
+    },
+    {
+      files,
       name: 'favorodera/tailwind/rules',
       rules: {
-        ...renamePluginsInRules(baseRules, { 'better-tailwindcss': 'tailwind' }),
+        ...rules,
 
         'tailwind/enforce-consistent-class-order': [
           'error',
@@ -115,12 +118,13 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',
 
-        // Disabled as `tailwind/enforce-canonical-classes` covers them
+        // Disabled as `tailwind/enforce-canonical-classes` handles them
         'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-shorthand-classes': 'off',
-
-        ...resolved.overrides,
+      },
+      settings: {
+        'better-tailwindcss': resolved,
       },
     },
   ]
