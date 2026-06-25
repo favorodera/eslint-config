@@ -74,6 +74,7 @@
     "eslint-plugin-unicorn": "catalog:prod",
     "eslint-plugin-unused-imports": "catalog:prod",
     "eslint-plugin-vue": "catalog:prod",
+    "eslint-plugin-vuejs-accessibility": "catalog:prod",
     "eslint-plugin-yml": "catalog:prod",
     "eslint-processor-vue-blocks": "catalog:prod",
     "globals": "catalog:prod",
