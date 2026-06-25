@@ -1,32 +1,21 @@
-import { defu } from 'defu'
 import globals from 'globals'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
-
-/** Options for configuring JavaScript linting rules. */
-export type JavascriptConfigOptions = SharedOptions
-
-const javascriptDefaults: JavascriptConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-}
 
 /**
  * Constructs the flat config items for core JavaScript linting, setting up the required
  * language options, globals, and recommended baseline rules.
- * @param options Javascript configuration options.
  * @returns Promise resolving to javascript ESLint config items.
  */
-export async function javascript(options: JavascriptConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, javascriptDefaults)
-
+export async function javascript(): Promise<Array<TypedFlatConfigItem>> {
   const jsPlugin = await importModule(import('@eslint/js'))
 
-  const baseRules = jsPlugin.configs.recommended.rules
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
 
   return [
     {
@@ -48,16 +37,27 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
       name: 'favorodera/javascript/setup',
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/javascript/rules',
       rules: {
-        ...baseRules,
+        ...jsPlugin.configs.recommended.rules,
 
-        'array-callback-return': 'error',
+        'array-callback-return': [
+          'error',
+          {
+            allowImplicit: true,
+          },
+        ],
         'block-scoped-var': 'error',
         'default-case-last': 'error',
         'dot-notation': 'error',
         'eqeqeq': 'error',
+        'getter-return': [
+          'error',
+          {
+            allowImplicit: true,
+          },
+        ],
         'new-cap': 'error',
         'no-alert': 'error',
         'no-array-constructor': 'error',
@@ -171,8 +171,6 @@ export async function javascript(options: JavascriptConfigOptions): Promise<Arra
         ],
         'vars-on-top': 'error',
         'yoda': 'error',
-
-        ...resolved.overrides,
       },
     },
   ]
