@@ -54,3 +54,21 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
   // Otherwise, value is an options object, so merge it with the default options using defu.
   return defu(value === true ? {} : value, defaults) as TOptions
 }
+
+/**
+ * Creates a new object that omits the specified keys from the target object.
+ * @template TTarget The type of the target object.
+ * @template TTargetKeys The type of the keys to omit from the target object.
+ * @param target The target object from which to omit the specified keys.
+ * @param keys An array of keys to omit from the target object.
+ * @returns A new object that contains all properties of the target object except for the specified keys.
+ */
+export function omit<TTarget extends object, TTargetKeys extends keyof TTarget>(target: TTarget, keys: Array<TTargetKeys>): Omit<TTarget, TTargetKeys> {
+  const targetClone = { ...target }
+
+  for (const key of keys) {
+    Reflect.deleteProperty(targetClone, key)
+  }
+
+  return targetClone
+}
