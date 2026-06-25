@@ -74,7 +74,7 @@ export interface ConfigOptions {
   /** Unused imports and variables detection and cleanup (via `eslint-plugin-unused-imports`). */
   unusedImports?: boolean
 
-  /** Vue single-file components linting (via `eslint-plugin-vue`). */
+  /** Vue single-file components accessibility and linting (via `eslint-plugin-vue` and `eslint-plugin-vuejs-accessibility`). */
   vue?: boolean | VueConfigOptions
 
   /** YAML files linting and sorting (via `eslint-plugin-yml`). */
