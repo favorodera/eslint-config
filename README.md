@@ -94,10 +94,8 @@ export default factory({
 
   // Example: Customize specific rulesets
   stylistic: {
-    settings: {
-      indent: 4,
-      quotes: 'double',
-    },
+    indent: 4,
+    quotes: 'double',
   },
 
   // Example: Disable tailwind if you aren't using it
