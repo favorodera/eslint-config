@@ -1,28 +1,19 @@
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin'
 import { defu } from 'defu'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule } from '../utils'
+import { importModule, omit } from '../utils'
 
 /** Options for configuring Stylistic formatting rules. */
-export type StylisticConfigOptions = SharedOptions & {
-  settings?: Omit<StylisticCustomizeOptions, 'pluginName'>
-}
+export type StylisticConfigOptions = Omit<StylisticCustomizeOptions, 'pluginName'>
 
 const stylisticDefaults: StylisticConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-  settings: {
-    braceStyle: '1tbs',
-    experimental: false,
-    indent: 2,
-    jsx: false,
-    quotes: 'single',
-    semi: false,
-  },
+  braceStyle: '1tbs',
+  experimental: false,
+  indent: 2,
+  jsx: false,
+  quotes: 'single',
+  semi: false,
 }
 
 /**
@@ -36,23 +27,34 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
 
   const stylePlugin = await importModule(import('@stylistic/eslint-plugin'))
 
-  const config = stylePlugin.configs.customize({
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
+
+  const recommendedConfig = stylePlugin.configs.customize({
     pluginName: 'style',
-    ...resolved.settings,
+    ...resolved,
   })
 
-  const baseRules = config?.rules || {}
+  const { rules = {} } = recommendedConfig
+  const rest = omit(recommendedConfig, [
+    'rules',
+    'files',
+    'name',
+  ])
 
   return [
     {
+      ...rest,
       name: 'favorodera/stylistic/setup',
-      plugins: { style: stylePlugin },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/stylistic/rules',
       rules: {
-        ...baseRules,
+        ...rules,
 
         'style/array-bracket-newline': 'error',
         'style/array-element-newline': 'error',
@@ -81,8 +83,6 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
         'style/semi-style': 'error',
         'style/switch-colon-spacing': 'error',
         'style/wrap-regex': 'error',
-
-        ...resolved.overrides,
       },
     },
   ]
