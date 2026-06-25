@@ -1,5 +1,153 @@
 # Changelog
 
+## v0.1.4...v1.0.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.4...v1.0.0)
+
+### Added
+
+- **utils:** Export omit utility function ([857cb87](https://github.com/favorodera/eslint-config/commit/857cb87))
+- **utils:** Add omit utility function ([378744d](https://github.com/favorodera/eslint-config/commit/378744d))
+
+  - implement omit function to remove object keys
+  - support generic types for target and keys
+
+- **pnpm:** Add allowBuilds settings for packages ([823e557](https://github.com/favorodera/eslint-config/commit/823e557))
+
+  - Add allowBuilds for essential dependencies
+  - Enable build permissions for native modules
+
+- **vue:** Integrate vuejs-accessibility plugin ([0a94426](https://github.com/favorodera/eslint-config/commit/0a94426))
+
+  - add eslint-plugin-vuejs-accessibility
+  - implement accessibility rules and configuration
+  - restructure vue config to support plugin base settings
+
+- **factory:** Add vue accessibility support ([38dff76](https://github.com/favorodera/eslint-config/commit/38dff76))
+
+  - Update vue config documentation
+  - Include eslint-plugin-vuejs-accessibility
+
+
+### Refactors
+
+- **factory:** Simplify config options to boolean flags ([b56ff10](https://github.com/favorodera/eslint-config/commit/b56ff10))
+
+  - Remove config option types for core plugins
+  - Clean up imports in factory module
+  - Register vue-a11y alias in config naming map
+
+- **imports:** Simplify config construction ([b82c678](https://github.com/favorodera/eslint-config/commit/b82c678))
+
+  - remove unused options and dependencies
+  - simplify recommended rules extraction
+  - spread base config properties directly
+
+- **javascript:** Simplify config and update rules ([545fec6](https://github.com/favorodera/eslint-config/commit/545fec6))
+
+  - Remove unused options and defu dependency
+  - Simplify internal rule configuration
+  - Update array-callback-return rule options
+  - Add getter-return rule configuration
+
+- **jsdoc:** Simplify config structure and options ([2cc09b5](https://github.com/favorodera/eslint-config/commit/2cc09b5))
+
+  - remove unused JSDocConfigOptions
+  - decouple recommended and stylistic configs
+  - improve rule inheritance and merging logic
+
+- **jsonc:** Simplify configuration structure ([9ca0378](https://github.com/favorodera/eslint-config/commit/9ca0378))
+
+  - remove unused options and defu dependency
+  - hardcode file globs within the function
+  - remove support for custom overrides
+
+- **markdown:** Simplify configuration logic ([2d9bd5b](https://github.com/favorodera/eslint-config/commit/2d9bd5b))
+
+  - remove unused shared options and files property
+  - refactor rules extraction from recommended config
+  - simplify plugin setup and rule application
+
+- **node:** Simplify node config implementation ([bd74697](https://github.com/favorodera/eslint-config/commit/bd74697))
+
+  - remove unused options and dependencies
+  - adopt native plugin configuration structure
+  - clean up file globbing and rule definitions
+
+- **perfectionist:** Flatten configuration options ([deb5831](https://github.com/favorodera/eslint-config/commit/deb5831))
+
+  - Flatten PerfectionistConfigOptions structure
+  - Remove SharedOptions inheritance
+  - Simplify rule resolution and plugin settings
+  - Update defaults and plugin integration logic
+
+- **stylistic:** Simplify configuration logic ([3c93e27](https://github.com/favorodera/eslint-config/commit/3c93e27))
+
+  - Flatten StylisticConfigOptions structure
+  - Remove unnecessary SharedOptions dependency
+  - Refactor rule application to omit extra keys
+
+- **tailwind:** Simplify configuration structure ([c5dc287](https://github.com/favorodera/eslint-config/commit/c5dc287))
+
+  - Flatten TailwindConfigOptions interface
+  - Refactor rule resolution logic
+  - Update settings injection in config items
+
+- **test:** Simplify test config implementation ([ebde81e](https://github.com/favorodera/eslint-config/commit/ebde81e))
+
+  - remove unused options and defu dependency
+  - use recommended config directly
+  - clean up plugin rule extraction
+
+- **typescript:** Simplify config construction ([1f210fe](https://github.com/favorodera/eslint-config/commit/1f210fe))
+
+  - Remove unused options and defu dependency
+  - Extract rules from typescript-eslint config
+  - Merge base, strict, and stylistic rules manually
+
+- **unicorn:** Simplify config structure ([3e382de](https://github.com/favorodera/eslint-config/commit/3e382de))
+
+  - remove unused options and dependencies
+  - adopt native plugin config merging
+  - clean up internal rule configuration
+
+- **unused-imports:** Simplify config structure ([4876099](https://github.com/favorodera/eslint-config/commit/4876099))
+
+  - remove unused options and defu dependency
+  - hardcode file globs for consistency
+  - simplify function signature
+
+- **yaml:** Simplify config structure ([b18f731](https://github.com/favorodera/eslint-config/commit/b18f731))
+
+  - remove unused options parameter
+  - refactor plugin configuration logic
+  - update rule extraction and application
+
+
+### Documentation
+
+- **readme:** Update npm downloads badge to total count ([14f22dc](https://github.com/favorodera/eslint-config/commit/14f22dc))
+- **readme:** Flatten stylistic configuration structure ([7352379](https://github.com/favorodera/eslint-config/commit/7352379))
+
+  - Simplify stylistic settings in example
+  - Remove unnecessary settings wrapper
+
+- **readme:** Add vuejs-accessibility plugin info ([6c7297c](https://github.com/favorodera/eslint-config/commit/6c7297c))
+
+  - Update Vue section in documentation
+  - Include eslint-plugin-vuejs-accessibility
+
+- **vue:** Update documentation for accessibility linting ([3d0800c](https://github.com/favorodera/eslint-config/commit/3d0800c))
+
+### Styling
+
+- **package:** Reformat files array for consistency ([4d078bc](https://github.com/favorodera/eslint-config/commit/4d078bc))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.1.3...v0.1.4
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.3...v0.1.4)
