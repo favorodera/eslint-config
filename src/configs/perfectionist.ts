@@ -1,111 +1,101 @@
 import { defu } from 'defu'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule } from '../utils'
+import { importModule, omit } from '../utils'
 
-/** Options for configuring Perfectionist linting rules. */
-export type PerfectionistConfigOptions = SharedOptions & {
+/**
+ * Options for configuring Perfectionist linting rules.
+ * @see https://perfectionist.dev/guide/getting-started#settings
+ * @see https://perfectionist.dev/configs/recommended-custom
+ */
+export interface PerfectionistConfigOptions {
+
   /**
-   * Global settings for the Perfectionist plugin, applied to all rules
-   * unless overridden by rule-specific options.
-   * @see https://perfectionist.dev/guide/getting-started#settings
-   * @see https://perfectionist.dev/configs/recommended-custom
+   * The type of sorting algorithm.
+   * @default 'natural'
    */
-  settings?: {
-    /**
-     * The type of sorting algorithm.
-     * @default 'natural'
-     */
-    type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'
+  type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'
 
-    /**
-     * The order of sorting.
-     * @default 'asc'
-     */
+  /**
+   * The order of sorting.
+   * @default 'asc'
+   */
+  order?: 'asc' | 'desc'
+
+  /**
+   * The fallback sorting type and order used when two elements are equal
+   * under the primary comparison.
+   */
+  fallbackSort?: {
     order?: 'asc' | 'desc'
-
-    /**
-     * The fallback sorting type and order used when two elements are equal
-     * under the primary comparison.
-     */
-    fallbackSort?: {
-      order?: 'asc' | 'desc'
-      type: 'alphabetical' | 'custom' | 'line-length' | 'natural'
-    }
-
-    /**
-     * Custom alphabet string for the `'custom'` sort type.
-     * Defines the exact character order to use.
-     */
-    alphabet?: string
-
-    /**
-     * Ignore case when sorting.
-     * @default true
-     */
-    ignoreCase?: boolean
-
-    /**
-     * Control whether special characters should be kept, trimmed or removed
-     * before sorting.
-     * @default 'keep'
-     */
-    specialCharacters?: 'keep' | 'remove' | 'trim'
-
-    /**
-     * Locale(s) used for locale-aware string comparison.
-     * A BCP 47 language tag or an array of such tags.
-     * @default 'en-US'
-     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare#locales
-     */
-    locales?: Array<string> | string
-
-    /**
-     * Partition sorted elements by comments.
-     * Can be `true`, `false`, a regexp pattern string, or an array of patterns.
-     * @default true
-     */
-    partitionByComment?: Array<string> | boolean | string
-
-    /**
-     * Partition sorted elements by newlines.
-     * @default true
-     */
-    partitionByNewLine?: boolean
-
-    /**
-     * Specifies how to handle newlines between groups.
-     * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
-     * @default 'ignore'
-     */
-    newlinesBetween?: 'ignore' | number
-
-    /**
-     * Specifies how to handle newlines between elements of each group.
-     * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
-     * @default 'ignore'
-     */
-    newlinesInside?: 'ignore' | 'newlinesBetween' | number
+    type: 'alphabetical' | 'custom' | 'line-length' | 'natural'
   }
+
+  /**
+   * Custom alphabet string for the `'custom'` sort type.
+   * Defines the exact character order to use.
+   */
+  alphabet?: string
+
+  /**
+   * Ignore case when sorting.
+   * @default true
+   */
+  ignoreCase?: boolean
+
+  /**
+   * Control whether special characters should be kept, trimmed or removed
+   * before sorting.
+   * @default 'keep'
+   */
+  specialCharacters?: 'keep' | 'remove' | 'trim'
+
+  /**
+   * Locale(s) used for locale-aware string comparison.
+   * A BCP 47 language tag or an array of such tags.
+   * @default 'en-US'
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare#locales
+   */
+  locales?: Array<string> | string
+
+  /**
+   * Partition sorted elements by comments.
+   * Can be `true`, `false`, a regexp pattern string, or an array of patterns.
+   * @default true
+   */
+  partitionByComment?: Array<string> | boolean | string
+
+  /**
+   * Partition sorted elements by newlines.
+   * @default true
+   */
+  partitionByNewLine?: boolean
+
+  /**
+   * Specifies how to handle newlines between groups.
+   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
+   * @default 'ignore'
+   */
+  newlinesBetween?: 'ignore' | number
+
+  /**
+   * Specifies how to handle newlines between elements of each group.
+   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
+   * @default 'ignore'
+   */
+  newlinesInside?: 'ignore' | 'newlinesBetween' | number
 }
 
 const perfectionistDefaults: PerfectionistConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-  settings: {
-    ignoreCase: true,
-    locales: 'en-US',
-    newlinesBetween: 'ignore',
-    newlinesInside: 'ignore',
-    order: 'asc',
-    partitionByComment: true,
-    partitionByNewLine: true,
-    specialCharacters: 'keep',
-    type: 'natural',
-  },
+  ignoreCase: true,
+  locales: 'en-US',
+  newlinesBetween: 'ignore',
+  newlinesInside: 'ignore',
+  order: 'asc',
+  partitionByComment: true,
+  partitionByNewLine: true,
+  specialCharacters: 'keep',
+  type: 'natural',
 }
 
 /**
@@ -116,29 +106,37 @@ const perfectionistDefaults: PerfectionistConfigOptions = {
  */
 export async function perfectionist(options: PerfectionistConfigOptions): Promise<Array<TypedFlatConfigItem>> {
   const resolved = defu(options, perfectionistDefaults)
-
   const perfectionistPlugin = await importModule(import('eslint-plugin-perfectionist'))
 
-  const safeType = resolved.settings?.type ?? 'natural'
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
+  const safeType = resolved.type ?? 'natural'
 
-  const baseRules = perfectionistPlugin.configs[`recommended-${safeType}`]?.rules || {}
+  const presetConfig = perfectionistPlugin.configs[`recommended-${safeType}`]
+
+  const { rules = {} } = presetConfig
+  const rest = omit(presetConfig, [
+    'rules',
+    'settings',
+    'files',
+    'name',
+  ])
 
   return [
     {
+      ...rest,
       name: 'favorodera/perfectionist/setup',
-      plugins: { perfectionist: perfectionistPlugin },
       settings: {
-        perfectionist: resolved.settings,
+        perfectionist: resolved,
       },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/perfectionist/rules',
-      rules: {
-        ...baseRules,
-
-        ...resolved.overrides,
-      },
+      rules,
     },
   ]
 }
