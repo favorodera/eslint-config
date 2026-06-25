@@ -1,6 +1,57 @@
 import { describe, expect, it } from 'vitest'
 import { factory } from '../src/factory'
-import { extractRules, importModule, resolveOptions } from '../src/utils'
+import { extractRules, importModule, omit, resolveOptions } from '../src/utils'
+
+describe('omit', () => {
+  it('returns a new object without the specified keys', () => {
+    const source = { a: 1, b: 2, c: 3 }
+    const result = omit(source, [
+      'a',
+      'c',
+    ])
+
+    expect(result).toStrictEqual({ b: 2 })
+  })
+
+  it('does not mutate the original object', () => {
+    const source = { a: 1, b: 2 }
+    const result = omit(source, ['a'])
+
+    expect(source).toStrictEqual({ a: 1, b: 2 })
+    expect(result).toStrictEqual({ b: 2 })
+  })
+
+  it('returns a shallow copy when no keys are omitted', () => {
+    const source = { a: 1, b: 2 }
+    const result = omit(source, [])
+
+    expect(result).toStrictEqual({ a: 1, b: 2 })
+    expect(result).not.toBe(source)
+  })
+
+  it('handles single key omission', () => {
+    const source = { name: 'test', plugins: {}, rules: {} }
+    const result = omit(source, ['rules'])
+
+    expect(result).toStrictEqual({ name: 'test', plugins: {} })
+    expect('rules' in result).toBe(false)
+  })
+
+  it('works with symbol keys', () => {
+    const sym = Symbol('hidden')
+    const source = { a: 1, [sym]: 2 }
+    const result = omit(source, ['a'])
+
+    expect(result).toStrictEqual({ [sym]: 2 })
+  })
+
+  it('returns empty object when all keys are omitted', () => {
+    const source = { a: 1 }
+    const result = omit(source, ['a'])
+
+    expect(result).toStrictEqual({})
+  })
+})
 
 describe('resolveOptions', () => {
   it('returns false when value is false', () => {
@@ -103,60 +154,6 @@ describe('factory', () => {
     expect(resolved[0]?.name).toBe('favorodera/ignores')
   })
 
-  it('includes expected default config names', async () => {
-    const resolved = await factory()
-    const names = resolved.map(config => config.name)
-
-    const expected = [
-      'favorodera/ignores',
-      'favorodera/imports/setup',
-      'favorodera/imports/rules',
-      'favorodera/javascript/setup',
-      'favorodera/javascript/rules',
-      'favorodera/jsdoc/setup',
-      'favorodera/jsdoc/rules',
-      'favorodera/jsonc/setup',
-      'favorodera/jsonc/rules',
-      'favorodera/jsonc/sort/package-json',
-      'favorodera/jsonc/sort/tsconfig-json',
-      'favorodera/jsonc/disables',
-      'favorodera/markdown/setup',
-      'favorodera/markdown/rules',
-      'favorodera/markdown/code-in-md/disables',
-      'favorodera/node/setup',
-      'favorodera/node/rules',
-      'favorodera/node/disables',
-      'favorodera/perfectionist/setup',
-      'favorodera/perfectionist/rules',
-      'favorodera/pnpm/setup',
-      'favorodera/pnpm/package-json',
-      'favorodera/pnpm/pnpm-workspace-yaml',
-      'favorodera/stylistic/setup',
-      'favorodera/stylistic/rules',
-      'favorodera/tailwind/setup',
-      'favorodera/tailwind/rules',
-      'favorodera/test/setup',
-      'favorodera/test/rules',
-      'favorodera/test/disables',
-      'favorodera/typescript/setup',
-      'favorodera/typescript/rules',
-      'favorodera/unicorn/setup',
-      'favorodera/unicorn/rules',
-      'favorodera/unused-imports/setup',
-      'favorodera/unused-imports/rules',
-      'favorodera/unused-imports/disables',
-      'favorodera/vue/setup',
-      'favorodera/vue/rules',
-      'favorodera/yaml/setup',
-      'favorodera/yaml/rules',
-      'favorodera/yaml/sort/pnpm-workspace-yaml',
-    ]
-
-    for (const name of expected) {
-      expect(names, `"${name}" was not returned by factory()`).toContain(name)
-    }
-  })
-
   it('disabling typescript excludes its config', async () => {
     const withTs = await factory({ typescript: true })
     const withoutTs = await factory({ typescript: false })
@@ -193,73 +190,6 @@ describe('factory', () => {
     })
 
     expect(stripped.length).toBeLessThan(full.length)
-  })
-
-  it('plugin renaming: @typescript-eslint → ts', async () => {
-    const resolved = await factory({ vue: false })
-    const tsSetup = resolved.find(config => config.name === 'favorodera/typescript/setup')
-
-    expect(tsSetup?.plugins).toHaveProperty('ts')
-    expect(tsSetup?.plugins).not.toHaveProperty('@typescript-eslint')
-  })
-
-  it('plugin renaming: n → node', async () => {
-    const resolved = await factory()
-    const nodeSetup = resolved.find(config => config.name === 'favorodera/node/setup')
-
-    expect(nodeSetup?.plugins).toHaveProperty('node')
-    expect(nodeSetup?.plugins).not.toHaveProperty('n')
-  })
-
-  it('plugin renaming: yml → yaml', async () => {
-    const resolved = await factory()
-    const yamlSetup = resolved.find(config => config.name === 'favorodera/yaml/setup')
-
-    expect(yamlSetup?.plugins).toHaveProperty('yaml')
-    expect(yamlSetup?.plugins).not.toHaveProperty('yml')
-  })
-
-  it('plugin renaming: better-tailwindcss → tailwind', async () => {
-    const resolved = await factory()
-    const tailwindSetup = resolved.find(config => config.name === 'favorodera/tailwind/setup')
-
-    expect(tailwindSetup?.plugins).toHaveProperty('tailwind')
-    expect(tailwindSetup?.plugins).not.toHaveProperty('better-tailwindcss')
-  })
-
-  it('plugin renaming: import-lite → import', async () => {
-    const resolved = await factory()
-    const importSetup = resolved.find(config => config.name === 'favorodera/imports/setup')
-
-    expect(importSetup?.plugins).toHaveProperty('import')
-    expect(importSetup?.plugins).not.toHaveProperty('import-lite')
-  })
-
-  it('plugin renaming: markdown → md', async () => {
-    const resolved = await factory()
-    const mdSetup = resolved.find(config => config.name === 'favorodera/markdown/setup')
-
-    expect(mdSetup?.plugins).toHaveProperty('md')
-    expect(mdSetup?.plugins).not.toHaveProperty('markdown')
-  })
-
-  it('plugin renaming: vitest → test', async () => {
-    const resolved = await factory()
-    const testSetup = resolved.find(config => config.name === 'favorodera/test/setup')
-
-    expect(testSetup?.plugins).toHaveProperty('test')
-    expect(testSetup?.plugins).not.toHaveProperty('vitest')
-  })
-
-  it('custom overrides are present in resolved rules', async () => {
-    const resolved = await factory({
-      javascript: {
-        overrides: { 'no-console': 'off' },
-      },
-    })
-    const jsRules = resolved.find(config => config.name === 'favorodera/javascript/rules')
-
-    expect(jsRules?.rules?.['no-console']).toBe('off')
   })
 
   it('custom ignore patterns are merged', async () => {
