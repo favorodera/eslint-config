@@ -1,54 +1,64 @@
-import { defu } from 'defu'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule } from '../utils'
-
-/** Options for configuring JSDoc linting rules. */
-export type JSDocConfigOptions = SharedOptions
-
-const jsdocDefaults: JSDocConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-}
+import { importModule, omit } from '../utils'
 
 /**
  * Constructs the flat config items for JSDoc linting, ensuring comments follow
  * proper styling, parameter checks, and types alignment.
- * @param options JSDoc configuration options.
  * @returns Promise resolving to JSDoc ESLint config items.
  */
-export async function jsdoc(options: JSDocConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, jsdocDefaults)
-
+export async function jsdoc(): Promise<Array<TypedFlatConfigItem>> {
   const jsdocPlugin = await importModule(import('eslint-plugin-jsdoc'))
 
-  const baseRules = {
-    ...jsdocPlugin.configs['flat/recommended-typescript-error']?.rules,
-    ...jsdocPlugin.configs['flat/stylistic-typescript-error']?.rules,
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
+
+  const recommendedConfig = jsdocPlugin.configs['flat/recommended-typescript-error']
+  const stylisticConfig = jsdocPlugin.configs['flat/stylistic-typescript-error']
+
+  const { rules: recommendedRules = {} } = recommendedConfig
+  const recommendedRest = omit(recommendedConfig, [
+    'rules',
+    'files',
+    'name',
+  ])
+
+  const { rules: stylisticRules = {} } = stylisticConfig
+  const stylisticRest = omit(stylisticConfig, [
+    'rules',
+    'files',
+    'name',
+  ])
+
+  const rules = {
+    ...recommendedRules,
+    ...stylisticRules,
   }
 
   return [
     {
-      name: 'favorodera/jsdoc/setup',
-      plugins: { jsdoc: jsdocPlugin },
+      ...recommendedRest,
+      name: 'favorodera/jsdoc/recommended/setup',
     },
     {
-      files: resolved.files,
+      ...stylisticRest,
+      name: 'favorodera/jsdoc/stylistic/setup',
+    },
+    {
+      files,
       name: 'favorodera/jsdoc/rules',
       rules: {
-        ...baseRules,
+        ...rules,
 
         'jsdoc/check-indentation': 'error',
         'jsdoc/check-template-names': 'error',
         'jsdoc/imports-as-dependencies': 'error',
         'jsdoc/lines-before-block': [
           'error',
-          {
-            ignoreSingleLines: false,
-          },
+          { ignoreSingleLines: false },
         ],
         'jsdoc/multiline-blocks': 'error',
         'jsdoc/no-bad-blocks': 'error',
@@ -56,8 +66,6 @@ export async function jsdoc(options: JSDocConfigOptions): Promise<Array<TypedFla
         'jsdoc/no-blank-blocks': 'error',
         'jsdoc/require-throws-type': 'off',
         'jsdoc/sort-tags': 'error',
-
-        ...resolved.overrides,
       },
     },
   ]
