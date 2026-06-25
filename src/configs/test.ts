@@ -1,39 +1,35 @@
-import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { testGlob } from '../globs'
-import { extractRules, importModule } from '../utils'
-
-/** Options for configuring test (Vitest) linting rules. */
-export type TestConfigOptions = SharedOptions
-
-const testDefaults: TestConfigOptions = {
-  files: [testGlob],
-}
+import { importModule, omit } from '../utils'
 
 /**
  * Constructs the flat config items for test linting, extending
  * the recommended Vitest rule sets.
- * @param options Test configuration options.
  * @returns Promise resolving to test ESLint config items.
  */
-export async function test(options: TestConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, testDefaults)
-
+export async function test(): Promise<Array<TypedFlatConfigItem>> {
   const testPlugin = await importModule(import('@vitest/eslint-plugin'))
 
-  const baseRules = extractRules(testPlugin.configs.recommended as any)
+  const files = [testGlob]
+
+  const recommendedConfig = testPlugin.configs.recommended
+
+  const { rules } = recommendedConfig
+  const rest = omit(recommendedConfig, [
+    'rules',
+    'name',
+  ])
 
   return [
     {
+      ...rest,
       name: 'favorodera/test/setup',
-      plugins: { test: testPlugin },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/test/rules',
       rules: {
-        ...renamePluginsInRules(baseRules, { vitest: 'test' }),
+        ...rules,
 
         'test/consistent-each-for': [
           'error',
@@ -91,12 +87,10 @@ export async function test(options: TestConfigOptions): Promise<Array<TypedFlatC
         'test/require-to-throw-message': 'error',
         'test/require-top-level-describe': 'error',
         'test/warn-todo': 'warn',
-
-        ...resolved.overrides,
       },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/test/disables',
       rules: {
         'no-unused-expressions': 'off',
