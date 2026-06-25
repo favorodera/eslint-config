@@ -1,25 +1,13 @@
-import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { pnpmWorkspaceGlob, yamlGlob } from '../globs'
-import { extractRules, importModule } from '../utils'
-
-/** Options for configuring YAML linting rules. */
-export type YAMLConfigOptions = SharedOptions
-
-const yamlDefaults: YAMLConfigOptions = {
-  files: [yamlGlob],
-}
+import { extractRules, importModule, omit } from '../utils'
 
 /**
  * Constructs the flat config items for YAML linting, setting up
  * the custom parser and rule validations.
- * @param options YAML configuration options.
  * @returns Promise resolving to YAML ESLint config items.
  */
-export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, yamlDefaults)
-
+export async function yaml(): Promise<Array<TypedFlatConfigItem>> {
   const [
     yamlPlugin,
     yamlParser,
@@ -28,33 +16,42 @@ export async function yaml(options: YAMLConfigOptions): Promise<Array<TypedFlatC
     importModule(import('yaml-eslint-parser')),
   ])
 
-  const baseRules = extractRules(yamlPlugin.configs.standard)
+  const standardConfig = yamlPlugin.configs.standard
+
+  const [pluginConfig] = standardConfig
+  const pluginRest = omit(pluginConfig, [
+    'rules',
+    'files',
+    'name',
+  ])
+
+  const rules = extractRules(standardConfig)
 
   return [
     {
+      ...pluginRest,
       name: 'favorodera/yaml/setup',
-      plugins: { yaml: yamlPlugin },
     },
     {
-      files: resolved.files,
+      files: [yamlGlob],
+      language: 'yaml/yaml',
       languageOptions: {
         parser: yamlParser,
       },
       name: 'favorodera/yaml/rules',
       rules: {
-        ...renamePluginsInRules(baseRules, { yml: 'yaml' }),
+        ...rules,
 
         'yaml/quotes': [
           'error',
           { avoidEscape: true, prefer: 'single' },
         ],
         'yaml/require-string-key': 'error',
-
-        ...resolved.overrides,
       },
     },
     {
       files: [pnpmWorkspaceGlob],
+      language: 'yaml/yaml',
       languageOptions: {
         parser: yamlParser,
       },
