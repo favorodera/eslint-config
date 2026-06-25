@@ -1,29 +1,20 @@
-import { defu } from 'defu'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
 import { importModule } from '../utils'
-
-/** Options for configuring JSON and JSONC linting rules. */
-export type JSONCConfigOptions = SharedOptions
-
-const jsoncDefaults: JSONCConfigOptions = {
-  files: [
-    json5Glob,
-    jsoncGlob,
-    jsonGlob,
-  ],
-}
 
 /**
  * Constructs the flat config items for JSON, JSON5, and JSONC linting, setting up
  * the custom parser, rule validations, and sorting rules for package.json/tsconfig.json.
- * @param options JSONC configuration options.
  * @returns Promise resolving to JSONC ESLint config items.
  */
-export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, jsoncDefaults)
-
+export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
   const jsoncPlugin = await importModule(import('eslint-plugin-jsonc'))
+
+  const files = [
+    json5Glob,
+    jsoncGlob,
+    jsonGlob,
+  ]
 
   return [
     {
@@ -31,7 +22,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       plugins: { jsonc: jsoncPlugin },
     },
     {
-      files: resolved.files,
+      files,
       language: 'jsonc/x',
       name: 'favorodera/jsonc/rules',
       rules: {
@@ -98,8 +89,6 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
         'jsonc/space-unary-ops': 'error',
         'jsonc/valid-json-number': 'error',
         'jsonc/vue-custom-block/no-parsing-error': 'error',
-
-        ...resolved.overrides,
       },
     },
     {
@@ -334,7 +323,7 @@ export async function jsonc(options: JSONCConfigOptions): Promise<Array<TypedFla
       },
     },
     {
-      files: resolved.files,
+      files,
       language: 'jsonc/x',
       name: 'favorodera/jsonc/disables',
       rules: {
