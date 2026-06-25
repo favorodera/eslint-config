@@ -1,46 +1,47 @@
-import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { tsGlob } from '../globs'
-import { extractRules, importModule } from '../utils'
-
-/** Options for configuring TypeScript linting rules. */
-export type TypescriptConfigOptions = SharedOptions
-
-const typescriptDefaults: TypescriptConfigOptions = {
-  files: [tsGlob],
-}
+import { importModule, omit } from '../utils'
 
 /**
  * Constructs the flat config items for TypeScript linting, initializing the parser
  * and extending the recommended and strict type-aware rule sets.
- * @param options TypeScript configuration options.
  * @returns Promise resolving to TypeScript ESLint config items.
  */
-export async function typescript(options: TypescriptConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, typescriptDefaults)
-
+export async function typescript(): Promise<Array<TypedFlatConfigItem>> {
   const tsEsLint = await importModule(import('typescript-eslint'))
 
-  const baseRules = extractRules(
-    tsEsLint.configs.strict as any,
-    tsEsLint.configs.stylistic as any,
-  )
+  const files = [tsGlob]
+
+  // Both arrays share base + eslint-recommended, only the 3rd element differs
+  const [
+    baseConfig,
+    eslintRecommended,
+    strictConfig,
+  ] = tsEsLint.configs.strict
+  const stylisticConfig = tsEsLint.configs.stylistic[2]
+
+  const baseRest = omit(baseConfig, [
+    'rules',
+    'name',
+  ])
+
+  // Merge rules from eslint-recommended (core overrides), strict, and stylistic
+  const rules = {
+    ...eslintRecommended?.rules,
+    ...strictConfig?.rules,
+    ...stylisticConfig?.rules,
+  }
 
   return [
     {
+      ...baseRest,
       name: 'favorodera/typescript/setup',
-      plugins: { ts: tsEsLint.plugin },
     },
     {
-      files: resolved.files,
-      languageOptions: {
-        parser: tsEsLint.parser,
-        parserOptions: { sourceType: 'module' },
-      },
+      files,
       name: 'favorodera/typescript/rules',
       rules: {
-        ...renamePluginsInRules(baseRules, { '@typescript-eslint': 'ts' }),
+        ...rules,
 
         'ts/array-type': [
           'error',
@@ -52,8 +53,6 @@ export async function typescript(options: TypescriptConfigOptions): Promise<Arra
         'ts/no-import-type-side-effects': 'error',
         'ts/no-loop-func': 'error',
         'ts/no-redeclare': 'error',
-
-        ...resolved.overrides,
       },
     },
   ]
