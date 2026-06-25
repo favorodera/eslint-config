@@ -24,7 +24,7 @@ const vueDefaults: VueConfigOptions = {
 }
 
 /**
- * Constructs the flat config items for Vue linting, setting up the custom template parser,
+ * Constructs the flat config items for Vue and accessibility linting, setting up the custom template parser,
  * Vue block processors, and rules to enforce recommended component syntax.
  * @param options Vue configuration options.
  * @returns Promise resolving to Vue ESLint config items.
