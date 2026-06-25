@@ -28,4 +28,4 @@ export type { ConfigNames } from './types/rules'
 export type { TypedFlatConfigItem } from './types/utils'
 
 // Utility functions - useful for consumers building on top of this config.
-export { extractRules, importModule } from './utils'
+export { extractRules, importModule, omit } from './utils'
