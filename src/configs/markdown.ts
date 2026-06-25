@@ -1,12 +1,11 @@
 import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { codeInMdGlob, mdGlob, mdInMdGlob } from '../globs'
-import { extractRules, importModule } from '../utils'
+import { importModule, omit } from '../utils'
 
 /** Options for configuring Markdown linting rules. */
-export type MarkdownConfigOptions = SharedOptions & {
+export interface MarkdownConfigOptions {
   /**
    * Enable GitHub Flavored Markdown (GFM) support.
    * When true, applies additional linting rules specific to GFM extensions
@@ -16,7 +15,6 @@ export type MarkdownConfigOptions = SharedOptions & {
 }
 
 const markdownDefaults: MarkdownConfigOptions = {
-  files: [mdGlob],
   gfm: true,
 }
 
@@ -31,15 +29,23 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
 
   const markdownPlugin = await importModule(import('@eslint/markdown'))
 
-  const baseRules = extractRules(markdownPlugin.configs.recommended)
+  const [recommendedConfig] = markdownPlugin.configs.recommended
+
+  const { rules = {} } = recommendedConfig
+  const rest = omit(recommendedConfig, [
+    'rules',
+    'files',
+    'name',
+    'language',
+  ])
 
   return [
     {
+      ...rest,
       name: 'favorodera/markdown/setup',
-      plugins: { md: markdownPlugin },
     },
     {
-      files: resolved.files,
+      files: [mdGlob],
       ignores: [mdInMdGlob],
       language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
       languageOptions: {
@@ -51,12 +57,10 @@ export async function markdown(options: MarkdownConfigOptions): Promise<Array<Ty
         processorPassThrough,
       ]),
       rules: {
-        ...renamePluginsInRules(baseRules, { markdown: 'md' }),
+        ...rules,
 
         'md/fenced-code-language': 'off',
         'md/no-missing-label-refs': 'off',
-
-        ...resolved.overrides,
       },
     },
     {
