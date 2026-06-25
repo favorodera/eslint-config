@@ -1,29 +1,20 @@
-import { defu } from 'defu'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
-
-/** Options for configuring unused imports linting rules. */
-export type UnusedImportsConfigOptions = SharedOptions
-
-const unusedImportsDefaults: UnusedImportsConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-}
 
 /**
  * Constructs the flat config items for unused imports linting, providing plugin setup and
  * specific rules to detect and remove unused imports and variables.
- * @param options Configuration options for unused imports linting.
  * @returns Promise resolving to unused imports ESLint config items.
  */
-export async function unusedImports(options: UnusedImportsConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, unusedImportsDefaults)
-
+export async function unusedImports(): Promise<Array<TypedFlatConfigItem>> {
   const unusedImportsPlugin = await importModule(import('eslint-plugin-unused-imports'))
+
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
 
   return [
     {
@@ -33,7 +24,7 @@ export async function unusedImports(options: UnusedImportsConfigOptions): Promis
       },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/unused-imports/rules',
       rules: {
         'unused-imports/no-unused-imports': 'error',
@@ -47,12 +38,10 @@ export async function unusedImports(options: UnusedImportsConfigOptions): Promis
             varsIgnorePattern: '^_',
           },
         ],
-
-        ...resolved.overrides,
       },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/unused-imports/disables',
       rules: {
         'no-unused-vars': 'off',
