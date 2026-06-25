@@ -1,43 +1,40 @@
-import { defu } from 'defu'
-import { renamePluginsInRules } from 'eslint-flat-config-utils'
-import type { SharedOptions, TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types/utils'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule } from '../utils'
-
-/** Options for configuring Node.js linting rules. */
-export type NodeConfigOptions = SharedOptions
-
-const nodeDefaults: NodeConfigOptions = {
-  files: [
-    jsGlob,
-    tsGlob,
-    vueGlob,
-  ],
-}
+import { importModule, omit } from '../utils'
 
 /**
  * Constructs the flat config items for Node.js linting, providing rules
  * to enforce best practices for Node.js environments.
- * @param options Node configuration options.
  * @returns Promise resolving to Node ESLint config items.
  */
-export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, nodeDefaults)
-
+export async function node(): Promise<Array<TypedFlatConfigItem>> {
   const nodePlugin = await importModule(import('eslint-plugin-n'))
 
-  const baseRules = nodePlugin.configs?.['flat/recommended-module']?.rules || {}
+  const files = [
+    jsGlob,
+    tsGlob,
+    vueGlob,
+  ]
+
+  const recommendedConfig = nodePlugin.configs['flat/recommended-module']
+
+  const { rules = {} } = recommendedConfig
+  const rest = omit(recommendedConfig, [
+    'rules',
+    'files',
+    'name',
+  ])
 
   return [
     {
+      ...rest,
       name: 'favorodera/node/setup',
-      plugins: { node: nodePlugin },
     },
     {
-      files: resolved.files,
+      files,
       name: 'favorodera/node/rules',
       rules: {
-        ...renamePluginsInRules(baseRules, { n: 'node' }),
+        ...rules,
 
         'node/callback-return': 'error',
         'node/handle-callback-err': [
@@ -62,15 +59,10 @@ export async function node(options: NodeConfigOptions): Promise<Array<TypedFlatC
         'node/prefer-promises/fs': 'error',
 
         'node/no-process-exit': 'off',
-
-        ...resolved.overrides,
       },
     },
     {
-      files: [
-        tsGlob,
-        vueGlob,
-      ],
+      files,
       name: 'favorodera/node/disables',
       rules: {
         'node/no-missing-import': 'off',
