@@ -1,26 +1,3 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":dependencyDashboard",
-    ":semanticCommitTypeAll(chore)"
-  ],
-
-  "schedule": ["before 5am on monday"],
-
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["patch"],
-      "enabled": false
-    },
-    {
-      "matchUpdateTypes": ["minor", "major"],
-      "minimumReleaseAge": "7 days",
-      "internalChecksFilter": "strict"
-    }
-  ],
-
-  "lockFileMaintenance": {
-    "enabled": true
-  }
+  "extends": ["github>favorodera/renovate-config"]
 }
