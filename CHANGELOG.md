@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.0.0...v1.0.1
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.0...v1.0.1)
+
+### Refactors
+
+- **config:** Centralize rule overrides ([cb90530](https://github.com/favorodera/eslint-config/commit/cb90530))
+
+  - Create disables.ts for centralized rule overrides
+  - Remove scattered disable configs from sub-modules
+  - Append disables to factory composer chain
+  - Update codeInMdGlob pattern
+  - Clean up issue template formatting
+
+
+### Documentation
+
+- **template:** Update project name in bug report ([71c5c46](https://github.com/favorodera/eslint-config/commit/71c5c46))
+
+### Chores
+
+- **renovate:** Simplify configuration to base preset ([efa5f45](https://github.com/favorodera/eslint-config/commit/efa5f45))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v0.1.4...v1.0.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v0.1.4...v1.0.0)
