@@ -151,7 +151,6 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
           'error',
           { destructure: 'never' },
         ],
-        'vue/multi-word-component-names': 'off',
         'vue/next-tick-style': [
           'error',
           'promise',

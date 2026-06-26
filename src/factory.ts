@@ -1,6 +1,7 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
+import { disables } from './configs/disables'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { imports } from './configs/imports'
 import { javascript } from './configs/javascript'
@@ -131,6 +132,7 @@ export function factory(options: ConfigOptions = {}) {
 
   composer = composer
     .append(...configs)
+    .append(...disables())
     .renamePlugins({
       '@typescript-eslint': 'ts',
       'better-tailwindcss': 'tailwind',

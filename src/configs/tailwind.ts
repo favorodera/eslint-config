@@ -117,11 +117,6 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
         ],
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',
-
-        // Disabled as `tailwind/enforce-canonical-classes` handles them
-        'tailwind/enforce-consistent-important-position': 'off',
-        'tailwind/enforce-consistent-variable-syntax': 'off',
-        'tailwind/enforce-shorthand-classes': 'off',
       },
       settings: {
         'better-tailwindcss': resolved,

@@ -89,12 +89,5 @@ export async function test(): Promise<Array<TypedFlatConfigItem>> {
         'test/warn-todo': 'warn',
       },
     },
-    {
-      files,
-      name: 'favorodera/test/disables',
-      rules: {
-        'no-unused-expressions': 'off',
-      },
-    },
   ]
 }

@@ -322,13 +322,5 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
         ],
       },
     },
-    {
-      files,
-      language: 'jsonc/x',
-      name: 'favorodera/jsonc/disables',
-      rules: {
-        'no-irregular-whitespace': 'off',
-      },
-    },
   ]
 }

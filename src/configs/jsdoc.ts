@@ -64,7 +64,6 @@ export async function jsdoc(): Promise<Array<TypedFlatConfigItem>> {
         'jsdoc/no-bad-blocks': 'error',
         'jsdoc/no-blank-block-descriptions': 'error',
         'jsdoc/no-blank-blocks': 'error',
-        'jsdoc/require-throws-type': 'off',
         'jsdoc/sort-tags': 'error',
       },
     },

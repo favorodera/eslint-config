@@ -40,13 +40,5 @@ export async function unusedImports(): Promise<Array<TypedFlatConfigItem>> {
         ],
       },
     },
-    {
-      files,
-      name: 'favorodera/unused-imports/disables',
-      rules: {
-        'no-unused-vars': 'off',
-        'ts/no-unused-vars': 'off',
-      },
-    },
   ]
 }

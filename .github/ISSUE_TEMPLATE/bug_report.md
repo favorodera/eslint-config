@@ -37,10 +37,10 @@ What actually happened instead.
 
 ## Environment
 
-- **OS:** [e.g., Windows 11, macOS 14]
-- **Node.js version:** [e.g., 24.0.0]
-- **pnpm version:** [e.g., 10.0.0]
-- **@favorodera/eslint-config version:** [e.g., 1.0.0]
+- **OS:** e.g. Windows 11, macOS 14
+- **Node.js version:** e.g. 24.0.0
+- **pnpm version:** e.g. 10.0.0
+- **@favorodera/eslint-config version:** e.g. 1.0.0
 
 ## Additional Context
 

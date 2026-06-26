@@ -33,13 +33,7 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
     {
       files,
       name: 'favorodera/unicorn/rules',
-      rules: {
-        ...rules,
-
-        'unicorn/filename-case': 'off',
-        'unicorn/no-process-exit': 'off',
-        'unicorn/prevent-abbreviations': 'off',
-      },
+      rules,
     },
   ]
 }

@@ -57,16 +57,6 @@ export async function node(): Promise<Array<TypedFlatConfigItem>> {
         'node/prefer-node-protocol': 'error',
         'node/prefer-promises/dns': 'error',
         'node/prefer-promises/fs': 'error',
-
-        'node/no-process-exit': 'off',
-      },
-    },
-    {
-      files,
-      name: 'favorodera/node/disables',
-      rules: {
-        'node/no-missing-import': 'off',
-        'node/no-missing-require': 'off',
       },
     },
   ]
