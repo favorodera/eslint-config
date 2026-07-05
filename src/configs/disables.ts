@@ -22,9 +22,6 @@ export function disables(): Array<TypedFlatConfigItem> {
     {
       files: [mdGlob],
       ignores: [mdInMdGlob],
-      languageOptions: {
-        frontmatter: 'yaml',
-      },
       name: 'favorodera/disables/markdown',
       rules: {
         'md/no-missing-atx-heading-space': 'off',
