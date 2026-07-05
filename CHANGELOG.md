@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.0.2...v1.0.3
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.2...v1.0.3)
+
+### Added
+
+- **config:** Disable node/no-extraneous-import ([2e6f65a](https://github.com/favorodera/eslint-config/commit/2e6f65a))
+
+  - Prevent false positives for extraneous imports
+  - Allow imports not defined in package.json
+
+
+### Refactors
+
+- **disables:** Remove yaml frontmatter configuration ([7734ff9](https://github.com/favorodera/eslint-config/commit/7734ff9))
+
+  - drop frontmatter option from markdown config
+  - simplify language options for markdown files
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.0.1...v1.0.2
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.1...v1.0.2)
