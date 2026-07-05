@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.0.1...v1.0.2
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.1...v1.0.2)
+
+### Fixed
+
+- **pnpm:** Disable autofix for json-valid-catalog ([4214ffa](https://github.com/favorodera/eslint-config/commit/4214ffa))
+
+  - prevent unexpected modifications to catalog files
+
+- **pnpm:** Disable automatic catalog enforcement fix ([869ac92](https://github.com/favorodera/eslint-config/commit/869ac92))
+
+  - Prevent unintended modifications to dependency files
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.0.0...v1.0.1
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.0...v1.0.1)
