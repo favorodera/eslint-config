@@ -28,7 +28,7 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
         'pnpm/json-enforce-catalog': [
           'error',
           {
-            autofix: true,
+            autofix: false,
             fields: [
               'dependencies',
               'devDependencies',
