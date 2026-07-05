@@ -51,6 +51,7 @@ export function disables(): Array<TypedFlatConfigItem> {
         'unicode-bom': 'off',
 
         'node/prefer-global/process': 'off',
+        'node/no-extraneous-import':'off',
 
         'style/comma-dangle': 'off',
         'style/eol-last': 'off',
