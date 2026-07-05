@@ -44,7 +44,7 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
         ],
         'pnpm/json-valid-catalog': [
           'error',
-          { autofix: true },
+          { autofix: false },
         ],
       },
     },
