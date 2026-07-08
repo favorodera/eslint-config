@@ -47,8 +47,8 @@ export function disables(): Array<TypedFlatConfigItem> {
         'no-unused-vars': 'off',
         'unicode-bom': 'off',
 
+        'node/no-extraneous-import': 'off',
         'node/prefer-global/process': 'off',
-        'node/no-extraneous-import':'off',
 
         'style/comma-dangle': 'off',
         'style/eol-last': 'off',
