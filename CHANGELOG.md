@@ -1,5 +1,29 @@
 # Changelog
 
+## v1.0.3...v1.0.4
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.3...v1.0.4)
+
+### Added
+
+- **vue:** Update accessibility rules for forms ([6bdba1d](https://github.com/favorodera/eslint-config/commit/6bdba1d))
+
+  - Add form-control-has-label and label-has-for rules
+  - Remove deprecated no-onchange rule
+
+
+### Chores
+
+- **config:** Improve formatting and rule sorting ([1e1b149](https://github.com/favorodera/eslint-config/commit/1e1b149))
+
+  - Consolidate package.json file array
+  - Reorder node rules for consistency
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.0.2...v1.0.3
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.2...v1.0.3)
