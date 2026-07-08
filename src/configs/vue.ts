@@ -203,8 +203,28 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
       rules: {
         ...a11yRules,
 
+        'vue-a11y/form-control-has-label': [
+          'error',
+          {
+            controlComponents: [],
+            labelComponents: [],
+          },
+        ],
+        'vue-a11y/label-has-for': [
+          'error',
+          {
+            allowChildren: true,
+            components: [],
+            controlComponents: [],
+            required: {
+              some: [
+                'nesting',
+                'id',
+              ],
+            },
+          },
+        ],
         'vue-a11y/no-aria-hidden-on-focusable': 'error',
-        'vue-a11y/no-onchange': 'error',
         'vue-a11y/no-role-presentation-on-focusable': 'error',
       },
     },
