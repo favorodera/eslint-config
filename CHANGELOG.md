@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.0.4...v1.1.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.4...v1.1.0)
+
+### Chores
+
+- **scripts:** Reorder ready script to build at the end ([32c4f39](https://github.com/favorodera/eslint-config/commit/32c4f39))
+
+  - Ensure linting and tests pass before building
+  - Prevent build execution if verification fails
+
+- Update dependencies, configs, and CI workflows ([0afe053](https://github.com/favorodera/eslint-config/commit/0afe053))
+
+  - update dependencies and catalog versions
+  - convert issue templates to YAML forms
+  - adjust CI and release workflow pipelines
+  - update eslint rules and vitest configuration
+
+- **scripts:** Streamline rule types generation ([983c682](https://github.com/favorodera/eslint-config/commit/983c682))
+
+  - Rename type generation script for brevity
+  - Run type generation before typecheck to prevent errors
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.0.3...v1.0.4
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.3...v1.0.4)
