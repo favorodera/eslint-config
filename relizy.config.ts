@@ -1,11 +1,6 @@
 import { defineConfig } from 'relizy'
 
 export default defineConfig({
-  excludeAuthors: [
-    'dependabot[bot]',
-    'renovate[bot]',
-    'github-actions[bot]',
-  ],
   projectName: '@favorodera/eslint-config',
   publish: {
     access: 'public',
@@ -15,14 +10,15 @@ export default defineConfig({
     registry: 'https://registry.npmjs.org',
   },
   types: {
-    build: false,
+    build: { semver: 'patch', title: 'Builds' },
     chore: { semver: 'patch', title: 'Chores' },
-    ci: false,
+    ci: { semver: 'patch', title: 'Continuous Integrations' },
     docs: { semver: 'patch', title: 'Documentation' },
-    feat: { semver: 'patch', title: 'Added' },
+    feat: { semver: 'minor', title: 'Added' },
     fix: { semver: 'patch', title: 'Fixed' },
+    perf: { semver: 'patch', title: 'Performance' },
     refactor: { semver: 'patch', title: 'Refactors' },
     style: { semver: 'patch', title: 'Styling' },
-    test: false,
+    test: { semver: 'patch', title: 'Tests' },
   },
 })

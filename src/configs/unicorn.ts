@@ -33,7 +33,14 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
     {
       files,
       name: 'favorodera/unicorn/rules',
-      rules,
+      rules: {
+        ...rules,
+
+        'unicorn/single-line-block-comment-style': [
+          'error',
+          'single-line',
+        ],
+      },
     },
   ]
 }
