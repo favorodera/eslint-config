@@ -39,14 +39,14 @@
     "pnpm": ">=11.0.0"
   },
   "scripts": {
-    "script:generate-rules-types": "tsx scripts/generate-rules-types.ts",
+    "generate-rules-types": "tsx scripts/generate-rules-types.ts",
     "dev:inspector": "pnpm dlx @eslint/config-inspector@latest",
-    "prebuild": "pnpm script:generate-rules-types",
+    "prebuild": "pnpm generate-rules-types",
     "build": "tsdown",
     "dev": "pnpm prebuild && concurrently \"tsdown --watch\" \"pnpm dev:inspector\"",
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm generate-rules-types && tsc --noEmit",
     "prepublishOnly": "pnpm build",
     "lint": "eslint . --fix",
     "ready": "pnpm install && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
