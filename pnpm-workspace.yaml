@@ -17,47 +17,47 @@ allowBuilds:
 
 catalogs:
   dev:
-    '@types/node': ^25.6.2
-    '@typescript/native-preview': 7.0.0-dev.20260509.2
-    '@vitest/ui': 4.1.8
-    concurrently: ^10.0.3
+    '@types/node': ^26.2.0
+    '@typescript/native-preview': 7.0.0-dev.20260707.2
+    '@vitest/ui': 4.1.10
+    concurrently: ^10.0.4
     eslint: ^10.4.1
     eslint-typegen: ^2.3.1
-    relizy: ^1.4.6
-    tsdown: ^0.22.0
-    tsx: ^4.22.4
+    relizy: ^1.4.9
+    tsdown: ^0.22.14
+    tsx: ^4.23.12
     typescript: ^6.0.3
-    vitest: ^4.1.5
+    vitest: ^4.1.10
 
   peer:
     eslint: ^10.0.0
 
   prod:
     '@eslint/js': ^10.0.1
-    '@eslint/markdown': ^8.0.2
+    '@eslint/markdown': ^8.0.3
     '@stylistic/eslint-plugin': ^5.10.0
-    '@vitest/eslint-plugin': ^1.6.19
+    '@vitest/eslint-plugin': ^1.6.27
     defu: ^6.1.7
     eslint-flat-config-utils: ^3.2.0
     eslint-merge-processors: ^2.0.0
-    eslint-plugin-better-tailwindcss: ^4.5.0
+    eslint-plugin-better-tailwindcss: ^4.7.0
     eslint-plugin-import-lite: ^0.6.0
-    eslint-plugin-jsdoc: ^63.0.2
-    eslint-plugin-jsonc: ^3.2.0
-    eslint-plugin-n: ^18.1.0
-    eslint-plugin-perfectionist: ^5.9.0
-    eslint-plugin-pnpm: ^1.6.1
-    eslint-plugin-unicorn: ^65.0.1
+    eslint-plugin-jsdoc: ^64.1.0
+    eslint-plugin-jsonc: ^3.4.1
+    eslint-plugin-n: ^18.3.0
+    eslint-plugin-perfectionist: ^5.10.1
+    eslint-plugin-pnpm: ^1.8.0
+    eslint-plugin-unicorn: ^73.0.0
     eslint-plugin-unused-imports: ^4.4.1
-    eslint-plugin-vue: ^10.9.2
-    eslint-plugin-vuejs-accessibility: ^2.5.0
+    eslint-plugin-vue: ^10.10.0
+    eslint-plugin-vuejs-accessibility: ^2.6.0
 
-    eslint-plugin-yml: ^3.4.0
+    eslint-plugin-yml: ^3.8.1
     eslint-processor-vue-blocks: ^2.0.0
-    globals: ^17.6.0
-    typescript-eslint: ^8.60.1
+    globals: ^17.11.0
+    typescript-eslint: ^8.67.0
     vue-eslint-parser: ^10.4.1
-    yaml-eslint-parser: ^2.0.0
+    yaml-eslint-parser: ^2.1.0
 peerDependencyRules:
   allowedVersions:
     typescript: '6'

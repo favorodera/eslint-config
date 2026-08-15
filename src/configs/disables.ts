@@ -84,15 +84,14 @@ export function disables(): Array<TypedFlatConfigItem> {
 
         'node/no-missing-import': 'off',
         'node/no-missing-require': 'off',
-        'node/no-process-exit': 'off',
 
         'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-shorthand-classes': 'off',
 
         'unicorn/filename-case': 'off',
+        'unicorn/name-replacements': 'off',
         'unicorn/no-process-exit': 'off',
-        'unicorn/prevent-abbreviations': 'off',
 
         'no-unused-vars': 'off',
 

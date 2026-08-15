@@ -51,7 +51,6 @@ export async function typescript(): Promise<Array<TypedFlatConfigItem>> {
         'ts/default-param-last': 'error',
         'ts/method-signature-style': 'error',
         'ts/no-import-type-side-effects': 'error',
-        'ts/no-loop-func': 'error',
         'ts/no-redeclare': 'error',
       },
     },
