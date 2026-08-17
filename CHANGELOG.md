@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.1.0...v1.1.1
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.0...v1.1.1)
+
+### Chores
+
+- **disables:** Disable node/no-process-exit rule ([0389330](https://github.com/favorodera/eslint-config/commit/0389330))
+
+  - Allow process.exit without linting errors
+  - Reformat files array in package.json
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.0.4...v1.1.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.0.4...v1.1.0)
