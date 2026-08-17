@@ -84,6 +84,7 @@ export function disables(): Array<TypedFlatConfigItem> {
 
         'node/no-missing-import': 'off',
         'node/no-missing-require': 'off',
+        'node/no-process-exit': 'off',
 
         'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-variable-syntax': 'off',
