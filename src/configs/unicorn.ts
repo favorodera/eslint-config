@@ -40,6 +40,13 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           'single-line',
         ],
+
+        'unicorn/prefer-query-selector': [
+          'error',
+          {
+            allowWithVariables: true,
+          },
+        ],
       },
     },
   ]

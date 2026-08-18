@@ -18,7 +18,6 @@ allowBuilds:
 catalogs:
   dev:
     '@types/node': ^26.2.0
-    '@typescript/native-preview': 7.0.0-dev.20260707.2
     '@vitest/ui': 4.1.10
     concurrently: ^10.0.4
     eslint: ^10.4.1

@@ -57,7 +57,10 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
         ...rules,
 
         'style/array-bracket-newline': 'error',
-        'style/array-element-newline': 'error',
+        'style/array-element-newline': [
+          'error',
+          'consistent',
+        ],
         'style/curly-newline': [
           'error',
           'always',

@@ -38,6 +38,7 @@ export function disables(): Array<TypedFlatConfigItem> {
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
+        'no-continue': 'off',
         'no-labels': 'off',
         'no-lone-blocks': 'off',
         'no-restricted-syntax': 'off',
@@ -94,6 +95,7 @@ export function disables(): Array<TypedFlatConfigItem> {
         'unicorn/name-replacements': 'off',
         'unicorn/no-process-exit': 'off',
 
+        'no-continue': 'off',
         'no-unused-vars': 'off',
 
         'ts/no-unused-vars': 'off',

@@ -1,9 +1,8 @@
 import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  clean: true,
-  dts: {
-    tsgo: true,
-  },
+  dts: true,
   exports: true,
+  fromVite: 'vitest',
+  minify: true,
 })
