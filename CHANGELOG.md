@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.1.1...v1.1.2
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.1...v1.1.2)
+
+### Chores
+
+- **config:** Update eslint rules and build setup ([374e2d0](https://github.com/favorodera/eslint-config/commit/374e2d0))
+
+  - Disable no-continue rule in disabled config
+  - Adjust stylistic and unicorn rule options
+  - Remove native-preview dev dependency
+  - Update tsdown bundler configuration
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.1.0...v1.1.1
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.0...v1.1.1)
