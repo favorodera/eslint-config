@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.1.2",
   "private": false,
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@11.22.0",
   "description": "Opinionated, type-safe flat ESLint configuration factory for Vue, TypeScript, Tailwind, and more.",
   "author": "Favour Emeka <favorodera@gmail.com>",
   "license": "MIT",
