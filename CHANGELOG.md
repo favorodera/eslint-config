@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.1.2...v1.1.3
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.2...v1.1.3)
+
+### Styling
+
+- **package:** Inline files array formatting ([50bf505](https://github.com/favorodera/eslint-config/commit/50bf505))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.1.1...v1.1.2
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.1...v1.1.2)
