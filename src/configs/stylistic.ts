@@ -72,7 +72,6 @@ export async function stylistic(options: StylisticConfigOptions): Promise<Array<
         'style/function-call-spacing': 'error',
         'style/function-paren-newline': 'error',
         'style/implicit-arrow-linebreak': 'error',
-        'style/line-comment-position': 'error',
         'style/linebreak-style': 'error',
         'style/multiline-comment-style': [
           'error',
