@@ -32,8 +32,6 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
             fields: [
               'dependencies',
               'devDependencies',
-              'optionalDependencies',
-              'peerDependencies',
             ],
             ignores: ['@types/vscode'],
           },
