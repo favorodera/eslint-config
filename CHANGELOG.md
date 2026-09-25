@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.1.3...v1.2.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.3...v1.2.0)
+
+### Fixed
+
+- **pnpm:** Exclude optional and peer dependencies ([c996e5b](https://github.com/favorodera/eslint-config/commit/c996e5b))
+
+  - Skip validation for peer and optional dependencies
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.1.2...v1.1.3
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.2...v1.1.3)
