@@ -18,7 +18,7 @@ allowBuilds:
 catalogs:
   dev:
     '@types/node': ^26.4.1
-    '@vitest/ui': 5.0.0
+    '@vitest/ui': 5.0.1
     concurrently: ^10.0.5
     eslint: ^10.9.1
     eslint-typegen: ^2.3.1
