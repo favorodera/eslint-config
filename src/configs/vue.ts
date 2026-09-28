@@ -176,12 +176,7 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         'vue/padding-line-between-blocks': 'error',
         'vue/padding-line-between-tags': [
           'error',
-          [
-            { blankLine: 'always', next: '*:multi-line', prev: '*:single-line' },
-            { blankLine: 'always', next: '*:single-line', prev: '*:multi-line' },
-            { blankLine: 'always', next: '*:multi-line', prev: '*:multi-line' },
-            { blankLine: 'never', next: '*:single-line', prev: '*:single-line' },
-          ],
+          [{ blankLine: 'always', next: '*', prev: '*' }],
         ],
         'vue/prefer-prop-type-boolean-first': 'error',
         'vue/prefer-separate-static-class': 'error',
