@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.2.1...v1.3.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.2.1...v1.3.0)
+
+No relevant changes for this release
+
+
 ## v1.1.3...v1.2.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.3...v1.2.0)
