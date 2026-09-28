@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.2.0...v1.2.1
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.2.0...v1.2.1)
+
+### Styling
+
+- **vue:** Enforce blank lines between all tags ([7409128](https://github.com/favorodera/eslint-config/commit/7409128))
+
+  - Simplify padding-line-between-tags configuration.
+
+- **vue:** Enforce blank lines between all tags ([#29](https://github.com/favorodera/eslint-config/pull/29))
+
+### ❤️ Contributors
+
+- Favour  Emeka ([@favorodera](https://github.com/favorodera))
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.1.3...v1.2.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.1.3...v1.2.0)
