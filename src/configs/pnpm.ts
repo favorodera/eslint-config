@@ -58,13 +58,7 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           {
             settings: {
               allowBuilds: {
-                '@parcel/watcher': true,
-                '@tailwindcss/oxide': true,
-                'better-sqlite3': true,
-                'esbuild': true,
-                'sharp': true,
-                'unrs-resolver': true,
-                'vue-demi': true,
+                esbuild: true,
               },
               shellEmulator: true,
               trustPolicy: 'no-downgrade',
