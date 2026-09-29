@@ -36,16 +36,15 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
       rules: {
         ...rules,
 
-        'unicorn/single-line-block-comment-style': [
-          'error',
-          'single-line',
-        ],
-
         'unicorn/prefer-query-selector': [
           'error',
           {
             allowWithVariables: true,
           },
+        ],
+        'unicorn/single-line-block-comment-style': [
+          'error',
+          'single-line',
         ],
       },
     },

@@ -7,16 +7,9 @@ nodeOptions: --max_old_space_size=4096
 verifyDepsBeforeRun: false
 
 allowBuilds:
-  '@parcel/watcher': true
-  '@tailwindcss/oxide': true
-  better-sqlite3: true
   esbuild: true
-  sharp: true
-  unrs-resolver: true
-  vue-demi: true
 
-catalogs:
-  dev:
+catalog:
     '@types/node': ^26.4.1
     '@vitest/ui': 5.0.2
     concurrently: ^10.0.5
@@ -27,11 +20,6 @@ catalogs:
     tsx: ^4.23.13
     typescript: ^6.0.3
     vitest: ^5.0.0
-
-  peer:
-    eslint: ^10.0.0
-
-  prod:
     '@eslint/js': ^10.0.1
     '@eslint/markdown': ^8.0.3
     '@stylistic/eslint-plugin': ^5.10.0
