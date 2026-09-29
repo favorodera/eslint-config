@@ -1,5 +1,31 @@
 # Changelog
 
+## v1.3.0...v1.4.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.3.0...v1.4.0)
+
+### Refactors
+
+- **config:** Clean up workspace and pnpm rules ([ee39c24](https://github.com/favorodera/eslint-config/commit/ee39c24))
+
+  - pass ignores directly into factory function
+  - trim unnecessary build allowances in pnpm config
+  - clean up workspace settings and sort catalog
+
+
+### Chores
+
+- Configure vscode and simplify pnpm catalog ([9800f8e](https://github.com/favorodera/eslint-config/commit/9800f8e))
+
+  - add recommended extensions and settings for vscode
+  - consolidate named catalogs into default catalog
+  - sort unicorn rule definitions
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.2.1...v1.3.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.2.1...v1.3.0)
