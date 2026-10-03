@@ -1,6 +1,7 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
+import { css } from './configs/css'
 import { disables } from './configs/disables'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { imports } from './configs/imports'
@@ -20,7 +21,6 @@ import { unusedImports } from './configs/unused-imports'
 import { vue, type VueConfigOptions } from './configs/vue'
 import { yaml } from './configs/yaml'
 import { resolveOptions } from './utils'
-import { css } from './configs/css'
 
 /**
  * Configuration options for the ESLint flat config.
@@ -99,6 +99,7 @@ export function factory(options: ConfigOptions = {}) {
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
+    css,
     imports,
     javascript,
     jsdoc,
@@ -115,7 +116,6 @@ export function factory(options: ConfigOptions = {}) {
     unusedImports,
     vue,
     yaml,
-    css
   }
 
   // Iterate over each configuration factory function

@@ -66,7 +66,6 @@ export async function css(): Promise<Array<TypedFlatConfigItem>> {
       name: 'favorodera/css/cssicorn/rules',
       rules: {
         ...cssicornRules,
-
       },
     },
   ]
