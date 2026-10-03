@@ -29,7 +29,7 @@ export async function css(): Promise<Array<TypedFlatConfigItem>> {
     'name',
     'files',
     'language',
-    'languageOptions'
+    'languageOptions',
   ])
 
   return [
