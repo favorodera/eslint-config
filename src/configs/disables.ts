@@ -93,7 +93,9 @@ export function disables(): Array<TypedFlatConfigItem> {
 
         'unicorn/filename-case': 'off',
         'unicorn/name-replacements': 'off',
+        'unicorn/no-asterisk-prefix-in-documentation-comments': 'off',
         'unicorn/no-process-exit': 'off',
+        'unicorn/no-top-level-side-effects': 'off',
 
         'no-continue': 'off',
         'no-unused-vars': 'off',

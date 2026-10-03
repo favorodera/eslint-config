@@ -1,6 +1,7 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './types/rules'
 import type { TypedFlatConfigItem } from './types/utils'
+import { css } from './configs/css'
 import { disables } from './configs/disables'
 import { ignores, type IgnoresPatterns } from './configs/ignores'
 import { imports } from './configs/imports'
@@ -80,6 +81,9 @@ export interface ConfigOptions {
 
   /** YAML files linting and sorting (via `eslint-plugin-yml`). */
   yaml?: boolean
+
+  /** CSS files linting and best practices (via `@eslint/css` and `eslint-cssicorn`). */
+  css?: boolean
 }
 
 /**
@@ -95,6 +99,7 @@ export function factory(options: ConfigOptions = {}) {
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
+    css,
     imports,
     javascript,
     jsdoc,

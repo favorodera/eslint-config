@@ -1,7 +1,7 @@
 import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from 'defu'
 import type { TypedFlatConfigItem } from '../types/utils'
-import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule, omit } from '../utils'
 
 /**
@@ -70,6 +70,7 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
     jsGlob,
     tsGlob,
     vueGlob,
+    cssGlob,
   ]
 
   const recommendedConfig = tailwindPlugin.configs['recommended-error']

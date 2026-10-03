@@ -7,6 +7,9 @@ export const tsGlob = '**/*.{ts,cts,mts}'
 /** Glob pattern for matching Vue single-file components */
 export const vueGlob = '**/*.vue'
 
+/** Glob pattern for matching CSS files */
+export const cssGlob = '**/*.css'
+
 /** Glob pattern for matching Markdown files */
 export const mdGlob = '**/*.md'
 
@@ -14,7 +17,7 @@ export const mdGlob = '**/*.md'
 export const mdInMdGlob = '**/*.md/*.md'
 
 /** Glob pattern for matching code blocks embedded in Markdown files */
-export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue}'
+export const codeInMdGlob = '**/*.md/**/*.{js,cjs,mjs,ts,cts,mts,vue,css}'
 
 /** Glob pattern for matching scripts files */
 export const scriptsGlob = '**/*.{js,cjs,mjs,ts,cts,mts}'

@@ -33,9 +33,7 @@
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.cts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "engines": {
     "node": ">=22.0.0",
     "pnpm": ">=11.0.0"
@@ -57,11 +55,13 @@
     "eslint": "^10.0.0"
   },
   "dependencies": {
+    "@eslint/css": "catalog:",
     "@eslint/js": "catalog:",
     "@eslint/markdown": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
     "@vitest/eslint-plugin": "catalog:",
     "defu": "catalog:",
+    "eslint-cssicorn": "catalog:",
     "eslint-flat-config-utils": "catalog:",
     "eslint-merge-processors": "catalog:",
     "eslint-plugin-better-tailwindcss": "catalog:",
@@ -78,6 +78,7 @@
     "eslint-plugin-yml": "catalog:",
     "eslint-processor-vue-blocks": "catalog:",
     "globals": "catalog:",
+    "tailwind-csstree": "catalog:",
     "typescript-eslint": "catalog:",
     "vue-eslint-parser": "catalog:",
     "yaml-eslint-parser": "catalog:"
