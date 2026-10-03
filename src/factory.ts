@@ -20,6 +20,7 @@ import { unusedImports } from './configs/unused-imports'
 import { vue, type VueConfigOptions } from './configs/vue'
 import { yaml } from './configs/yaml'
 import { resolveOptions } from './utils'
+import { css } from './configs/css'
 
 /**
  * Configuration options for the ESLint flat config.
@@ -80,6 +81,9 @@ export interface ConfigOptions {
 
   /** YAML files linting and sorting (via `eslint-plugin-yml`). */
   yaml?: boolean
+
+  /** CSS files linting and best practices (via `@eslint/css` and `eslint-cssicorn`). */
+  css?: boolean
 }
 
 /**
@@ -111,6 +115,7 @@ export function factory(options: ConfigOptions = {}) {
     unusedImports,
     vue,
     yaml,
+    css
   }
 
   // Iterate over each configuration factory function

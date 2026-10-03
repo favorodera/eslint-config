@@ -4,6 +4,7 @@ export { type ConfigOptions, factory } from './factory'
 // Globs used to match files for specific configurations.
 export {
   codeInMdGlob,
+  cssGlob,
   ignoresGlob,
   jsGlob,
   json5Glob,

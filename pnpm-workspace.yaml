@@ -1,8 +1,12 @@
+minimumReleaseAgeExclude:
+  - eslint-cssicorn@0.1.0
+  - eslint-plugin-unicorn@77.0.0
 shellEmulator: true
 
 trustPolicy: no-downgrade
 
 catalog:
+  '@eslint/css': ^2.0.0
   '@eslint/js': ^10.0.1
   '@eslint/markdown': ^8.0.3
   '@stylistic/eslint-plugin': ^5.10.0
@@ -12,6 +16,7 @@ catalog:
   concurrently: ^10.0.5
   defu: ^6.1.7
   eslint: ^10.9.1
+  eslint-cssicorn: ^0.1.0
   eslint-flat-config-utils: ^3.2.0
   eslint-merge-processors: ^2.0.0
   eslint-plugin-better-tailwindcss: ^4.7.0
@@ -21,7 +26,7 @@ catalog:
   eslint-plugin-n: ^18.3.0
   eslint-plugin-perfectionist: ^5.11.0
   eslint-plugin-pnpm: ^1.9.1
-  eslint-plugin-unicorn: ^76.0.0
+  eslint-plugin-unicorn: ^77.0.0
   eslint-plugin-unused-imports: ^4.4.1
   eslint-plugin-vue: ^10.10.0
   eslint-plugin-vuejs-accessibility: ^2.6.0
@@ -30,6 +35,7 @@ catalog:
   eslint-typegen: ^2.3.1
   globals: ^17.12.0
   relizy: ^1.4.9
+  tailwind-csstree: ^0.4.1
   tsdown: ^0.23.0
   tsx: ^4.23.13
   typescript: ^6.0.3

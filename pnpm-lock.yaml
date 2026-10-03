@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@eslint/css':
+      specifier: ^2.0.0
+      version: 2.0.0
     '@eslint/js':
       specifier: ^10.0.1
       version: 10.0.1
@@ -33,6 +36,9 @@ catalogs:
     eslint:
       specifier: ^10.9.1
       version: 10.11.0
+    eslint-cssicorn:
+      specifier: ^0.1.0
+      version: 0.1.0
     eslint-flat-config-utils:
       specifier: ^3.2.0
       version: 3.2.0
@@ -61,8 +67,8 @@ catalogs:
       specifier: ^1.9.1
       version: 1.9.1
     eslint-plugin-unicorn:
-      specifier: ^76.0.0
-      version: 76.0.0
+      specifier: ^77.0.0
+      version: 77.0.0
     eslint-plugin-unused-imports:
       specifier: ^4.4.1
       version: 4.4.1
@@ -87,6 +93,9 @@ catalogs:
     relizy:
       specifier: ^1.4.9
       version: 1.5.0
+    tailwind-csstree:
+      specifier: ^0.4.1
+      version: 0.4.1
     tsdown:
       specifier: ^0.23.0
       version: 0.23.0
@@ -113,6 +122,9 @@ importers:
 
   .:
     dependencies:
+      '@eslint/css':
+        specifier: 'catalog:'
+        version: 2.0.0
       '@eslint/js':
         specifier: 'catalog:'
         version: 10.0.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -128,6 +140,9 @@ importers:
       defu:
         specifier: 'catalog:'
         version: 6.1.7
+      eslint-cssicorn:
+        specifier: 'catalog:'
+        version: 0.1.0(@eslint/css@2.0.0)(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
       eslint-flat-config-utils:
         specifier: 'catalog:'
         version: 3.2.0
@@ -136,7 +151,7 @@ importers:
         version: 2.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
       eslint-plugin-better-tailwindcss:
         specifier: 'catalog:'
-        version: 4.7.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(tailwindcss@4.3.3)(typescript@6.0.3)
+        version: 4.7.0(@eslint/css@2.0.0)(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(tailwindcss@4.3.3)(typescript@6.0.3)
       eslint-plugin-import-lite:
         specifier: 'catalog:'
         version: 0.6.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -157,7 +172,7 @@ importers:
         version: 1.9.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
       eslint-plugin-unicorn:
         specifier: 'catalog:'
-        version: 76.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
+        version: 77.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
       eslint-plugin-unused-imports:
         specifier: 'catalog:'
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.70.1(@typescript-eslint/parser@8.70.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -176,6 +191,9 @@ importers:
       globals:
         specifier: 'catalog:'
         version: 17.12.0
+      tailwind-csstree:
+        specifier: 'catalog:'
+        version: 0.4.1(@eslint/css@2.0.0)
       typescript-eslint:
         specifier: 'catalog:'
         version: 8.70.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
@@ -440,6 +458,10 @@ packages:
 
   '@eslint/css-tree@4.1.1':
     resolution: {integrity: sha512-A+s89eP+yDAPkKjnIOfjlkGifg5J7GPn01nWx14UjBVWktfkxOU4975F9ZZ13xNxkGiblNcBaAqgKhnQrW6SWA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
+  '@eslint/css@2.0.0':
+    resolution: {integrity: sha512-lODVRbtxOXgcSOWNvv3gE4A8oRTSUHefA0tX9zrWUD57F+5RTLGDX9I8bnHQROO8nWb0hrmke0uO23pTlNfZ0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   '@eslint/js@10.0.1':
@@ -1386,6 +1408,13 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
+  eslint-cssicorn@0.1.0:
+    resolution: {integrity: sha512-2whStJU5GARrKj+GXU3GlnQ4My8GpjX7x273KTozgVguhg5GzYNHaCGW0YPD99YhvL6VG8sDdFyu4CcvabOIBw==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      '@eslint/css': '>=2'
+      eslint: '>=10.4'
+
   eslint-flat-config-utils@3.2.0:
     resolution: {integrity: sha512-PHgo1X5uqIorJONLVD9BIaOSdoYFD3z/AeJljdqDPlWVRpeCYkDbK9k0AXoYVqqNJr6FEYIEr5Rm2TSktLQcHw==}
 
@@ -1473,8 +1502,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
-  eslint-plugin-unicorn@76.0.0:
-    resolution: {integrity: sha512-3ywJrCMHKYhcBP5yFzGaOOX3dY7+iR3hvpuoS/0EnhRFgVWLejly+t4fOdJvWQxJdHZl1C+QBW7hybXPDld4Pw==}
+  eslint-plugin-unicorn@77.0.0:
+    resolution: {integrity: sha512-aayznMCKTXlPAsoyUjRok862sz3BJAfxpQX/t79AT/uVQTmWsCx3FXfXo+9hfhL8aR2mMZQYyXoDZo3/ly6lJw==}
     engines: {node: '>=22'}
     peerDependencies:
       eslint: '>=10.4'
@@ -2382,6 +2411,15 @@ packages:
       '@eslint/css':
         optional: true
 
+  tailwind-csstree@0.4.1:
+    resolution: {integrity: sha512-GOgf0lQhk13norDMdHbW6aK7wd5gFPrArzTkDgJH88w9AVtQQrROUqLVu3sgXqzPBUXIhd+tLASpKqba7+I68g==}
+    engines: {node: '>=18.18'}
+    peerDependencies:
+      '@eslint/css': '>=1.0.0'
+    peerDependenciesMeta:
+      '@eslint/css':
+        optional: true
+
   tailwindcss@4.3.3:
     resolution: {integrity: sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ==}
 
@@ -2849,6 +2887,12 @@ snapshots:
     dependencies:
       mdn-data: 2.35.0
       source-map-js: 1.2.1
+
+  '@eslint/css@2.0.0':
+    dependencies:
+      '@eslint/core': 1.2.1
+      '@eslint/css-tree': 4.1.1
+      '@eslint/plugin-kit': 0.7.3
 
   '@eslint/js@10.0.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))':
     optionalDependencies:
@@ -3677,6 +3721,12 @@ snapshots:
       eslint: 10.11.0(jiti@2.7.0)(supports-color@10.2.2)
       semver: 7.8.5
 
+  eslint-cssicorn@0.1.0(@eslint/css@2.0.0)(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2)):
+    dependencies:
+      '@eslint/css': 2.0.0
+      '@eslint/css-tree': 4.1.1
+      eslint: 10.11.0(jiti@2.7.0)(supports-color@10.2.2)
+
   eslint-flat-config-utils@3.2.0:
     dependencies:
       '@eslint/config-helpers': 0.5.5
@@ -3692,14 +3742,14 @@ snapshots:
     dependencies:
       eslint: 10.11.0(jiti@2.7.0)(supports-color@10.2.2)
 
-  eslint-plugin-better-tailwindcss@4.7.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(tailwindcss@4.3.3)(typescript@6.0.3):
+  eslint-plugin-better-tailwindcss@4.7.0(@eslint/css@2.0.0)(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))(tailwindcss@4.3.3)(typescript@6.0.3):
     dependencies:
       '@eslint/css-tree': 4.1.1
       '@valibot/to-json-schema': 1.8.0(valibot@1.5.0(typescript@6.0.3))
       enhanced-resolve: 5.25.1
       jiti: 2.7.0
       synckit: 0.11.13
-      tailwind-csstree: 0.3.3
+      tailwind-csstree: 0.3.3(@eslint/css@2.0.0)
       tailwindcss: 4.3.3
       tsconfig-paths-webpack-plugin: 4.2.0
       valibot: 1.5.0(typescript@6.0.3)
@@ -3798,7 +3848,7 @@ snapshots:
     transitivePeerDependencies:
       - '@eslint/json'
 
-  eslint-plugin-unicorn@76.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2)):
+  eslint-plugin-unicorn@77.0.0(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.11.0(jiti@2.7.0)(supports-color@10.2.2))
       '@eslint/css-tree': 4.1.1
@@ -4842,7 +4892,13 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.3.6
 
-  tailwind-csstree@0.3.3: {}
+  tailwind-csstree@0.3.3(@eslint/css@2.0.0):
+    optionalDependencies:
+      '@eslint/css': 2.0.0
+
+  tailwind-csstree@0.4.1(@eslint/css@2.0.0):
+    optionalDependencies:
+      '@eslint/css': 2.0.0
 
   tailwindcss@4.3.3: {}
 
