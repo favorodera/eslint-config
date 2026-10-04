@@ -57,9 +57,6 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           {
             settings: {
-              allowBuilds: {
-                esbuild: true,
-              },
               shellEmulator: true,
               trustPolicy: 'no-downgrade',
             },
