@@ -1,5 +1,23 @@
 # Changelog
 
+## v2.0.0...v2.0.1
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v2.0.0...v2.0.1)
+
+### Chores
+
+- **pnpm:** Remove esbuild allowBuilds setting ([a73caef](https://github.com/favorodera/eslint-config/commit/a73caef))
+
+  - Remove esbuild build permission from pnpm config
+
+- **pnpm:** Remove esbuild allowBuilds setting ([#32](https://github.com/favorodera/eslint-config/pull/32))
+
+### ❤️ Contributors
+
+- Favour  Emeka <favorodera@gmail.com>
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.4.0...v2.0.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.4.0...v2.0.0)

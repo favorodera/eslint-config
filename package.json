@@ -1,7 +1,7 @@
 {
   "name": "@favorodera/eslint-config",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "packageManager": "pnpm@11.28.0",
   "description": "Opinionated, type-safe flat ESLint configuration factory for Vue, TypeScript, Tailwind, and more.",
