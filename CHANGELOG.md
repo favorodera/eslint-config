@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.4.0...v2.0.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v1.4.0...v2.0.0)
+
+### Added
+
+- **css:** Add CSS linting configuration ([994c11b](https://github.com/favorodera/eslint-config/commit/994c11b))
+
+  - Add @eslint/css and eslint-cssicorn integration
+  - Enable Tailwind CSS v4 syntax support for CSS
+  - Update globs and factory options for CSS files
+  - Bump eslint-plugin-unicorn dependency
+
+
+### Styling
+
+- Sort imports and properties alphabetically ([f70137b](https://github.com/favorodera/eslint-config/commit/f70137b))
+
+  - reorder css import and config mapping in factory
+  - clean up formatting in css config and package.json
+
+- **css:** Add missing trailing comma ([60a8123](https://github.com/favorodera/eslint-config/commit/60a8123))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v1.3.0...v1.4.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v1.3.0...v1.4.0)
