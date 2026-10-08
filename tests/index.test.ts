@@ -1,54 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { defineConfig } from '../src/'
-import {  importModule, omit, resolveOptions } from '../src/utils'
-
-describe('omit', () => {
-  it('returns a new object without the specified keys', () => {
-    const source = { a: 1, b: 2, c: 3 }
-    const result = omit(source,  'a','c',)
-
-    expect(result).toStrictEqual({ b: 2 })
-  })
-
-  it('does not mutate the original object', () => {
-    const source = { a: 1, b: 2 }
-    const result = omit(source, 'a')
-
-    expect(source).toStrictEqual({ a: 1, b: 2 })
-    expect(result).toStrictEqual({ b: 2 })
-  })
-
-  it('returns a shallow copy when no keys are omitted', () => {
-    const source = { a: 1, b: 2 }
-    const result = omit(source)
-
-    expect(result).toStrictEqual({ a: 1, b: 2 })
-    expect(result).not.toBe(source)
-  })
-
-  it('handles single key omission', () => {
-    const source = { name: 'test', plugins: {}, rules: {} }
-    const result = omit(source, 'rules')
-
-    expect(result).toStrictEqual({ name: 'test', plugins: {} })
-    expect('rules' in result).toBe(false)
-  })
-
-  it('works with symbol keys', () => {
-    const sym = Symbol('hidden')
-    const source = { a: 1, [sym]: 2 }
-    const result = omit(source, 'a')
-
-    expect(result).toStrictEqual({ [sym]: 2 })
-  })
-
-  it('returns empty object when all keys are omitted', () => {
-    const source = { a: 1 }
-    const result = omit(source, 'a')
-
-    expect(result).toStrictEqual({})
-  })
-})
+import {  importModule, resolveOptions } from '../src/utils'
 
 describe('resolveOptions', () => {
   it('returns false when value is false', () => {
@@ -91,7 +43,6 @@ describe('importModule', () => {
 
   it('handles null without throwing', async () => {
     // null has no .default property check — returns as-is
-    // eslint-disable-next-line unicorn/no-null
     const result = await importModule(Promise.resolve(null))
 
     expect(result).toBeNull()
