@@ -1,11 +1,9 @@
-minimumReleaseAgeExclude:
-  - eslint-cssicorn@0.1.0
-  - eslint-plugin-unicorn@77.0.0
 shellEmulator: true
 
 trustPolicy: no-downgrade
 
 catalog:
+  '@eslint/config-inspector': ^3.5.0
   '@eslint/css': ^2.0.0
   '@eslint/js': ^10.0.1
   '@eslint/markdown': ^8.0.3
@@ -34,6 +32,7 @@ catalog:
   eslint-processor-vue-blocks: ^2.0.0
   eslint-typegen: ^2.3.1
   globals: ^17.12.0
+  pkg-pr-new: ^0.0.90
   relizy: ^1.4.9
   tailwind-csstree: ^0.4.1
   tsdown: ^0.23.0

@@ -1,4 +1,4 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { TypedFlatConfigItem } from '../types'
 import { ignoresGlob } from '../globs'
 
 /**

@@ -1,9 +1,9 @@
 import { flatConfigsToRulesDTS } from 'eslint-typegen/core'
 import { builtinRules } from 'eslint/use-at-your-own-risk'
 import { writeFile } from 'node:fs/promises'
-import { factory } from '../src/factory'
+import { defineConfig } from '../src'
 
-const configs = await factory()
+const configs = await defineConfig()
   .prepend({
     plugins: {
       '': { rules: Object.fromEntries(builtinRules.entries()) },
@@ -23,4 +23,4 @@ declarations += `
 export type ConfigNames = ${configNames.map(entry => `'${entry}'`).join(' | ')}
 `
 
-await writeFile('src/types/rules.d.ts', declarations, 'utf8')
+await writeFile('src/typegen.d.ts', declarations, 'utf8')

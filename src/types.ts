@@ -1,18 +1,9 @@
 import type { Linter } from 'eslint'
 import type { ConfigWithExtends } from 'eslint-flat-config-utils'
-import type { RuleOptions } from './rules'
+import type { RuleOptions } from './typegen'
 
 /** ESLint rules configuration with type-safe autocompletion */
 export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOptions
-
-/** Shared configuration options for ESLint rules */
-export interface SharedOptions {
-  /** File glob patterns to apply configuration to */
-  files?: Array<string>
-
-  /** Override rules configuration */
-  overrides?: TypedFlatConfigItem['rules']
-}
 
 /**
  * An updated version of ESLint's `Linter.Config`, which provides autocompletion
@@ -33,3 +24,15 @@ export type TypedFlatConfigItem = Omit<ConfigWithExtends, 'plugins' | 'rules'> &
    */
   rules?: Rules
 }
+
+/** Shared configuration options for ESLint rules */
+export interface SharedOptions {
+  /** Override rules configuration */
+  overrides?: TypedFlatConfigItem['rules']
+}
+
+/** Shared configuration options for ESLint rules with boolean toggle */
+export type BooleanSharedOptions = boolean | SharedOptions
+
+/** Return type for individual configs */
+export type PromisedTypedConfigFlatItemArray = Promise<Array<TypedFlatConfigItem>>

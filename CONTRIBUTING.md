@@ -1,21 +1,17 @@
-# Contributing to @favorodera/eslint-config
+# Contributing to NotForm
 
-Thank you for your interest in contributing to @favorodera/eslint-config! We appreciate your time and effort in helping to improve this project.
-
----
+Thank you for contributing to @favorodera/eslint-config.
 
 ## Code of Conduct
 
-By participating in this project, you agree to abide by the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
-
----
+By participating in this project, you agree to follow the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
-### Prerequisites
+### Requirements
 
-  - [Node.js](https://nodejs.org/) (v20 or later)
-  - [pnpm](https://pnpm.io/installation) (v11 or later)
+- [Node.js](https://nodejs.org/) 24 or later
+- [pnpm](https://pnpm.io/) 11 or later
 
 ### Setup
 
@@ -26,101 +22,58 @@ pnpm install
 pnpm dev
 ```
 
----
+This starts the development environment and config inspector.
 
-## Development Workflow
+## Development
 
-### Branch Naming
+Use conventional commit messages. Common prefixes are:
 
-| Pattern | Use |
-|---------|-----|
-| `feat/<feature-name>` | New features |
-| `fix/<issue-description>` | Bug fixes |
-| `docs/<what-changed>` | Documentation changes |
-| `chore/<task>` | Maintenance tasks |
+- `feat` — new functionality
+- `fix` — bug fixes
+- `docs` — documentation changes
+- `refactor` — code changes without behavior changes
+- `perf` — performance improvements
 
-### Commit Messages
-
-We follow [Conventional Commits](https://www.conventionalcommits.org/). `relizy` reads these to generate changelogs automatically.
-
-| Prefix | Use |
-|--------|-----|
-| `feat:` | A new feature |
-| `fix:` | A bug fix |
-| `docs:` | Documentation only |
-| `style:` | No logic change |
-| `refactor:` | Neither fix nor feature |
-| `perf:` | Performance improvement |
-| `test:` | Adding or correcting tests |
-| `chore:` | Build process or tooling |
-
-### Code Style
+Before opening a pull request, run:
 
 ```bash
-pnpm lint       # check linting errors
-pnpm typecheck  # verify TypeScript types
-pnpm test       # run all tests
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
 ```
 
----
+Add or update tests when changing behavior.
 
-## Testing
+## Documentation
 
-We use:
+Documentation lives in README.
 
-- **Vitest** — Test runner
+When changing the public API, update the relevant documentation alongside the code.
 
-```bash
-pnpm test         # run all tests
-pnpm test:watch   # watch mode
-```
+## Pull Requests
 
-  When adding new features or fixing bugs, please include tests as this helps us validate upcoming features before they are fully integrated.
+Keep pull requests focused and easy to review.
 
----
+Before submitting:
 
-## Pull Request Process
-
-1. Ensure your code follows the project's coding standards
-2. Update documentation if you're changing functionality
-3. Add or update tests as appropriate
-4. Run the full validation suite:
-
-```bash
-pnpm ready
-```
-
-5. Commit using Conventional Commits and open a Pull Request.
-6. Push your branch and open a Pull Request.
-
----
+1. Add or update tests where appropriate.
+2. Update documentation for user-facing changes.
+3. Run the project checks locally.
+4. Use a conventional commit message.
 
 ## Reporting Bugs
 
-  Before filing a report, check existing issues. When you do file one, include:
+Search existing issues before opening a new one.
 
-  - A clear, descriptive title
-  - Steps to reproduce
-  - Expected vs. actual behaviour
-  - Your environment (OS, Node.js version, pnpm version)
+Include the expected behavior, actual behavior, reproduction steps, and relevant environment details.
 
----
+## Feature Requests
 
-## Suggesting Features
+Open an issue describing the problem, the proposed solution, and any alternatives you considered.
 
-We welcome feature suggestions! Please open an issue describing:
+## Questions
 
-- The problem you're trying to solve
-- Your proposed solution
-- Any alternatives you've considered
+For questions and discussion, use [GitHub Discussions](https://github.com/favorodera/eslint-config/discussions).
 
----
-
-## Questions?
-
-  If you have questions, feel free to:
-
-  - Open a [Discussion](https://github.com/favorodera/eslint-config/discussions)
-  - Check the [Documentation](https://github.com/favorodera/eslint-config#readme)
-
-  Thank you for contributing! 🎉
+Thank you for helping improve NotForm.

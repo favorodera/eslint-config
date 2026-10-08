@@ -73,6 +73,8 @@ export const ignoresGlob = [
   '**/.next',
   '**/.svelte-kit',
   '**/.vercel',
+  '**/.turbo',
+  '**/.data',
   '**/.changeset',
   '**/.idea',
   '**/.cache',

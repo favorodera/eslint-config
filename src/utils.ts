@@ -1,20 +1,5 @@
 import type { Awaitable } from 'eslint-flat-config-utils'
-import { defu } from 'defu'
-
-/**
- * Extracts and merges the rules from multiple ESLint configuration arrays.
- * @param configArrays Rest parameter representing multiple arrays of ESLint flat config items.
- * @returns A single object containing all the merged rules from the provided configurations.
- */
-export function extractRules(...configArrays: Array<Array<{ rules?: Record<string, unknown> }>>): Record<string, unknown> {
-  return Object.assign(
-    {},
-    // Flatten the array of config arrays, then map over each config to extract its 'rules' object (or an empty object if undefined).
-    ...configArrays
-      .flat()
-      .map(config => config?.rules || {}),
-  )
-}
+import {defu} from 'defu'
 
 /**
  * Resolves a module (or a promise of one) and returns its default export
@@ -26,16 +11,16 @@ export function extractRules(...configArrays: Array<Array<{ rules?: Record<strin
  * @param module A module or a promise that resolves to one.
  * @returns The `.default` export if it exists, otherwise the module itself.
  */
-export async function importModule<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
-  const resolved = await module
+export async function importModule<TModule>(module:Awaitable<TModule>):Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule>{
+  const resolvedModule = await module
 
   // If the resolved module is an object and has a 'default' property, extract it (handles ESM default exports)
-  if (resolved !== null && typeof resolved === 'object' && 'default' in resolved) {
-    return (resolved as any).default
+  if (resolvedModule !== null && typeof resolvedModule === 'object' && 'default' in resolvedModule) {
+    return (resolvedModule as any).default
   }
 
   // Otherwise, return the module directly (handles CJS and plain objects)
-  return resolved as any
+  return resolvedModule as any
 }
 
 /**
@@ -53,22 +38,4 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
   // If value is exactly true, use an empty object to merge with defaults.
   // Otherwise, value is an options object, so merge it with the default options using defu.
   return defu(value === true ? {} : value, defaults) as TOptions
-}
-
-/**
- * Creates a new object that omits the specified keys from the target object.
- * @template TTarget The type of the target object.
- * @template TTargetKeys The type of the keys to omit from the target object.
- * @param target The target object from which to omit the specified keys.
- * @param keys An array of keys to omit from the target object.
- * @returns A new object that contains all properties of the target object except for the specified keys.
- */
-export function omit<TTarget extends object, TTargetKeys extends keyof TTarget>(target: TTarget, keys: Array<TTargetKeys>): Omit<TTarget, TTargetKeys> {
-  const targetClone = { ...target }
-
-  for (const key of keys) {
-    Reflect.deleteProperty(targetClone, key)
-  }
-
-  return targetClone
 }

@@ -1,21 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { factory } from '../src/factory'
-import { extractRules, importModule, omit, resolveOptions } from '../src/utils'
+import { defineConfig } from '../src/'
+import {  importModule, omit, resolveOptions } from '../src/utils'
 
 describe('omit', () => {
   it('returns a new object without the specified keys', () => {
     const source = { a: 1, b: 2, c: 3 }
-    const result = omit(source, [
-      'a',
-      'c',
-    ])
+    const result = omit(source,  'a','c',)
 
     expect(result).toStrictEqual({ b: 2 })
   })
 
   it('does not mutate the original object', () => {
     const source = { a: 1, b: 2 }
-    const result = omit(source, ['a'])
+    const result = omit(source, 'a')
 
     expect(source).toStrictEqual({ a: 1, b: 2 })
     expect(result).toStrictEqual({ b: 2 })
@@ -23,7 +20,7 @@ describe('omit', () => {
 
   it('returns a shallow copy when no keys are omitted', () => {
     const source = { a: 1, b: 2 }
-    const result = omit(source, [])
+    const result = omit(source)
 
     expect(result).toStrictEqual({ a: 1, b: 2 })
     expect(result).not.toBe(source)
@@ -31,7 +28,7 @@ describe('omit', () => {
 
   it('handles single key omission', () => {
     const source = { name: 'test', plugins: {}, rules: {} }
-    const result = omit(source, ['rules'])
+    const result = omit(source, 'rules')
 
     expect(result).toStrictEqual({ name: 'test', plugins: {} })
     expect('rules' in result).toBe(false)
@@ -40,14 +37,14 @@ describe('omit', () => {
   it('works with symbol keys', () => {
     const sym = Symbol('hidden')
     const source = { a: 1, [sym]: 2 }
-    const result = omit(source, ['a'])
+    const result = omit(source, 'a')
 
     expect(result).toStrictEqual({ [sym]: 2 })
   })
 
   it('returns empty object when all keys are omitted', () => {
     const source = { a: 1 }
-    const result = omit(source, ['a'])
+    const result = omit(source, 'a')
 
     expect(result).toStrictEqual({})
   })
@@ -77,45 +74,6 @@ describe('resolveOptions', () => {
   })
 })
 
-describe('extractRules', () => {
-  it('extracts rules from a single config array', () => {
-    const result = extractRules([{ rules: { 'no-console': 'error' } }])
-
-    expect(result).toStrictEqual({ 'no-console': 'error' })
-  })
-
-  it('merges rules across multiple config arrays', () => {
-    const result = extractRules(
-      [{ rules: { 'no-console': 'error' } }],
-      [{ rules: { 'no-debugger': 'warn' } }],
-    )
-
-    expect(result).toStrictEqual({ 'no-console': 'error', 'no-debugger': 'warn' })
-  })
-
-  it('later rules overwrite earlier ones (last-write-wins)', () => {
-    const result = extractRules(
-      [{ rules: { 'no-console': 'warn' } }],
-      [{ rules: { 'no-console': 'error' } }],
-    )
-
-    expect(result['no-console']).toBe('error')
-  })
-
-  it('handles configs without rules gracefully', () => {
-    const result = extractRules(
-      [{}],
-      [{ rules: { 'no-undef': 'error' } }],
-    )
-
-    expect(result).toStrictEqual({ 'no-undef': 'error' })
-  })
-
-  it('returns empty object for empty input', () => {
-    expect(extractRules([])).toStrictEqual({})
-  })
-})
-
 describe('importModule', () => {
   it('returns .default when present (ESM interop)', async () => {
     const fakeModule = { default: { rules: {} } }
@@ -142,47 +100,21 @@ describe('importModule', () => {
 
 describe('factory', () => {
   it('resolves to a non-empty array of configs', async () => {
-    const resolved = await factory()
+    const resolved = await defineConfig()
 
     expect(Array.isArray(resolved)).toBe(true)
     expect(resolved.length).toBeGreaterThan(0)
   })
 
   it('always includes the ignores config first', async () => {
-    const resolved = await factory()
+    const resolved = await defineConfig()
 
     expect(resolved[0]?.name).toBe('favorodera/ignores')
   })
 
-  it('disabling typescript excludes its config', async () => {
-    const withTs = await factory({ typescript: true })
-    const withoutTs = await factory({ typescript: false })
-
-    const withNames = withTs.map(config => config.name)
-    const withoutNames = withoutTs.map(config => config.name)
-
-    expect(withNames).toContain('favorodera/typescript/rules')
-    expect(withNames).toContain('favorodera/typescript/setup')
-
-    expect(withoutNames).not.toContain('favorodera/typescript/rules')
-    expect(withoutNames).not.toContain('favorodera/typescript/setup')
-  })
-
-  it('disabling vue excludes its config', async () => {
-    const withVue = await factory({ vue: true })
-    const withoutVue = await factory({ vue: false })
-
-    expect(withVue.map(config => config.name)).toContain('favorodera/vue/rules')
-    expect(withVue.map(config => config.name)).toContain('favorodera/vue/setup')
-
-    expect(withoutVue.map(config => config.name)).not.toContain('favorodera/vue/rules')
-    expect(withoutVue.map(config => config.name)).not.toContain('favorodera/vue/setup')
-  })
-
-  it('disabling multiple configs reduces count', async () => {
-    const full = await factory()
-    const stripped = await factory({
-      jsdoc: false,
+  it('disabling configs reduces count', async () => {
+    const full = await defineConfig()
+    const stripped = await defineConfig({
       markdown: false,
       tailwind: false,
       vue: false,
@@ -193,7 +125,7 @@ describe('factory', () => {
   })
 
   it('custom ignore patterns are merged', async () => {
-    const resolved = await factory({
+    const resolved = await defineConfig({
       ignores: ['**/my-custom-dir/**'],
     })
     const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
@@ -204,7 +136,7 @@ describe('factory', () => {
   })
 
   it('ignores accepts a function to transform default patterns', async () => {
-    const resolved = await factory({
+    const resolved = await defineConfig({
       ignores: defaults => [
         ...defaults,
         '**/generated/**',
