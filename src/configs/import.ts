@@ -24,10 +24,13 @@ export async function _import(_options:SharedOptions):PromisedTypedConfigFlatIte
       files,
       name:'favorodera/import/rules',
       rules:{
-        'import/consistent-type-specifier-style': [
-          'error',
-          'prefer-top-level',
-        ],
+        'import/consistent-type-specifier-style': 'error',
+        'import/exports-last':'error',
+        'import/first':'error',
+        'import/newline-after-import':"error",
+        "import/no-duplicates": ["error", {"prefer-inline": true}],
+        'import/no-mutable-exports': 'error',
+        'import/no-named-default': 'error',
 
         ...options.overrides
       }
