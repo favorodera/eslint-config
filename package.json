@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.0.1",
   "private": false,
-  "packageManager": "pnpm@11.28.3",
+  "packageManager": "pnpm@12.14.0",
   "description": "Opinionated, type-safe flat ESLint configuration factory for Vue, TypeScript, Tailwind, and more.",
   "author": "Favour Emeka <favorodera@gmail.com>",
   "license": "MIT",
@@ -38,7 +38,7 @@
   ],
   "engines": {
     "node": ">=24.0.0",
-    "pnpm": ">=11.0.0"
+    "pnpm": ">=12.0.0"
   },
   "scripts": {
     "typegen": "tsx scripts/typegen.ts",
