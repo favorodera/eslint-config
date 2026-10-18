@@ -3,18 +3,24 @@ import { ignores, type IgnoresPatterns } from "./configs/ignores";
 import type { BooleanSharedOptions, TypedFlatConfigItem } from "./types";
 import { resolveOptions } from "./utils";
 import type { ConfigNames } from "./typegen";
-import { _import } from "./configs/import";
+import { imports } from "./configs/imports";
+import { css } from "./configs/css";
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
   /** 
    * Glob patterns to exclude from linting.
+   * 
+   * Can be a list of additional ignore patterns or a function to modify the defaults
    * @default `IgnoresGlob'
    */
   ignores?: IgnoresPatterns
 
-  /** Imports sorting and quality rules. */
+  /** Imports linting. */
   imports?: BooleanSharedOptions
+
+  /** CSS linting. */
+  css?: BooleanSharedOptions
 }
 
 /**
@@ -30,7 +36,8 @@ export function defineConfig(options:ConfigOptions = {}) {
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
-    import :_import
+    imports,
+    css
   }
 
   for(const [key, configFunction] of Object.entries(configFunctions)) {
@@ -54,7 +61,7 @@ export function defineConfig(options:ConfigOptions = {}) {
       'import-lite': 'import',
       'markdown': 'md',
       'n': 'node',
-      'vuejs-accessibility': 'vue-a11y',
+      'vuejs-accessibility': 'a11y',
       'yml': 'yaml',
     })
 

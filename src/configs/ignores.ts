@@ -1,4 +1,4 @@
-import type { TypedFlatConfigItem } from '../types'
+import type { PromisedTypedConfigFlatItemArray, TypedFlatConfigItem } from '../types'
 import { ignoresGlob } from '../globs'
 
 /**
@@ -14,7 +14,7 @@ const defaultPatterns = ignoresGlob
  * @param patterns Additional ignore patterns or a function to modify the defaults.
  * @returns An array containing the ignore flat config item.
  */
-export function ignores(patterns: IgnoresPatterns = []): Array<TypedFlatConfigItem> {
+export function ignores(patterns: IgnoresPatterns = []): Awaited<PromisedTypedConfigFlatItemArray> {
   const resolved = typeof patterns === 'function'
     ? patterns(defaultPatterns)
     : [
