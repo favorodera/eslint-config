@@ -36,3 +36,9 @@ export type BooleanSharedOptions = boolean | SharedOptions
 
 /** Return type for individual configs */
 export type PromisedTypedConfigFlatItemArray = Promise<Array<TypedFlatConfigItem>>
+
+/**
+ * Patterns used to ignore files and directories from ESLint scanning.
+ * Can be a list of glob patterns or a function that receives default patterns.
+ */
+export type IgnoresPatterns = ((defaults: Array<string>) => Array<string>) | Array<string>

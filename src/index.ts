@@ -1,10 +1,12 @@
-import { FlatConfigComposer, type Awaitable } from "eslint-flat-config-utils";
-import { ignores, type IgnoresPatterns } from "./configs/ignores";
-import type { BooleanSharedOptions, TypedFlatConfigItem } from "./types";
+import { FlatConfigComposer, type Awaitable  } from "eslint-flat-config-utils";
+import { ignores } from "./configs/ignores";
+import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from "./types";
 import { resolveOptions } from "./utils";
 import type { ConfigNames } from "./typegen";
 import { imports } from "./configs/imports";
 import { css } from "./configs/css";
+import { javascript } from "./configs/javascript";
+import { typescript } from "./configs/typescript";
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
@@ -19,8 +21,14 @@ interface ConfigOptions {
   /** Imports linting. */
   imports?: BooleanSharedOptions
 
-  /** CSS linting. */
+  /** Core css linting. */
   css?: BooleanSharedOptions
+  
+  /** Core javascript linting */
+  javascript?:BooleanSharedOptions
+
+  /** Core typescript linting */
+  typescript?:BooleanSharedOptions
 }
 
 /**
@@ -37,7 +45,9 @@ export function defineConfig(options:ConfigOptions = {}) {
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
     imports,
-    css
+    css,
+    javascript,
+    typescript
   }
 
   for(const [key, configFunction] of Object.entries(configFunctions)) {

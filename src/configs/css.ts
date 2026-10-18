@@ -1,11 +1,10 @@
-import { defu } from "defu"
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
 import { importModule } from "../utils"
-import { jsGlob, tsGlob, vueGlob, cssGlob } from "../globs"
+import {  cssGlob } from "../globs"
 import { tailwind4 } from 'tailwind-csstree'
 
 /** 
- * Constructs the flat config for CSS linting
+ * Constructs the flat config for core css linting
  * @returns Flat config items
  */
 export async function css(options: SharedOptions): PromisedTypedConfigFlatItemArray {

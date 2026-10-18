@@ -66,10 +66,8 @@ describe('factory', () => {
   it('disabling configs reduces count', async () => {
     const full = await defineConfig()
     const stripped = await defineConfig({
-      markdown: false,
-      tailwind: false,
-      vue: false,
-      yaml: false,
+      javascript: false,
+      typescript: false,
     })
 
     expect(stripped.length).toBeLessThan(full.length)

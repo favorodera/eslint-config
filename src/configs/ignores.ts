@@ -1,13 +1,5 @@
-import type { PromisedTypedConfigFlatItemArray, TypedFlatConfigItem } from '../types'
+import type { IgnoresPatterns, PromisedTypedConfigFlatItemArray } from '../types'
 import { ignoresGlob } from '../globs'
-
-/**
- * Patterns used to ignore files and directories from ESLint scanning.
- * Can be a list of glob patterns or a function that receives default patterns.
- */
-export type IgnoresPatterns = ((defaults: Array<string>) => Array<string>) | Array<string>
-
-const defaultPatterns = ignoresGlob
 
 /**
  * Globs for ignoring files and directories from ESLint scanning.
@@ -16,9 +8,9 @@ const defaultPatterns = ignoresGlob
  */
 export function ignores(patterns: IgnoresPatterns = []): Awaited<PromisedTypedConfigFlatItemArray> {
   const resolved = typeof patterns === 'function'
-    ? patterns(defaultPatterns)
+    ? patterns(ignoresGlob)
     : [
-        ...defaultPatterns,
+        ...ignoresGlob,
         ...patterns,
       ]
 
