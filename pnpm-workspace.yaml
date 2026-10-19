@@ -12,11 +12,11 @@ catalog:
   '@stylistic/eslint-plugin': ^5.10.0
   '@types/node': ^26.4.1
   '@vitest/eslint-plugin': ^1.6.27
-  '@vitest/ui': 5.0.3
+  '@vitest/ui': 5.0.5
   concurrently: ^10.0.5
   defu: ^6.1.7
   eslint: ^10.9.1
-  eslint-cssicorn: ^0.1.0
+  eslint-cssicorn: ^0.2.0
   eslint-flat-config-utils: ^3.2.0
   eslint-merge-processors: ^2.0.0
   eslint-plugin-better-tailwindcss: ^4.7.0
