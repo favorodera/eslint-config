@@ -36,8 +36,8 @@ export const jsoncGlob = '**/*.jsonc'
 
 /** Glob patterns for matching TypeScript configuration files */
 export const tsConfigGlob = [
-  '**/tsconfig.json',
   '**/tsconfig.*.json',
+  '**/tsconfig.json',
 ]
 
 /** Glob pattern for matching YAML files */
@@ -53,42 +53,53 @@ export const packageJsonGlob = '**/package.json'
  * Common glob patterns for files and directories that should be ignored by ESLint.
  * Includes node_modules, build outputs, lock files, temporary files, and tool-specific caches.
  */
-export const ignoresGlob = [
+ export const ignoresGlob = [
+  // Dependencies & Package Managers
   '**/node_modules/**',
-  '**/dist/**',
   '**/package-lock.json',
   '**/pnpm-lock.yaml',
 
-  '**/output',
-  '**/coverage',
-  '**/temp',
-  '**/.temp',
-  '**/tmp',
-  '**/.tmp',
-  '**/.history',
-  '**/.vitepress/cache',
-  '**/.nuxt',
-  '**/.vercel',
-  '**/.turbo',
-  '**/.data',
-  '**/.idea',
-  '**/.cache',
-  '**/.output',
-  '**/.vite-inspect',
-
-  '**/CHANGELOG*.md',
-  '**/LICENSE*',
+  // Build Outputs & Distribution
   '**/*.min.*',
-  '**/__snapshots__',
+  '**/.output',
+  '**/cache',
+  '**/dist/**',
+  '**/output',
 
-  // Tools temp files
-  '**/vite.config.*.timestamp-*',
+  // Testing & Coverage
+  '**/__snapshots__',
+  '**/coverage',
+
+  // Framework Caches & Build Tools (Vite, Nuxt, Vercel, Turbo)
+  '**/.nuxt',
+  '**/.turbo',
+  '**/.vercel',
+  '**/.vite-inspect',
+  '**/.vitepress/cache',
+
+  // IDEs, Editors & System Files
+  '**/.data',
+  '**/.history',
+  '**/.idea',
+
+  // Temporary Files & Directories
+  '**/.temp',
+  '**/.tmp',
+  '**/temp',
+  '**/tmp',
+
+  // Tool-Generated & Auto-Generated Files
   '**/auto-import?(s).d.ts',
   '**/components.d.ts',
+  '**/vite.config.*.timestamp-*',
 
-  // AI related
-  '**/.context',
-  '**/.claude',
-  '**/.agents',
+  // Repository Documentation
+  '**/CHANGELOG*.md',
+  '**/LICENSE*',
+
+  // AI & Assistant Workspace Metadata
   '**/.*/skills',
-]
+  '**/.agents',
+  '**/.claude',
+  '**/.context',
+];

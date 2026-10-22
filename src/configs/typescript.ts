@@ -1,6 +1,6 @@
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import { importModule } from "../utils"
 import { tsGlob, vueGlob, } from "../globs"
+import { importModule } from "../utils"
 
 /** 
  * Constructs the flat config for core typescript linting
@@ -13,31 +13,20 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
 
   return [
     {
-      name: 'favorodera/typescript/setup',
-      plugins: { ts: typescriptPlugin.plugin },
-      languageOptions: {
-        parser: typescriptPlugin.parser,
-      }
-    },
-
-    {
       files,
       name: 'favorodera/typescript/rules',
       rules: {
         'ts/array-type': 'error',
-        'ts/consistent-type-imports': 'error',
-        'ts/method-signature-style': 'error',
-        'ts/no-import-type-side-effects': 'error',
-        'ts/no-redeclare': 'error',
-        'ts/adjacent-overload-signatures': 'error',
         'ts/ban-ts-comment': 'error',
         "ts/class-methods-use-this": "error",
         "ts/consistent-generic-constructors": "error",
         "ts/consistent-indexed-object-style": "error",
         "ts/consistent-type-assertions": "error",
         "ts/consistent-type-definitions": "error",
+        'ts/consistent-type-imports': 'error',
         "ts/default-param-last": "error",
         "ts/member-ordering": "error",
+        'ts/method-signature-style': 'error',
         "ts/no-array-constructor": "error",
         "ts/no-confusing-non-null-assertion": "error",
         "ts/no-duplicate-enum-values": "error",
@@ -46,6 +35,7 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
         "ts/no-explicit-any": "error",
         "ts/no-extra-non-null-assertion": "error",
         "ts/no-extraneous-class": "error",
+        'ts/no-import-type-side-effects': 'error',
         "ts/no-inferrable-types": "error",
         "ts/no-invalid-void-type": "error",
         "ts/no-magic-numbers": "error",
@@ -54,6 +44,7 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
         "ts/no-non-null-asserted-nullish-coalescing": "error",
         "ts/no-non-null-asserted-optional-chain": "error",
         "ts/no-non-null-assertion": "error",
+        'ts/no-redeclare': 'error',
         "ts/no-require-imports": "error",
         "ts/no-shadow": "error",
         "ts/no-this-alias": "error",
@@ -61,7 +52,6 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
         "ts/no-unnecessary-type-constraint": "error",
         "ts/no-unsafe-declaration-merging": "error",
         "ts/no-unsafe-function-type": "error",
-        "ts/no-useless-constructor": "error",
         "ts/no-unused-expressions": [
           'error',
           {
@@ -74,6 +64,7 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
           'error',
           { classes: false, functions: false },
         ],
+        "ts/no-useless-constructor": "error",
         "ts/no-wrapper-object-types": "error",
          "ts/prefer-as-const": "error",
          "ts/prefer-enum-initializers": "error",
@@ -85,6 +76,14 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
 
         ...options.overrides
       }
+    },
+
+    {
+      languageOptions: {
+        parser: typescriptPlugin.parser,
+      },
+      name: 'favorodera/typescript/setup',
+      plugins: { ts: typescriptPlugin.plugin }
     }
   ]
 }

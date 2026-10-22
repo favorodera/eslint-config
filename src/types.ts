@@ -32,7 +32,7 @@ export interface SharedOptions {
 }
 
 /** Shared configuration options for ESLint rules with boolean toggle */
-export type BooleanSharedOptions = boolean | SharedOptions
+export type BooleanSharedOptions<Options = SharedOptions> = boolean | Options
 
 /** Return type for individual configs */
 export type PromisedTypedConfigFlatItemArray = Promise<TypedFlatConfigItem[]>

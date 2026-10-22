@@ -1,13 +1,14 @@
-import { FlatConfigComposer, type Awaitable  } from "eslint-flat-config-utils";
-import { ignores } from "./configs/ignores";
-import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from "./types";
-import { resolveOptions } from "./utils";
+import { type Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
 import type { ConfigNames } from "./typegen";
-import { imports } from "./configs/imports";
+import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from "./types";
 import { css } from "./configs/css";
+import { ignores } from "./configs/ignores";
+import { imports } from "./configs/imports";
 import { javascript } from "./configs/javascript";
+import { perfectionist, type PerfectionistOptions } from "./configs/perfectionist";
 import { typescript } from "./configs/typescript";
 import { unusedImports } from "./configs/unused-imports";
+import { resolveOptions } from "./utils";
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
@@ -24,15 +25,18 @@ interface ConfigOptions {
 
   /** Core css linting. */
   css?: BooleanSharedOptions
-  
+
   /** Core javascript linting */
-  javascript?:BooleanSharedOptions
+  javascript?: BooleanSharedOptions
 
   /** Core typescript linting */
-  typescript?:BooleanSharedOptions
+  typescript?: BooleanSharedOptions
 
   /** Unused imports linting */
-  unusedImports?:BooleanSharedOptions
+  unusedImports?: BooleanSharedOptions
+
+  /** Perfectionist linting */
+  perfectionist?: BooleanSharedOptions<PerfectionistOptions>
 }
 
 /**
@@ -41,21 +45,22 @@ interface ConfigOptions {
  * @param options Configuration options for enabling/disabling or configuring specific rule sets.
  * @returns A flat config composer instance that can be exported directly or further modified.
  */
-export function defineConfig(options:ConfigOptions = {}) {
+export function defineConfig(options: ConfigOptions = {}) {
   // Array to hold the promises of flat configuration items
   // Always append the ignore patterns configuration first to apply it globally
   const configs: Awaitable<TypedFlatConfigItem[]>[] = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
-    imports,
     css,
+    imports,
     javascript,
+    perfectionist,
     typescript,
     unusedImports
   }
 
-  for(const [key, configFunction] of Object.entries(configFunctions)) {
+  for (const [key, configFunction] of Object.entries(configFunctions)) {
     const configOption = (options as Record<string, unknown>)[key]
 
     // Resolve the options for the current configuration, defaulting to true if not explicitly provided
@@ -65,7 +70,7 @@ export function defineConfig(options:ConfigOptions = {}) {
     if (resolved) configs.push(configFunction(resolved))
   }
 
-   // Initialize the composer that allows method chaining and plugins renaming
+  // Initialize the composer that allows method chaining and plugins renaming
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
 
   composer = composer

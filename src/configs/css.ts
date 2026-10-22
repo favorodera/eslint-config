@@ -1,7 +1,7 @@
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import { importModule } from "../utils"
-import {  cssGlob } from "../globs"
 import { tailwind4 } from 'tailwind-csstree'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
+import {  cssGlob } from "../globs"
+import { importModule } from "../utils"
 
 /** 
  * Constructs the flat config for core css linting
@@ -15,11 +15,6 @@ export async function css(options: SharedOptions): PromisedTypedConfigFlatItemAr
   ]
 
   return [
-    {
-      name: 'favorodera/css/setup',
-      plugins: { 'css': cssPlugin }
-    },
-
     {
       files,
       language: 'css/css',
@@ -44,6 +39,11 @@ export async function css(options: SharedOptions): PromisedTypedConfigFlatItemAr
 
         ...options.overrides
       }
+    },
+
+    {
+      name: 'favorodera/css/setup',
+      plugins: { 'css': cssPlugin }
     }
   ]
 }

@@ -1,6 +1,6 @@
+import globals from 'globals'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
 import { jsGlob, tsGlob, vueGlob } from "../globs"
-import globals from 'globals'
 
 /** 
  * Constructs the flat config for core javascript linting
@@ -15,25 +15,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
 
   return [
     {
-      name: 'favorodera/javascript/setup',
-      languageOptions: {
-        ecmaVersion: 'latest',
-        globals: {
-          ...globals.browser,
-          ...globals.es2021,
-          ...globals.node,
-          document: 'readonly',
-          navigator: 'readonly',
-          window: 'readonly',
-        },
-        sourceType: 'module',
-      },
-      linterOptions: {
-        reportUnusedDisableDirectives: true,
-      },
-    },
-
-    {
       files,
       name: 'favorodera/javascript/rules',
       rules: {
@@ -44,56 +25,50 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
             checkForEach: true
           },
         ],
+        // eslint-disable-next-line perfectionist/sort-arrays
+        'arrow-body-style': ['error', 'always' ],
+        'block-scoped-var': 'error',
+        'default-case-last': 'error',
+        'dot-notation': 'error',
+        'eqeqeq': 'error',
         'for-direction': 'error',
+        'getter-return': [
+          'error',
+          {
+            allowImplicit: true,
+          },
+        ],
+        'new-cap': 'error',
+        'no-alert': 'error',
         'no-async-promise-executor': 'error',
         'no-await-in-loop': 'error',
+        'no-caller': 'error',
         'no-compare-neg-zero': 'error',
         'no-cond-assign': 'error',
+        'no-console': 'error',
         'no-constant-binary-expression': 'error',
+        'no-constructor-return': 'error',
+        'no-continue': 'error',
         'no-control-regex': 'error',
         'no-debugger': 'error',
         'no-dupe-else-if': 'error',
         'no-duplicate-case': 'error',
-        'no-empty-character-class': 'error',
-        'no-empty-pattern': 'error',
-        'no-ex-assign': 'error',
-        'no-fallthrough': 'error',
-        'no-invalid-regexp': 'error',
-        'no-irregular-whitespace': 'error',
-        'no-loss-of-precision': 'error',
-        'no-misleading-character-class': 'error',
-        'no-prototype-builtins': 'error',
-        'no-self-assign': 'error',
-        'no-self-compare': 'error',
-        'no-sparse-arrays': 'error',
-        'no-template-curly-in-string': 'error',
-        'no-unassigned-vars': 'error',
-        'no-unexpected-multiline': 'error',
-        'no-unmodified-loop-condition': 'error',
-        'no-unreachable-loop': 'error',
-        'no-unsafe-finally': 'error',
-        'no-unsafe-optional-chaining': 'error',
-        'no-useless-assignment': 'error',
-        'no-useless-backreference': 'error',
-        'require-atomic-updates': 'error',
-        'use-isnan': 'error',
-        'arrow-body-style': ['error', 'always'],
-        'default-case-last': 'error',
-        'eqeqeq': 'error',
-        'new-cap': 'error',
-        'no-alert': 'error',
-        'no-caller': 'error',
-        'no-console': 'error',
-        'no-continue': 'error',
         'no-else-return': 'error',
         'no-empty': [
           'error',
           { allowEmptyCatch: true },
         ],
+        'no-empty-character-class': 'error',
+        'no-empty-pattern': 'error',
         'no-eq-null': 'error',
+        'no-eval': 'error',
+        'no-ex-assign': 'error',
         'no-extend-native': 'error',
         'no-extra-bind': 'error',
+        'no-fallthrough': 'error',
         'no-implied-eval': 'error',
+        'no-invalid-regexp': 'error',
+        'no-irregular-whitespace': 'error',
         'no-iterator': 'error',
         'no-labels': [
           'error',
@@ -101,6 +76,8 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         ],
         'no-lone-blocks': 'error',
         'no-loop-func': 'error',
+        'no-loss-of-precision': 'error',
+        'no-misleading-character-class': 'error',
         'no-multi-str': 'error',
         'no-negated-condition': 'error',
         'no-nested-ternary': 'error',
@@ -112,32 +89,36 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-param-reassign': 'error',
         'no-promise-executor-return': 'error',
         'no-proto': 'error',
+        'no-prototype-builtins': 'error',
         'no-return-assign': 'error',
         'no-script-url': 'error',
+        'no-self-assign': 'error',
+        'no-self-compare': 'error',
         'no-sequences': 'error',
+        'no-sparse-arrays': 'error',
+        'no-template-curly-in-string': 'error',
         'no-throw-literal': 'error',
+        'no-unassigned-vars': 'error',
         'no-undef-init': 'error',
+        'no-unexpected-multiline': 'error',
+        'no-unmodified-loop-condition': 'error',
+        'no-unneeded-ternary': [
+          'error',
+          { defaultAssignment: false },
+        ],
+        'no-unreachable-loop': 'error',
+        'no-unsafe-finally': 'error',
+        'no-unsafe-optional-chaining': 'error',
+        'no-useless-assignment': 'error',
+        'no-useless-backreference': 'error',
         'no-useless-call': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-concat': 'error',
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
-        'block-scoped-var': 'error',
-        'dot-notation': 'error',
-        'getter-return': [
-          'error',
-          {
-            allowImplicit: true,
-          },
-        ],
-        'no-constructor-return': 'error',
-        'no-eval': 'error',
-        'no-unneeded-ternary': [
-          'error',
-          { defaultAssignment: false },
-        ],
         'object-shorthand': [
           'error',
+          // eslint-disable-next-line perfectionist/sort-arrays
           'always',
           {
             avoidQuotes: true,
@@ -169,8 +150,10 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
           { disallowRedundantWrapping: true },
         ],
         'prefer-template': 'error',
+        'require-atomic-updates': 'error',
         'symbol-description': 'error',
         'unicode-bom': 'error',
+        'use-isnan': 'error',
         'valid-typeof': [
           'error',
           { requireStringLiterals: true },
@@ -180,6 +163,25 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
 
         ...options.overrides
       }
+    },
+
+    {
+      languageOptions: {
+        ecmaVersion: 'latest',
+        globals: {
+          ...globals.browser,
+          ...globals.es2021,
+          ...globals.node,
+          document: 'readonly',
+          navigator: 'readonly',
+          window: 'readonly',
+        },
+        sourceType: 'module',
+      },
+      linterOptions: {
+        reportUnusedDisableDirectives: true,
+      },
+      name: 'favorodera/javascript/setup',
     }
   ]
 }
