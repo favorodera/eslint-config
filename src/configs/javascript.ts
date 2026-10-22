@@ -78,12 +78,10 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'require-atomic-updates': 'error',
         'use-isnan': 'error',
         'arrow-body-style': ['error', 'always'],
-        'default-param-last': 'error',
         'default-case-last': 'error',
         'eqeqeq': 'error',
         'new-cap': 'error',
         'no-alert': 'error',
-        'no-array-constructor': 'error',
         'no-caller': 'error',
         'no-console': 'error',
         'no-continue': 'error',
@@ -138,14 +136,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-unneeded-ternary': [
           'error',
           { defaultAssignment: false },
-        ],
-        'no-unused-expressions': [
-          'error',
-          {
-            allowShortCircuit: true,
-            allowTaggedTemplates: true,
-            allowTernary: true,
-          },
         ],
         'no-use-before-define': [
           'error',
