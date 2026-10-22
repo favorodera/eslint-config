@@ -3,6 +3,11 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
 import { jsGlob, tsGlob, vueGlob, } from "../globs"
 import { importModule } from "../utils"
 
+/** Shared configuration options for ESLint rules and Perfectionist settings */
+export type PerfectionistOptions = SharedOptions & {
+  settings?: PerfectionistSettings
+}
+
 /**
  * Options for configuring Perfectionist linting rules.
  * @see https://perfectionist.dev/guide/getting-started#settings
@@ -10,31 +15,14 @@ import { importModule } from "../utils"
  */
 interface PerfectionistSettings {
   /**
-   * The type of sorting algorithm.
-   * @default 'natural'
-   */
-  type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'
-
-  /**
-   * The order of sorting.
-   * @default 'asc'
-   */
-  order?: 'asc' | 'desc'
-
-  /**
-   * The fallback sorting type and order used when two elements are equal
-   * under the primary comparison.
-   */
-  fallbackSort?: {
-    order?: 'asc' | 'desc'
-    type: 'alphabetical' | 'custom' | 'line-length' | 'natural'
-  }
-
-  /**
    * Custom alphabet string for the `'custom'` sort type.
+   * 
    * Defines the exact character order to use.
    */
   alphabet?: string
+
+  /** The fallback sorting type and order used when two elements are equal under the primary comparison. */
+  fallbackSort?: Pick<PerfectionistSettings,'order'|'type'>
 
   /**
    * Ignore case when sorting.
@@ -43,14 +31,8 @@ interface PerfectionistSettings {
   ignoreCase?: boolean
 
   /**
-   * Control whether special characters should be kept, trimmed or removed
-   * before sorting.
-   * @default 'keep'
-   */
-  specialCharacters?: 'keep' | 'remove' | 'trim'
-
-  /**
    * Locale(s) used for locale-aware string comparison.
+   * 
    * A BCP 47 language tag or an array of such tags.
    * @default 'en-US'
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare#locales
@@ -58,11 +40,42 @@ interface PerfectionistSettings {
   locales?: string | string[]
 
   /**
-   * Partition sorted elements by comments.
-   * Can be `true`, `false`, a regexp pattern string, or an array of patterns.
-   * @default true
+   * Specifies how to handle newlines between groups.
+   * 
+   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
+   * @default 'ignore'
    */
-  partitionByComment?: boolean | string | string[]
+  newlinesBetween?: 'ignore' | number
+
+  /**
+   * Specifies how to handle newlines between elements of each group.
+   * 
+   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
+   * @default 'ignore'
+   */
+  newlinesInside?: 'ignore' | 'newlinesBetween' | number
+
+  /**
+   * The order of sorting.
+   * @default 'asc'
+   */
+  order?: 'asc' | 'desc'
+
+    /**
+   * Partition sorted elements by comments.
+   *
+   * Can be a boolean, a string pattern, an array of patterns, or an object
+   * specifying separate rules for line and block comments.
+   * @default { line: true, block: false } (partitions on line comments but ignores block comments, including JSDoc)
+   */
+  partitionByComment?:
+    | boolean
+    | string
+    | string[]
+    | {
+        block?: boolean | string | string[]
+        line?: boolean | string | string[]
+      }
 
   /**
    * Partition sorted elements by newlines.
@@ -71,18 +84,10 @@ interface PerfectionistSettings {
   partitionByNewLine?: boolean
 
   /**
-   * Specifies how to handle newlines between groups.
-   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
-   * @default 'ignore'
+   * Control whether special characters should be kept, trimmed or removed before sorting.
+   * @default 'keep'
    */
-  newlinesBetween?: 'ignore' | number
-
-  /**
-   * Specifies how to handle newlines between elements of each group.
-   * `'ignore'` preserves existing newlines; a number enforces that many blank lines.
-   * @default 'ignore'
-   */
-  newlinesInside?: 'ignore' | 'newlinesBetween' | number
+  specialCharacters?: 'keep' | 'remove' | 'trim'
 
   /** `tsconfig` configuration option used by rules.*/
   tsconfig?: {
@@ -91,17 +96,19 @@ interface PerfectionistSettings {
      * @default 'tsconfig.json'
      */
     filename?: string,
+
     /** 
      * The project root directory
      * @default '.'
      */
     rootDir?: string
   }
-}
 
-/** Shared configuration options for ESLint rules and Perfectionist settings */
-export type PerfectionistOptions = SharedOptions & {
-  settings?: PerfectionistSettings
+  /**
+   * The type of sorting algorithm.
+   * @default 'natural'
+   */
+  type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'|'unsorted'
 }
 
 const perfectionistDefaults: PerfectionistSettings = {
@@ -110,7 +117,10 @@ const perfectionistDefaults: PerfectionistSettings = {
   newlinesBetween: 'ignore',
   newlinesInside: 'ignore',
   order: 'asc',
-  partitionByComment: true,
+  partitionByComment: {
+     block: false,
+  line: true,
+  },
   partitionByNewLine: false,
   specialCharacters: 'keep',
   tsconfig: {

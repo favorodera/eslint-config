@@ -6,12 +6,16 @@ import { ignores } from "./configs/ignores";
 import { imports } from "./configs/imports";
 import { javascript } from "./configs/javascript";
 import { perfectionist, type PerfectionistOptions } from "./configs/perfectionist";
+import { tailwind, type TailwindOptions } from "./configs/tailwind";
 import { typescript } from "./configs/typescript";
 import { unusedImports } from "./configs/unused-imports";
 import { resolveOptions } from "./utils";
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
+  /** Core css linting. */
+  css?: BooleanSharedOptions
+
   /** 
    * Glob patterns to exclude from linting.
    * 
@@ -23,20 +27,20 @@ interface ConfigOptions {
   /** Imports linting. */
   imports?: BooleanSharedOptions
 
-  /** Core css linting. */
-  css?: BooleanSharedOptions
-
   /** Core javascript linting */
   javascript?: BooleanSharedOptions
+
+  /** Perfectionist linting */
+  perfectionist?: BooleanSharedOptions<PerfectionistOptions>
+
+  /** Tailwind linting */
+  tailwind?: BooleanSharedOptions<TailwindOptions>
 
   /** Core typescript linting */
   typescript?: BooleanSharedOptions
 
   /** Unused imports linting */
   unusedImports?: BooleanSharedOptions
-
-  /** Perfectionist linting */
-  perfectionist?: BooleanSharedOptions<PerfectionistOptions>
 }
 
 /**
@@ -56,6 +60,7 @@ export function defineConfig(options: ConfigOptions = {}) {
     imports,
     javascript,
     perfectionist,
+    tailwind,
     typescript,
     unusedImports
   }

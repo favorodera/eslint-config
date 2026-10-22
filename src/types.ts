@@ -2,8 +2,26 @@ import type { Linter } from 'eslint'
 import type { ConfigWithExtends } from 'eslint-flat-config-utils'
 import type { RuleOptions } from './typegen'
 
+/** Shared configuration options for ESLint rules with boolean toggle */
+export type BooleanSharedOptions<Options = SharedOptions> = boolean | Options
+
+/**
+ * Patterns used to ignore files and directories from ESLint scanning.
+ * Can be a list of glob patterns or a function that receives default patterns.
+ */
+export type IgnoresPatterns = ((defaults: string[]) => string[]) | string[]
+
+/** Return type for individual configs */
+export type PromisedTypedConfigFlatItemArray = Promise<TypedFlatConfigItem[]>
+
 /** ESLint rules configuration with type-safe autocompletion */
 export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOptions
+
+/** Shared configuration options for ESLint rules */
+export interface SharedOptions {
+  /** Override rules configuration */
+  overrides?: TypedFlatConfigItem['rules']
+}
 
 /**
  * An updated version of ESLint's `Linter.Config`, which provides autocompletion
@@ -24,21 +42,3 @@ export type TypedFlatConfigItem = Omit<ConfigWithExtends, 'plugins' | 'rules'> &
    */
   rules?: Rules
 }
-
-/** Shared configuration options for ESLint rules */
-export interface SharedOptions {
-  /** Override rules configuration */
-  overrides?: TypedFlatConfigItem['rules']
-}
-
-/** Shared configuration options for ESLint rules with boolean toggle */
-export type BooleanSharedOptions<Options = SharedOptions> = boolean | Options
-
-/** Return type for individual configs */
-export type PromisedTypedConfigFlatItemArray = Promise<TypedFlatConfigItem[]>
-
-/**
- * Patterns used to ignore files and directories from ESLint scanning.
- * Can be a list of glob patterns or a function that receives default patterns.
- */
-export type IgnoresPatterns = ((defaults: string[]) => string[]) | string[]
