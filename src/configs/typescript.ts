@@ -80,6 +80,9 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
          "ts/prefer-enum-initializers": "error",
          "ts/prefer-for-of": "error",
          "ts/prefer-function-type": "error",
+         "ts/prefer-literal-enum-member": "error",
+         "ts/triple-slash-reference": "error",
+         "ts/unified-signatures": "error",
 
         ...options.overrides
       }
