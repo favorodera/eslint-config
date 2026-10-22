@@ -1,6 +1,6 @@
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
 import { importModule } from "../utils"
-import { tsGlob, } from "../globs"
+import { tsGlob, vueGlob, } from "../globs"
 
 /** 
  * Constructs the flat config for core typescript linting
@@ -9,7 +9,7 @@ import { tsGlob, } from "../globs"
 export async function typescript(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const typescriptPlugin = await importModule(import('typescript-eslint'))
 
-  const files = [tsGlob]
+  const files = [tsGlob,vueGlob]
 
   return [
     {
@@ -61,7 +61,6 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
         "ts/no-unnecessary-type-constraint": "error",
         "ts/no-unsafe-declaration-merging": "error",
         "ts/no-unsafe-function-type": "error",
-        "ts/no-unused-vars": "error",
         "ts/no-useless-constructor": "error",
         "ts/no-unused-expressions": [
           'error',

@@ -7,6 +7,7 @@ import { imports } from "./configs/imports";
 import { css } from "./configs/css";
 import { javascript } from "./configs/javascript";
 import { typescript } from "./configs/typescript";
+import { unusedImports } from "./configs/unused-imports";
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
@@ -29,6 +30,9 @@ interface ConfigOptions {
 
   /** Core typescript linting */
   typescript?:BooleanSharedOptions
+
+  /** Unused imports linting */
+  unusedImports?:BooleanSharedOptions
 }
 
 /**
@@ -47,7 +51,8 @@ export function defineConfig(options:ConfigOptions = {}) {
     imports,
     css,
     javascript,
-    typescript
+    typescript,
+    unusedImports
   }
 
   for(const [key, configFunction] of Object.entries(configFunctions)) {
