@@ -1,5 +1,6 @@
-import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from "defu"
+import { getDefaultSelectors } from "eslint-plugin-better-tailwindcss/defaults";
+import { MatcherType, SelectorKind, type Selectors } from 'eslint-plugin-better-tailwindcss/types'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
 import { cssGlob, jsGlob, tsGlob, vueGlob } from "../globs"
 import { importModule } from "../utils"
@@ -14,26 +15,16 @@ export type TailwindOptions = SharedOptions & {
  * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
  */
 interface TailwindSettings {
- /**
-   * Working directory used to resolve Tailwind config files.
-   * 
-   * Useful for monorepos where linting runs from the root but each project has its own setup.
-   * 
-   * Relative to the ESLint process's cwd; defaults to that cwd if not specified.
-   */
+  /** Working directory used to resolve Tailwind config files. */
   cwd?: string
 
   /**
-   * Whether to detect custom component classes (like `card`, `btn`) defined in Tailwind CSS v4, so they are not reported as unknown classes.
+   * Whether to detect and not report custom component classes (like `card`, `btn`) defined in Tailwind CSS v4.
    * @default true
    */
   detectComponentClasses?: boolean
 
-  /**
-   * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
-   * 
-   * Falls back to the default configuration when omitted.
-   */
+  /** Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.*/
   entryPoint?: string
 
   /**
@@ -53,16 +44,33 @@ interface TailwindSettings {
    */
   rootFontSize?: number
 
-  /**
-   * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
-   * 
-   * Only matches are treated as class candidates.
-   */
+  /** Flat list of AST selectors that determine which string literals are linted as Tailwind classes. */
   selectors?: Selectors
 }
 
 const tailwindDefaults: TailwindSettings = {
   detectComponentClasses: true,
+  selectors: [
+    ...getDefaultSelectors(),
+    {
+      kind: SelectorKind.Callee,
+      "match": [
+        { "type": MatcherType.ObjectKey },
+        { "type": MatcherType.ObjectValue },
+        { "type": MatcherType.String }
+      ],
+      name: "^computed$"
+    },
+    {
+      kind: SelectorKind.Callee,
+      "match": [
+        { "type": MatcherType.ObjectKey },
+        { "type": MatcherType.ObjectValue },
+        { "type": MatcherType.String }
+      ],
+      name: "^defineAppConfig$"
+    }
+  ]
 }
 
 /** 
