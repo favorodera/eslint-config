@@ -94,7 +94,29 @@ export async function tailwind(options: TailwindOptions): PromisedTypedConfigFla
       files,
       name: 'favorodera/tailwind/rules',
       rules: {
-        'tailwind/enforce-logical-properties': 'error',
+        'tailwind/enforce-canonical-classes': 'error',
+        'tailwind/enforce-consistent-class-order': [
+          'error',
+          {
+            componentClassOrder: 'asc',
+            componentClassPosition: 'start',
+            order: 'strict',
+            unknownClassOrder: 'asc',
+            unknownClassPosition: 'start',
+          },
+        ],
+        'tailwind/enforce-consistent-line-wrapping': [
+          'error',
+          { group: 'newLine' },
+        ],
+        'tailwind/enforce-consistent-variant-order': 'error',
+         'tailwind/enforce-logical-properties': 'error',
+         'tailwind/no-concatenated-classes': 'error',
+         'tailwind/no-conflicting-classes': 'error',
+         'tailwind/no-deprecated-classes': 'error',
+         'tailwind/no-duplicate-classes': 'error',
+         'tailwind/no-unknown-classes': 'error',
+         'tailwind/no-unnecessary-whitespace': 'error',
 
         ...resolvedOptions.overrides
       }
