@@ -76,6 +76,10 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
           { classes: false, functions: false },
         ],
         "ts/no-wrapper-object-types": "error",
+         "ts/prefer-as-const": "error",
+         "ts/prefer-enum-initializers": "error",
+         "ts/prefer-for-of": "error",
+         "ts/prefer-function-type": "error",
 
         ...options.overrides
       }
