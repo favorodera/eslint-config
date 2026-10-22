@@ -40,7 +40,7 @@ interface ConfigOptions {
 export function defineConfig(options:ConfigOptions = {}) {
   // Array to hold the promises of flat configuration items
   // Always append the ignore patterns configuration first to apply it globally
-  const configs: Array<Awaitable<Array<TypedFlatConfigItem>>> = [ignores(options.ignores)]
+  const configs: Awaitable<TypedFlatConfigItem[]>[] = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {

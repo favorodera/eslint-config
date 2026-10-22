@@ -4,7 +4,8 @@ export default defineConfig({
   ignores: ['src/typegen.d.ts'],
   typescript:{
     overrides:{
-      'ts/no-explicit-any':'off'
+      'ts/no-explicit-any':'off',
+      'ts/no-magic-numbers':'off'
     }
   }
 })

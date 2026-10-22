@@ -11,7 +11,9 @@ const configs = await defineConfig()
   })
 
 const configNames = configs
-  .map(config => config.name)
+  .map(config => {
+    return config.name
+  })
   .filter(Boolean)
 
 let declarations = await flatConfigsToRulesDTS(configs, {
@@ -20,7 +22,9 @@ let declarations = await flatConfigsToRulesDTS(configs, {
 
 declarations += `
 // Names of all the configs
-export type ConfigNames = ${configNames.map(entry => `'${entry}'`).join(' | ')}
+export type ConfigNames = ${configNames.map(entry => {
+  return `'${entry}'`}).join(' | ')
+}
 `
 
 await writeFile('src/typegen.d.ts', declarations, 'utf8')

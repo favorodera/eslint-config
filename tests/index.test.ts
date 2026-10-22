@@ -77,7 +77,7 @@ describe('factory', () => {
     const resolved = await defineConfig({
       ignores: ['**/my-custom-dir/**'],
     })
-    const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
+    const ignoresConfig = resolved.find(config => {return config.name === 'favorodera/ignores'})
 
     expect(ignoresConfig?.ignores).toContain('**/my-custom-dir/**')
     // default patterns still present
@@ -86,12 +86,12 @@ describe('factory', () => {
 
   it('ignores accepts a function to transform default patterns', async () => {
     const resolved = await defineConfig({
-      ignores: defaults => [
+      ignores: defaults => {return [
         ...defaults,
         '**/generated/**',
-      ],
+      ]},
     })
-    const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
+    const ignoresConfig = resolved.find(config => {return config.name === 'favorodera/ignores'})
 
     expect(ignoresConfig?.ignores).toContain('**/generated/**')
     expect(ignoresConfig?.ignores).toContain('**/node_modules/**')
