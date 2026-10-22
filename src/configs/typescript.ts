@@ -62,6 +62,7 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
         "ts/no-unsafe-declaration-merging": "error",
         "ts/no-unsafe-function-type": "error",
         "ts/no-unused-vars": "error",
+        "ts/no-useless-constructor": "error",
         "ts/no-unused-expressions": [
           'error',
           {
@@ -70,6 +71,11 @@ export async function typescript(options: SharedOptions): PromisedTypedConfigFla
             allowTernary: true,
           },
         ],
+        "ts/no-use-before-define": [
+          'error',
+          { classes: false, functions: false },
+        ],
+        "ts/no-wrapper-object-types": "error",
 
         ...options.overrides
       }

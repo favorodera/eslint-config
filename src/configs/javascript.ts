@@ -120,7 +120,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-useless-call': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-concat': 'error',
-        'no-useless-constructor': 'error',
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
         'block-scoped-var': 'error',
@@ -136,10 +135,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-unneeded-ternary': [
           'error',
           { defaultAssignment: false },
-        ],
-        'no-use-before-define': [
-          'error',
-          { classes: false, functions: false },
         ],
         'object-shorthand': [
           'error',
