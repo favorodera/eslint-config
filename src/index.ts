@@ -8,6 +8,7 @@ import { ignores } from './configs/ignores'
 import { imports } from './configs/imports'
 import { javascript } from './configs/javascript'
 import { markdown, type MarkdownOptions } from './configs/markdown'
+import { node } from './configs/node'
 import { perfectionist, type PerfectionistOptions } from './configs/perfectionist'
 import { stylistic, type StylisticOptions } from './configs/stylistic'
 import { tailwind, type TailwindOptions } from './configs/tailwind'
@@ -15,15 +16,11 @@ import { typescript } from './configs/typescript'
 import { unusedImports } from './configs/unused-imports'
 import { vue, type VueOptions } from './configs/vue'
 import { resolveOptions } from './utils'
-import { node } from './configs/node'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
   /** Accessibility linting */
   a11y?: BooleanSharedOptions
-
-  /** Node.js linting */
-  node?: BooleanSharedOptions
 
   /** Code blocks in markdown linting linting */
   codeInMarkdown?: BooleanSharedOptions
@@ -47,6 +44,9 @@ interface ConfigOptions {
 
   /** Markdown linting */
   markdown?: BooleanSharedOptions<MarkdownOptions>
+
+  /** Node.js linting */
+  node?: BooleanSharedOptions
 
   /** Perfectionist linting */
   perfectionist?: BooleanSharedOptions<PerfectionistOptions>
@@ -87,13 +87,13 @@ export function defineConfig(options: ConfigOptions = {}) {
     imports,
     javascript,
     markdown,
+    node,
     perfectionist,
     stylistic,
     tailwind,
     typescript,
     unusedImports,
     vue,
-    node,
 
     // Must be appended last
     codeInMarkdown,

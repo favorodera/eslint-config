@@ -52,5 +52,3 @@ tmp/
 
 # Types
 src/typegen.d.ts
-
-dump/
