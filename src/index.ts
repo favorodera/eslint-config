@@ -6,6 +6,7 @@ import { css } from './configs/css'
 import { ignores } from './configs/ignores'
 import { imports } from './configs/imports'
 import { javascript } from './configs/javascript'
+import { markdown, type MarkdownOptions } from './configs/markdown'
 import { perfectionist, type PerfectionistOptions } from './configs/perfectionist'
 import { stylistic, type StylisticOptions } from './configs/stylistic'
 import { tailwind, type TailwindOptions } from './configs/tailwind'
@@ -34,6 +35,9 @@ interface ConfigOptions {
 
   /** Core javascript linting */
   javascript?: BooleanSharedOptions
+
+  /** Markdown linting */
+  markdown?: BooleanSharedOptions<MarkdownOptions>
 
   /** Perfectionist linting */
   perfectionist?: BooleanSharedOptions<PerfectionistOptions>
@@ -69,6 +73,7 @@ export function defineConfig(options: ConfigOptions = {}) {
     css,
     imports,
     javascript,
+    markdown,
     perfectionist,
     stylistic,
     tailwind,
@@ -99,7 +104,6 @@ export function defineConfig(options: ConfigOptions = {}) {
       '@typescript-eslint': 'ts',
       'better-tailwindcss': 'tailwind',
       'import-lite': 'import',
-      'markdown': 'md',
       'n': 'node',
       'vuejs-accessibility': 'a11y',
       'yml': 'yaml',

@@ -48,37 +48,40 @@ interface TailwindSettings {
   selectors?: Selectors
 }
 
-const tailwindDefaults: TailwindSettings = {
-  detectComponentClasses: true,
-  selectors: [
-    ...getDefaultSelectors(),
-    {
-      kind: SelectorKind.Callee,
-      match: [
-        { type: MatcherType.ObjectKey },
-        { type: MatcherType.ObjectValue },
-        { type: MatcherType.String },
-      ],
-      name: '^computed$',
-    },
-    {
-      kind: SelectorKind.Callee,
-      match: [
-        { type: MatcherType.ObjectKey },
-        { type: MatcherType.ObjectValue },
-        { type: MatcherType.String },
-      ],
-      name: '^defineAppConfig$',
-    },
-  ],
-}
+const tailwindDefaults = {
+  overrides: undefined,
+  settings: {
+    detectComponentClasses: true,
+    selectors: [
+      ...getDefaultSelectors(),
+      {
+        kind: SelectorKind.Callee,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+          { type: MatcherType.String },
+        ],
+        name: '^computed$',
+      },
+      {
+        kind: SelectorKind.Callee,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+          { type: MatcherType.String },
+        ],
+        name: '^defineAppConfig$',
+      },
+    ],
+  },
+} satisfies TailwindOptions
 
 /**
  * Constructs the flat config for tailwind linting
  * @returns Flat config items
  */
 export async function tailwind(options: TailwindOptions): PromisedTypedConfigFlatItemArray {
-  const resolvedOptions = defu(options, { settings: tailwindDefaults })
+  const resolvedOptions = defu(options, tailwindDefaults)
 
   const tailwindPlugin = await importModule(import('eslint-plugin-better-tailwindcss'))
 

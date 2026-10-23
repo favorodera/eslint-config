@@ -111,31 +111,34 @@ interface PerfectionistSettings {
   type?: 'alphabetical' | 'custom' | 'line-length' | 'natural' | 'unsorted'
 }
 
-const perfectionistDefaults: PerfectionistOptions['settings'] = {
-  ignoreCase: true,
-  locales: 'en-US',
-  newlinesBetween: 'ignore',
-  newlinesInside: 'ignore',
-  order: 'asc',
-  partitionByComment: {
-    block: false,
-    line: true,
+const perfectionistDefaults = {
+  overrides: undefined,
+  settings: {
+    ignoreCase: true,
+    locales: 'en-US',
+    newlinesBetween: 'ignore',
+    newlinesInside: 'ignore',
+    order: 'asc',
+    partitionByComment: {
+      block: false,
+      line: true,
+    },
+    partitionByNewLine: false,
+    specialCharacters: 'keep',
+    tsconfig: {
+      filename: 'tsconfig.json',
+      rootDir: '.',
+    },
+    type: 'natural',
   },
-  partitionByNewLine: false,
-  specialCharacters: 'keep',
-  tsconfig: {
-    filename: 'tsconfig.json',
-    rootDir: '.',
-  },
-  type: 'natural',
-}
+} satisfies PerfectionistOptions
 
 /**
  * Constructs the flat config for perfectionist linting
  * @returns Flat config items
  */
 export async function perfectionist(options: PerfectionistOptions): PromisedTypedConfigFlatItemArray {
-  const resolvedOptions = defu(options, { settings: perfectionistDefaults })
+  const resolvedOptions = defu(options, perfectionistDefaults)
 
   const perfectionistPlugin = await importModule(import('eslint-plugin-perfectionist'))
 
