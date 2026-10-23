@@ -1,12 +1,15 @@
 import globals from 'globals'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
 /**
  * Constructs the flat config for core javascript linting
  * @returns Flat config items
  */
 export async function javascript(options: SharedOptions): PromisedTypedConfigFlatItemArray {
+  const javascriptPlugin = await importModule(import('@eslint/js'))
+
   const files = [
     jsGlob,
     tsGlob,
@@ -15,9 +18,31 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
 
   return [
     {
+      languageOptions: {
+        ecmaVersion: 'latest',
+        globals: {
+          ...globals.browser,
+          ...globals.es2021,
+          ...globals.node,
+          document: 'readonly',
+          navigator: 'readonly',
+          window: 'readonly',
+        },
+        sourceType: 'module',
+      },
+      linterOptions: {
+        reportUnusedDisableDirectives: true,
+      },
+      name: 'favorodera/javascript/setup',
+    },
+
+    {
       files,
       name: 'favorodera/javascript/rules',
       rules: {
+
+        ...javascriptPlugin.configs.recommended.rules,
+
         'array-callback-return': [
           'error',
           {
@@ -25,7 +50,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
             checkForEach: true,
           },
         ],
-        // eslint-disable-next-line perfectionist/sort-arrays
         'arrow-body-style': ['error', 'always'],
         'block-scoped-var': 'error',
         'default-case-last': 'error',
@@ -40,6 +64,7 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         ],
         'new-cap': 'error',
         'no-alert': 'error',
+        'no-array-constructor': 'error',
         'no-async-promise-executor': 'error',
         'no-await-in-loop': 'error',
         'no-caller': 'error',
@@ -48,7 +73,7 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-console': 'error',
         'no-constant-binary-expression': 'error',
         'no-constructor-return': 'error',
-        'no-continue': 'error',
+        'no-continue': 'off',
         'no-control-regex': 'error',
         'no-debugger': 'error',
         'no-dupe-else-if': 'error',
@@ -109,16 +134,29 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'no-unreachable-loop': 'error',
         'no-unsafe-finally': 'error',
         'no-unsafe-optional-chaining': 'error',
+        'no-unused-expressions': [
+          'error',
+          {
+            allowShortCircuit: true,
+            allowTaggedTemplates: true,
+            allowTernary: true,
+          },
+        ],
+        'no-unused-vars': 'off',
+        'no-use-before-define': [
+          'error',
+          { classes: false, functions: false },
+        ],
         'no-useless-assignment': 'error',
         'no-useless-backreference': 'error',
         'no-useless-call': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-concat': 'error',
+        'no-useless-constructor': 'error',
         'no-useless-rename': 'error',
         'no-useless-return': 'error',
         'object-shorthand': [
           'error',
-          // eslint-disable-next-line perfectionist/sort-arrays
           'always',
           {
             avoidQuotes: true,
@@ -162,26 +200,8 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'yoda': 'error',
 
         ...options.overrides,
-      },
-    },
 
-    {
-      languageOptions: {
-        ecmaVersion: 'latest',
-        globals: {
-          ...globals.browser,
-          ...globals.es2021,
-          ...globals.node,
-          document: 'readonly',
-          navigator: 'readonly',
-          window: 'readonly',
-        },
-        sourceType: 'module',
       },
-      linterOptions: {
-        reportUnusedDisableDirectives: true,
-      },
-      name: 'favorodera/javascript/setup',
     },
   ]
 }

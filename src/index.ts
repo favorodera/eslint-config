@@ -1,6 +1,7 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './typegen'
 import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from './types'
+import { a11y } from './configs/a11y'
 import { codeInMarkdown } from './configs/code-in-markdown'
 import { css } from './configs/css'
 import { ignores } from './configs/ignores'
@@ -17,6 +18,9 @@ import { resolveOptions } from './utils'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
+  /** Accessibility linting */
+  a11y?: BooleanSharedOptions
+
   /** Code blocks in markdown linting linting */
   codeInMarkdown?: BooleanSharedOptions
 
@@ -74,6 +78,7 @@ export function defineConfig(options: ConfigOptions = {}) {
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
+    a11y,
     css,
     imports,
     javascript,
@@ -108,7 +113,7 @@ export function defineConfig(options: ConfigOptions = {}) {
       '@stylistic': 'stylistic',
       '@typescript-eslint': 'typescript',
       'better-tailwindcss': 'tailwind',
-      'import-lite': 'import',
+      'import-lite': 'imports',
       'n': 'node',
       'vuejs-accessibility': 'a11y',
       'yml': 'yaml',

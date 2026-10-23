@@ -17,6 +17,11 @@ export async function unusedImports(options: SharedOptions): PromisedTypedConfig
 
   return [
     {
+      name: 'favorodera/unused-imports/setup',
+      plugins: { 'unused-imports': unusedImportsPlugin },
+    },
+
+    {
       files,
       name: 'favorodera/unused-imports/rules',
       rules: {
@@ -34,11 +39,6 @@ export async function unusedImports(options: SharedOptions): PromisedTypedConfig
 
         ...options.overrides,
       },
-    },
-
-    {
-      name: 'favorodera/unused-imports/setup',
-      plugins: { 'unused-imports': unusedImportsPlugin },
     },
   ]
 }

@@ -94,10 +94,20 @@ export async function tailwind(options: TailwindOptions): PromisedTypedConfigFla
 
   return [
     {
+      name: 'favorodera/tailwind/setup',
+      plugins: { tailwind: tailwindPlugin },
+      settings: {
+        'better-tailwindcss': resolvedOptions.settings,
+      },
+    },
+
+    {
       files,
       name: 'favorodera/tailwind/rules',
       rules: {
-        'tailwind/enforce-canonical-classes': 'error',
+        ...tailwindPlugin.configs['recommended-error'].rules,
+        ...tailwindPlugin.configs['stylistic-error'].rules,
+
         'tailwind/enforce-consistent-class-order': [
           'error',
           {
@@ -108,28 +118,17 @@ export async function tailwind(options: TailwindOptions): PromisedTypedConfigFla
             unknownClassPosition: 'start',
           },
         ],
+        'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-line-wrapping': [
           'error',
-          { group: 'newLine' },
+          { group: 'emptyLine' },
         ],
+        'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',
-        'tailwind/no-concatenated-classes': 'error',
-        'tailwind/no-conflicting-classes': 'error',
-        'tailwind/no-deprecated-classes': 'error',
-        'tailwind/no-duplicate-classes': 'error',
-        'tailwind/no-unknown-classes': 'error',
-        'tailwind/no-unnecessary-whitespace': 'error',
+        'tailwind/enforce-shorthand-classes': 'off',
 
         ...resolvedOptions.overrides,
-      },
-    },
-
-    {
-      name: 'favorodera/tailwind/setup',
-      plugins: { tailwind: tailwindPlugin },
-      settings: {
-        'better-tailwindcss': resolvedOptions.settings,
       },
     },
   ]

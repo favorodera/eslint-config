@@ -10,6 +10,15 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
 
   return [
     {
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: { impliedStrict: true },
+        },
+      },
+      name: 'favorodera/code-in-markdown/setup',
+    },
+
+    {
       files,
       name: 'favorodera/code-in-markdown/rules',
       rules: {
@@ -58,15 +67,6 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
 
         ...options.overrides,
       },
-    },
-
-    {
-      languageOptions: {
-        parserOptions: {
-          ecmaFeatures: { impliedStrict: true },
-        },
-      },
-      name: 'favorodera/code-in-markdown/setup',
     },
   ]
 }

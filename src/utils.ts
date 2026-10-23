@@ -1,5 +1,23 @@
 import type { Awaitable } from 'eslint-flat-config-utils'
 import { defu } from 'defu'
+import type { Rules } from './types'
+
+/**
+ * Extracts and merges the rules from multiple ESLint configuration arrays.
+ * @param configArrays Rest parameter representing multiple arrays of ESLint flat config items.
+ * @returns A single object containing all the merged rules from the provided configurations.
+ */
+export function extractRules(...configArrays: { rules?: Record<string, unknown> }[][]): Rules {
+  return Object.assign(
+    {},
+    // Flatten the array of config arrays, then map over each config to extract its 'rules' object (or an empty object if undefined).
+    ...configArrays
+      .flat()
+      .map((config) => {
+        return config?.rules ?? {}
+      }),
+  )
+}
 
 /**
  * Resolves a module (or a promise of one) and returns its default export

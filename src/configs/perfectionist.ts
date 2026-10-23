@@ -108,7 +108,7 @@ interface PerfectionistSettings {
    * The type of sorting algorithm.
    * @default 'natural'
    */
-  type?: 'alphabetical' | 'custom' | 'line-length' | 'natural' | 'unsorted'
+  type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'
 }
 
 const perfectionistDefaults = {
@@ -150,43 +150,20 @@ export async function perfectionist(options: PerfectionistOptions): PromisedType
 
   return [
     {
-      files,
-      name: 'favorodera/perfectionist/rules',
-      rules: {
-        'perfectionist/sort-array-includes': 'error',
-        'perfectionist/sort-arrays': [
-          'error',
-          {
-            useConfigurationIf: {},
-          },
-        ],
-        'perfectionist/sort-classes': 'error',
-        'perfectionist/sort-enums': 'error',
-        'perfectionist/sort-exports': 'error',
-        'perfectionist/sort-heritage-clauses': 'error',
-        'perfectionist/sort-imports': 'error',
-        'perfectionist/sort-interfaces': 'error',
-        'perfectionist/sort-intersection-types': 'error',
-        'perfectionist/sort-maps': 'error',
-        'perfectionist/sort-modules': 'error',
-        'perfectionist/sort-named-exports': 'error',
-        'perfectionist/sort-named-imports': 'error',
-        'perfectionist/sort-object-types': 'error',
-        'perfectionist/sort-objects': 'error',
-        'perfectionist/sort-sets': 'error',
-        'perfectionist/sort-switch-case': 'error',
-        'perfectionist/sort-union-types': 'error',
-        'perfectionist/sort-variable-declarations': 'error',
-
-        ...resolvedOptions.overrides,
-      },
-    },
-
-    {
       name: 'favorodera/perfectionist/setup',
       plugins: { perfectionist: perfectionistPlugin },
       settings: {
         perfectionist: resolvedOptions.settings,
+      },
+    },
+
+    {
+      files,
+      name: 'favorodera/perfectionist/rules',
+      rules: {
+        ...perfectionistPlugin.configs[`recommended-${resolvedOptions.settings.type}`].rules,
+
+        ...resolvedOptions.overrides,
       },
     },
   ]

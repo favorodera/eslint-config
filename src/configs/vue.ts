@@ -3,7 +3,7 @@ import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor, { type Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { vueGlob } from '../globs'
-import { importModule } from '../utils'
+import { extractRules, importModule } from '../utils'
 
 /** Shared configuration options for ESLint rules and Vue settings */
 export type VueOptions = SharedOptions & {
@@ -58,28 +58,6 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
 
   return [
     {
-      files,
-      languageOptions: {
-        parser: vueParser,
-        parserOptions: {
-          extraFileExtensions: ['.vue'],
-          parser: typescriptPlugin.parser,
-          sourceType: 'module',
-        },
-      },
-      name: 'favorodera/vue/rules',
-      processor,
-      rules: {
-        'vue/block-lang': [
-          'error',
-          { script: { lang: 'ts' } },
-        ],
-
-        ...resolvedOptions.overrides,
-      },
-    },
-
-    {
       languageOptions: {
         globals: {
           computed: 'readonly',
@@ -100,6 +78,117 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
       },
       name: 'favorodera/vue/setup',
       plugins: { vue: vuePlugin },
+    },
+
+    {
+      files,
+      languageOptions: {
+        parser: vueParser,
+        parserOptions: {
+          extraFileExtensions: ['.vue'],
+          parser: typescriptPlugin.parser,
+          sourceType: 'module',
+        },
+      },
+      name: 'favorodera/vue/rules',
+      processor,
+      rules: {
+        ...extractRules(vuePlugin.configs['flat/recommended-error']),
+
+        'vue/block-lang': [
+          'error',
+          { script: { lang: 'ts' } },
+        ],
+        'vue/block-order': [
+          'error',
+          {
+            order: [
+              'script',
+              'template',
+              'style',
+            ],
+          },
+        ],
+        'vue/block-tag-newline': [
+          'error',
+          { multiline: 'always', singleline: 'always' },
+        ],
+        'vue/comment-directive': [
+          'error',
+          { reportUnusedDisableDirectives: true },
+        ],
+        'vue/define-macros-order': [
+          'error',
+          {
+            defineExposeLast: true,
+            order: [
+              'defineOptions',
+              'definePage',
+              'defineSlots',
+              'defineProps',
+              'defineEmits',
+              'defineModel',
+            ],
+          },
+        ],
+        'vue/define-props-declaration': [
+          'error',
+          'type-based',
+        ],
+        'vue/define-props-destructuring': [
+          'error',
+          { destructure: 'never' },
+        ],
+        'vue/multi-word-component-names': 'off',
+        'vue/next-tick-style': [
+          'error',
+          'promise',
+        ],
+        'vue/no-import-compiler-macros': 'error',
+        'vue/no-negated-v-if-condition': 'error',
+        'vue/no-reserved-component-names': [
+          'error',
+          {
+            disallowVue3BuiltInComponents: true,
+            disallowVueBuiltInComponents: true,
+            htmlElementCaseSensitive: false,
+          },
+        ],
+        'vue/no-root-v-if': 'error',
+        'vue/no-template-target-blank': 'error',
+        'vue/no-unused-emit-declarations': 'error',
+        'vue/no-unused-properties': 'error',
+        'vue/no-unused-refs': 'error',
+        'vue/no-use-v-else-with-v-for': 'error',
+        'vue/no-useless-mustaches': 'error',
+        'vue/no-useless-v-bind': 'error',
+        'vue/padding-line-between-blocks': 'error',
+        'vue/padding-line-between-tags': [
+          'error',
+          [
+            {
+              blankLine: 'always',
+              next: '*',
+              prev: '*',
+            },
+          ],
+        ],
+        'vue/prefer-prop-type-boolean-first': 'error',
+        'vue/prefer-separate-static-class': 'error',
+        'vue/prefer-single-event-payload': 'error',
+        'vue/prefer-use-template-ref': 'error',
+        'vue/slot-name-casing': [
+          'error',
+          'kebab-case',
+        ],
+        'vue/v-for-delimiter-style': [
+          'error',
+          'in',
+        ],
+
+        ...resolvedOptions.overrides,
+
+      },
     },
   ]
 }

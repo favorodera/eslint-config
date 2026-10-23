@@ -17,9 +17,16 @@ export async function imports(options: SharedOptions): PromisedTypedConfigFlatIt
 
   return [
     {
+      name: 'favorodera/imports/setup',
+      plugins: { imports: importsPlugin },
+    },
+
+    {
       files,
       name: 'favorodera/imports/rules',
       rules: {
+        ...importsPlugin.configs.recommended.rules,
+
         'imports/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         'imports/first': 'error',
         'imports/newline-after-import': ['error', { count: 1 }],
@@ -29,11 +36,6 @@ export async function imports(options: SharedOptions): PromisedTypedConfigFlatIt
 
         ...options.overrides,
       },
-    },
-
-    {
-      name: 'favorodera/imports/setup',
-      plugins: { imports: importsPlugin },
     },
   ]
 }

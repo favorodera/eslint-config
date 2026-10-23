@@ -38,11 +38,16 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
 
   const files = [
     jsGlob,
-    tsGlob,
     vueGlob,
+    tsGlob,
   ]
 
   return [
+    {
+      name: 'favorodera/stylistic/setup',
+      plugins: { stylistic: stylisticPlugin },
+    },
+
     {
       files,
       name: 'favorodera/stylistic/rules',
@@ -50,7 +55,6 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
         ...stylisticPlugin.configs.customize(resolvedOptions.settings).rules,
 
         'stylistic/array-bracket-newline': 'error',
-        /* eslint-disable perfectionist/sort-arrays */
         'stylistic/array-element-newline': [
           'error',
           'consistent',
@@ -63,7 +67,6 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
           'error',
           'consistent',
         ],
-        /* eslint-enable perfectionist/sort-arrays */
         'stylistic/function-call-spacing': 'error',
         'stylistic/function-paren-newline': 'error',
         'stylistic/implicit-arrow-linebreak': 'error',
@@ -80,11 +83,6 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
 
         ...resolvedOptions.overrides,
       },
-    },
-
-    {
-      name: 'favorodera/stylistic/setup',
-      plugins: { stylistic: stylisticPlugin },
     },
   ]
 }
