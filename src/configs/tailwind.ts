@@ -1,9 +1,9 @@
-import { defu } from "defu"
-import { getDefaultSelectors } from "eslint-plugin-better-tailwindcss/defaults";
+import { defu } from 'defu'
+import { getDefaultSelectors } from 'eslint-plugin-better-tailwindcss/defaults'
 import { MatcherType, SelectorKind, type Selectors } from 'eslint-plugin-better-tailwindcss/types'
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import { cssGlob, jsGlob, tsGlob, vueGlob } from "../globs"
-import { importModule } from "../utils"
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
 /** Shared configuration options for ESLint rules and Tailwind settings */
 export type TailwindOptions = SharedOptions & {
@@ -24,7 +24,7 @@ interface TailwindSettings {
    */
   detectComponentClasses?: boolean
 
-  /** Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.*/
+  /** Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory. */
   entryPoint?: string
 
   /**
@@ -39,7 +39,7 @@ interface TailwindSettings {
 
   /**
    * Font size of the `<html>` element in pixels (default 16px).
-   * 
+   *
    * Used to determine if arbitrary values can be replaced with predefined sizing scales.
    */
   rootFontSize?: number
@@ -54,26 +54,26 @@ const tailwindDefaults: TailwindSettings = {
     ...getDefaultSelectors(),
     {
       kind: SelectorKind.Callee,
-      "match": [
-        { "type": MatcherType.ObjectKey },
-        { "type": MatcherType.ObjectValue },
-        { "type": MatcherType.String }
+      match: [
+        { type: MatcherType.ObjectKey },
+        { type: MatcherType.ObjectValue },
+        { type: MatcherType.String },
       ],
-      name: "^computed$"
+      name: '^computed$',
     },
     {
       kind: SelectorKind.Callee,
-      "match": [
-        { "type": MatcherType.ObjectKey },
-        { "type": MatcherType.ObjectValue },
-        { "type": MatcherType.String }
+      match: [
+        { type: MatcherType.ObjectKey },
+        { type: MatcherType.ObjectValue },
+        { type: MatcherType.String },
       ],
-      name: "^defineAppConfig$"
-    }
-  ]
+      name: '^defineAppConfig$',
+    },
+  ],
 }
 
-/** 
+/**
  * Constructs the flat config for tailwind linting
  * @returns Flat config items
  */
@@ -110,24 +110,24 @@ export async function tailwind(options: TailwindOptions): PromisedTypedConfigFla
           { group: 'newLine' },
         ],
         'tailwind/enforce-consistent-variant-order': 'error',
-         'tailwind/enforce-logical-properties': 'error',
-         'tailwind/no-concatenated-classes': 'error',
-         'tailwind/no-conflicting-classes': 'error',
-         'tailwind/no-deprecated-classes': 'error',
-         'tailwind/no-duplicate-classes': 'error',
-         'tailwind/no-unknown-classes': 'error',
-         'tailwind/no-unnecessary-whitespace': 'error',
+        'tailwind/enforce-logical-properties': 'error',
+        'tailwind/no-concatenated-classes': 'error',
+        'tailwind/no-conflicting-classes': 'error',
+        'tailwind/no-deprecated-classes': 'error',
+        'tailwind/no-duplicate-classes': 'error',
+        'tailwind/no-unknown-classes': 'error',
+        'tailwind/no-unnecessary-whitespace': 'error',
 
-        ...resolvedOptions.overrides
-      }
+        ...resolvedOptions.overrides,
+      },
     },
 
     {
       name: 'favorodera/tailwind/setup',
-      plugins: { 'tailwind': tailwindPlugin, },
+      plugins: { tailwind: tailwindPlugin },
       settings: {
         'better-tailwindcss': resolvedOptions.settings,
       },
-    }
+    },
   ]
 }

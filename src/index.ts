@@ -1,24 +1,25 @@
-import { type Awaitable, FlatConfigComposer } from "eslint-flat-config-utils";
-import type { ConfigNames } from "./typegen";
-import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from "./types";
-import { css } from "./configs/css";
-import { ignores } from "./configs/ignores";
-import { imports } from "./configs/imports";
-import { javascript } from "./configs/javascript";
-import { perfectionist, type PerfectionistOptions } from "./configs/perfectionist";
-import { tailwind, type TailwindOptions } from "./configs/tailwind";
-import { typescript } from "./configs/typescript";
-import { unusedImports } from "./configs/unused-imports";
-import { resolveOptions } from "./utils";
+import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
+import type { ConfigNames } from './typegen'
+import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from './types'
+import { css } from './configs/css'
+import { ignores } from './configs/ignores'
+import { imports } from './configs/imports'
+import { javascript } from './configs/javascript'
+import { perfectionist, type PerfectionistOptions } from './configs/perfectionist'
+import { stylistic, type StylisticOptions } from './configs/stylistic'
+import { tailwind, type TailwindOptions } from './configs/tailwind'
+import { typescript } from './configs/typescript'
+import { unusedImports } from './configs/unused-imports'
+import { resolveOptions } from './utils'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
   /** Core css linting. */
   css?: BooleanSharedOptions
 
-  /** 
+  /**
    * Glob patterns to exclude from linting.
-   * 
+   *
    * Can be a list of additional ignore patterns or a function to modify the defaults
    * @default `IgnoresGlob'
    */
@@ -32,6 +33,9 @@ interface ConfigOptions {
 
   /** Perfectionist linting */
   perfectionist?: BooleanSharedOptions<PerfectionistOptions>
+
+  /** Stylistic linting */
+  stylistic?: BooleanSharedOptions<StylisticOptions>
 
   /** Tailwind linting */
   tailwind?: BooleanSharedOptions<TailwindOptions>
@@ -50,8 +54,10 @@ interface ConfigOptions {
  * @returns A flat config composer instance that can be exported directly or further modified.
  */
 export function defineConfig(options: ConfigOptions = {}) {
-  // Array to hold the promises of flat configuration items
-  // Always append the ignore patterns configuration first to apply it globally
+  /*
+   * Array to hold the promises of flat configuration items
+   * Always append the ignore patterns configuration first to apply it globally
+   */
   const configs: Awaitable<TypedFlatConfigItem[]>[] = [ignores(options.ignores)]
 
   // Mapping of configuration keys to their respective factory functions
@@ -60,9 +66,10 @@ export function defineConfig(options: ConfigOptions = {}) {
     imports,
     javascript,
     perfectionist,
+    stylistic,
     tailwind,
     typescript,
-    unusedImports
+    unusedImports,
   }
 
   for (const [key, configFunction] of Object.entries(configFunctions)) {
@@ -81,6 +88,7 @@ export function defineConfig(options: ConfigOptions = {}) {
   composer = composer
     .append(...configs)
     .renamePlugins({
+      '@stylistic': 'stylistic',
       '@typescript-eslint': 'ts',
       'better-tailwindcss': 'tailwind',
       'import-lite': 'import',

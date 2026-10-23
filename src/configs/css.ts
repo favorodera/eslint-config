@@ -1,18 +1,16 @@
 import { tailwind4 } from 'tailwind-csstree'
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import {  cssGlob } from "../globs"
-import { importModule } from "../utils"
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import { cssGlob } from '../globs'
+import { importModule } from '../utils'
 
-/** 
+/**
  * Constructs the flat config for core css linting
  * @returns Flat config items
  */
 export async function css(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const cssPlugin = await importModule(import('@eslint/css'))
 
-  const files = [
-    cssGlob
-  ]
+  const files = [cssGlob]
 
   return [
     {
@@ -32,18 +30,18 @@ export async function css(options: SharedOptions): PromisedTypedConfigFlatItemAr
         'css/no-invalid-at-rules': 'error',
         'css/no-invalid-named-grid-areas': 'error',
         'css/no-invalid-properties': 'error',
-        "css/no-unmatchable-selectors": 'error',
+        'css/no-unmatchable-selectors': 'error',
         'css/prefer-logical-properties': 'error',
-        "css/relative-font-units": 'error',
+        'css/relative-font-units': 'error',
         'css/use-baseline': 'error',
 
-        ...options.overrides
-      }
+        ...options.overrides,
+      },
     },
 
     {
       name: 'favorodera/css/setup',
-      plugins: { 'css': cssPlugin }
-    }
+      plugins: { css: cssPlugin },
+    },
   ]
 }

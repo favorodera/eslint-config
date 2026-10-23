@@ -53,7 +53,7 @@ export const packageJsonGlob = '**/package.json'
  * Common glob patterns for files and directories that should be ignored by ESLint.
  * Includes node_modules, build outputs, lock files, temporary files, and tool-specific caches.
  */
- export const ignoresGlob = [
+export const ignoresGlob = [
   // Dependencies & Package Managers
   '**/node_modules/**',
   '**/package-lock.json',
@@ -102,4 +102,4 @@ export const packageJsonGlob = '**/package.json'
   '**/.agents',
   '**/.claude',
   '**/.context',
-];
+]

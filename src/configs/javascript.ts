@@ -1,8 +1,8 @@
 import globals from 'globals'
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import { jsGlob, tsGlob, vueGlob } from "../globs"
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import { jsGlob, tsGlob, vueGlob } from '../globs'
 
-/** 
+/**
  * Constructs the flat config for core javascript linting
  * @returns Flat config items
  */
@@ -22,11 +22,11 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
           'error',
           {
             allowImplicit: true,
-            checkForEach: true
+            checkForEach: true,
           },
         ],
         // eslint-disable-next-line perfectionist/sort-arrays
-        'arrow-body-style': ['error', 'always' ],
+        'arrow-body-style': ['error', 'always'],
         'block-scoped-var': 'error',
         'default-case-last': 'error',
         'dot-notation': 'error',
@@ -161,8 +161,8 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         'vars-on-top': 'error',
         'yoda': 'error',
 
-        ...options.overrides
-      }
+        ...options.overrides,
+      },
     },
 
     {
@@ -182,6 +182,6 @@ export async function javascript(options: SharedOptions): PromisedTypedConfigFla
         reportUnusedDisableDirectives: true,
       },
       name: 'favorodera/javascript/setup',
-    }
+    },
   ]
 }

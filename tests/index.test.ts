@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { defineConfig } from '../src/'
-import {  importModule, resolveOptions } from '../src/utils'
+import { importModule, resolveOptions } from '../src/utils'
 
 describe('resolveOptions', () => {
   it('returns false when value is false', () => {
@@ -77,7 +77,7 @@ describe('factory', () => {
     const resolved = await defineConfig({
       ignores: ['**/my-custom-dir/**'],
     })
-    const ignoresConfig = resolved.find(config => {
+    const ignoresConfig = resolved.find((config) => {
       return config.name === 'favorodera/ignores'
     })
 
@@ -88,14 +88,14 @@ describe('factory', () => {
 
   it('ignores accepts a function to transform default patterns', async () => {
     const resolved = await defineConfig({
-      ignores: defaults => {
+      ignores: (defaults) => {
         return [
-        ...defaults,
-        '**/generated/**',
-      ]
-    },
+          ...defaults,
+          '**/generated/**',
+        ]
+      },
     })
-    const ignoresConfig = resolved.find(config => {
+    const ignoresConfig = resolved.find((config) => {
       return config.name === 'favorodera/ignores'
     })
 

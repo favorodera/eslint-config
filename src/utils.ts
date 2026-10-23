@@ -1,5 +1,5 @@
 import type { Awaitable } from 'eslint-flat-config-utils'
-import {defu} from 'defu'
+import { defu } from 'defu'
 
 /**
  * Resolves a module (or a promise of one) and returns its default export
@@ -11,7 +11,7 @@ import {defu} from 'defu'
  * @param module A module or a promise that resolves to one.
  * @returns The `.default` export if it exists, otherwise the module itself.
  */
-export async function importModule<TModule>(module:Awaitable<TModule>):Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule>{
+export async function importModule<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
   const resolvedModule = await module
 
   // If the resolved module is an object and has a 'default' property, extract it (handles ESM default exports)
@@ -35,7 +35,9 @@ export function resolveOptions<TOptions extends object>(value: boolean | TOption
   // If the value is falsy (false, undefined, null), the feature is considered disabled
   if (!value) return false
 
-  // If value is exactly true, use an empty object to merge with defaults.
-  // Otherwise, value is an options object, so merge it with the default options using defu.
+  /*
+   * If value is exactly true, use an empty object to merge with defaults.
+   * Otherwise, value is an options object, so merge it with the default options using defu.
+   */
   return defu(value === true ? {} : value, defaults) as TOptions
 }

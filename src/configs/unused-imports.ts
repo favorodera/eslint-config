@@ -1,8 +1,8 @@
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from "../types"
-import { jsGlob, tsGlob, vueGlob, } from "../globs"
-import { importModule } from "../utils"
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import { jsGlob, tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
-/** 
+/**
  * Constructs the flat config for unused imports linting
  * @returns Flat config items
  */
@@ -12,7 +12,7 @@ export async function unusedImports(options: SharedOptions): PromisedTypedConfig
   const files = [
     jsGlob,
     tsGlob,
-    vueGlob
+    vueGlob,
   ]
 
   return [
@@ -32,13 +32,13 @@ export async function unusedImports(options: SharedOptions): PromisedTypedConfig
           },
         ],
 
-        ...options.overrides
-      }
+        ...options.overrides,
+      },
     },
 
     {
       name: 'favorodera/unused-imports/setup',
-      plugins: { 'unused-imports': unusedImportsPlugin, },
-    }
+      plugins: { 'unused-imports': unusedImportsPlugin },
+    },
   ]
 }
