@@ -90,6 +90,7 @@ An array passed to `ignores` is added to the default ignore patterns. A function
 | `markdown` | Markdown linting; GitHub Flavored Markdown is enabled by default. |
 | `codeInMarkdown` | Linting for supported code blocks embedded in Markdown. |
 | `ignores` | Adds ignore patterns or customizes the default list. This option is always applied. |
+| `node` | Node.js specific linting rules. |
 
 ## Development
 

@@ -13,31 +13,13 @@ export async function a11y(options: SharedOptions): PromisedTypedConfigFlatItemA
 
   return [
     {
-      languageOptions: {
-        globals: {
-          computed: 'readonly',
-          defineEmits: 'readonly',
-          defineExpose: 'readonly',
-          defineProps: 'readonly',
-          onMounted: 'readonly',
-          onUnmounted: 'readonly',
-          reactive: 'readonly',
-          ref: 'readonly',
-          shallowReactive: 'readonly',
-          shallowRef: 'readonly',
-          toRef: 'readonly',
-          toRefs: 'readonly',
-          watch: 'readonly',
-          watchEffect: 'readonly',
-        },
-      },
       name: 'favorodera/a11y/setup',
       plugins: { a11y: a11yPlugin },
     },
 
     {
       files,
-      name: 'favorodera/vue/rules',
+      name: 'favorodera/a11y/rules',
       rules: {
         ...extractRules(a11yPlugin.configs['flat/recommended'] as any),
 

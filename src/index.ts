@@ -15,11 +15,15 @@ import { typescript } from './configs/typescript'
 import { unusedImports } from './configs/unused-imports'
 import { vue, type VueOptions } from './configs/vue'
 import { resolveOptions } from './utils'
+import { node } from './configs/node'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
   /** Accessibility linting */
   a11y?: BooleanSharedOptions
+
+  /** Node.js linting */
+  node?: BooleanSharedOptions
 
   /** Code blocks in markdown linting linting */
   codeInMarkdown?: BooleanSharedOptions
@@ -89,6 +93,7 @@ export function defineConfig(options: ConfigOptions = {}) {
     typescript,
     unusedImports,
     vue,
+    node,
 
     // Must be appended last
     codeInMarkdown,
