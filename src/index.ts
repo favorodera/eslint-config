@@ -12,6 +12,7 @@ import { stylistic, type StylisticOptions } from './configs/stylistic'
 import { tailwind, type TailwindOptions } from './configs/tailwind'
 import { typescript } from './configs/typescript'
 import { unusedImports } from './configs/unused-imports'
+import { vue, type VueOptions } from './configs/vue'
 import { resolveOptions } from './utils'
 
 /** Configuration options for the ESLint flat config. */
@@ -53,6 +54,9 @@ interface ConfigOptions {
 
   /** Unused imports linting */
   unusedImports?: BooleanSharedOptions
+
+  /** Vue linting */
+  vue?: BooleanSharedOptions<VueOptions>
 }
 
 /**
@@ -79,6 +83,7 @@ export function defineConfig(options: ConfigOptions = {}) {
     tailwind,
     typescript,
     unusedImports,
+    vue,
 
     // Must be appended last
     codeInMarkdown,
