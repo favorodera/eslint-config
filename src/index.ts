@@ -1,6 +1,7 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './typegen'
 import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from './types'
+import { codeInMarkdown } from './configs/code-in-markdown'
 import { css } from './configs/css'
 import { ignores } from './configs/ignores'
 import { imports } from './configs/imports'
@@ -14,6 +15,9 @@ import { resolveOptions } from './utils'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
+  /** Code blocks in markdown linting linting */
+  codeInMarkdown?: BooleanSharedOptions
+
   /** Core css linting. */
   css?: BooleanSharedOptions
 
@@ -70,6 +74,9 @@ export function defineConfig(options: ConfigOptions = {}) {
     tailwind,
     typescript,
     unusedImports,
+
+    // Must be appended last
+    codeInMarkdown,
   }
 
   for (const [key, configFunction] of Object.entries(configFunctions)) {
