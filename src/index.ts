@@ -101,7 +101,7 @@ export function defineConfig(options: ConfigOptions = {}) {
     .append(...configs)
     .renamePlugins({
       '@stylistic': 'stylistic',
-      '@typescript-eslint': 'ts',
+      '@typescript-eslint': 'typescript',
       'better-tailwindcss': 'tailwind',
       'import-lite': 'import',
       'n': 'node',

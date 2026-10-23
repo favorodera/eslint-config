@@ -37,14 +37,14 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
         'stylistic/padding-line-between-statements': 'off',
 
         // Typescript
-        'ts/consistent-type-imports': 'off',
-        'ts/explicit-function-return-type': 'off',
-        'ts/no-namespace': 'off',
-        'ts/no-redeclare': 'off',
-        'ts/no-require-imports': 'off',
-        'ts/no-unused-expressions': 'off',
-        'ts/no-unused-vars': 'off',
-        'ts/no-use-before-define': 'off',
+        'typescript/consistent-type-imports': 'off',
+        'typescript/explicit-function-return-type': 'off',
+        'typescript/no-namespace': 'off',
+        'typescript/no-redeclare': 'off',
+        'typescript/no-require-imports': 'off',
+        'typescript/no-unused-expressions': 'off',
+        'typescript/no-unused-vars': 'off',
+        'typescript/no-use-before-define': 'off',
 
         // Unused imports
         'unused-imports/no-unused-imports': 'off',

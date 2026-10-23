@@ -1,6 +1,6 @@
-# Contributing to NotForm
+# Contributing to `@favorodera/eslint-config` 
 
-Thank you for contributing to @favorodera/eslint-config.
+Thank you for contributing to `@favorodera/eslint-config`.
 
 ## Code of Conduct
 
@@ -11,7 +11,7 @@ By participating in this project, you agree to follow the [Contributor Covenant 
 ### Requirements
 
 - [Node.js](https://nodejs.org/) 24 or later
-- [pnpm](https://pnpm.io/) 11 or later
+- [pnpm](https://pnpm.io/) 12 or later
 
 ### Setup
 
@@ -22,7 +22,7 @@ pnpm install
 pnpm dev
 ```
 
-This starts the development environment and config inspector.
+This starts the development environment with the inspector running at `http://localhost:7777`.
 
 ## Development
 
@@ -47,7 +47,7 @@ Add or update tests when changing behavior.
 
 ## Documentation
 
-Documentation lives in README.
+Documentation lives in the README.
 
 When changing the public API, update the relevant documentation alongside the code.
 
@@ -74,6 +74,6 @@ Open an issue describing the problem, the proposed solution, and any alternative
 
 ## Questions
 
-For questions and discussion, use [GitHub Discussions](https://github.com/favorodera/eslint-config/discussions).
+For questions and discussion, use [GitHub Discussions](https://github.com/favorodera/notform/discussions).
 
-Thank you for helping improve NotForm.
+Thank you for helping improve the config.
