@@ -1,12 +1,13 @@
 import { defu } from 'defu'
 import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor, { type Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
-import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOptions, TypedFlatConfigItem } from '../types'
 import { vueGlob } from '../globs'
-import { extractRules, importModule } from '../utils'
+import { extractRules, importModule, resolveOptions } from '../utils'
 
 /** Shared configuration options for ESLint rules and Vue settings */
 export type VueOptions = SharedOptions & {
+  a11y?: BooleanSharedOptions
   settings?: VueSettings
 }
 
@@ -22,6 +23,7 @@ interface VueSettings {
 }
 
 const vueDefaults = {
+  a11y: true,
   overrides: undefined,
   settings: {
     sfcBlocks: {
@@ -40,11 +42,13 @@ const vueDefaults = {
  */
 export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, vueDefaults)
+  const enableA11y = resolveOptions(resolvedOptions.a11y, {})
 
-  const [vuePlugin, typescriptPlugin, vueParser] = await Promise.all([
+  const [vuePlugin, typescriptPlugin, vueParser, a11yPlugin] = await Promise.all([
     importModule(import('eslint-plugin-vue')),
     importModule(import('typescript-eslint')),
     importModule(import('vue-eslint-parser')),
+    importModule(import('eslint-plugin-vuejs-accessibility')),
   ])
 
   const processor = resolvedOptions.settings.sfcBlocks === false
@@ -56,7 +60,7 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
 
   const files = [vueGlob]
 
-  return [
+  const config: TypedFlatConfigItem[] = [
     {
       languageOptions: {
         globals: {
@@ -191,4 +195,49 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
       },
     },
   ]
+
+  if (enableA11y) {
+    config.push(
+      {
+        name: 'favorodera/vue/a11y/setup',
+        plugins: { 'vue-a11y': a11yPlugin },
+      },
+
+      {
+        files,
+        name: 'favorodera/vue/a11y/rules',
+        rules: {
+          ...extractRules(a11yPlugin.configs['flat/recommended'] as any),
+
+          'vue-a11y/form-control-has-label': [
+            'error',
+            {
+              controlComponents: [],
+              labelComponents: [],
+            },
+          ],
+          'vue-a11y/label-has-for': [
+            'error',
+            {
+              allowChildren: true,
+              components: [],
+              controlComponents: [],
+              required: {
+                some: [
+                  'nesting',
+                  'id',
+                ],
+              },
+            },
+          ],
+          'vue-a11y/no-aria-hidden-on-focusable': 'error',
+          'vue-a11y/no-role-presentation-on-focusable': 'error',
+
+          ...enableA11y.overrides,
+        },
+      },
+    )
+  }
+
+  return config
 }

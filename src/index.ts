@@ -1,12 +1,12 @@
 import { type Awaitable, FlatConfigComposer } from 'eslint-flat-config-utils'
 import type { ConfigNames } from './typegen'
 import type { BooleanSharedOptions, IgnoresPatterns, TypedFlatConfigItem } from './types'
-import { a11y } from './configs/a11y'
 import { codeInMarkdown } from './configs/code-in-markdown'
 import { css } from './configs/css'
 import { ignores } from './configs/ignores'
 import { imports } from './configs/imports'
 import { javascript } from './configs/javascript'
+import { jsonc, type JSONCOptions } from './configs/jsonc'
 import { markdown, type MarkdownOptions } from './configs/markdown'
 import { node } from './configs/node'
 import { perfectionist, type PerfectionistOptions } from './configs/perfectionist'
@@ -19,9 +19,6 @@ import { resolveOptions } from './utils'
 
 /** Configuration options for the ESLint flat config. */
 interface ConfigOptions {
-  /** Accessibility linting */
-  a11y?: BooleanSharedOptions
-
   /** Code blocks in markdown linting linting */
   codeInMarkdown?: BooleanSharedOptions
 
@@ -41,6 +38,9 @@ interface ConfigOptions {
 
   /** Core javascript linting */
   javascript?: BooleanSharedOptions
+
+  /** JSON, JSON5, and JSONC linting */
+  jsonc?: BooleanSharedOptions<JSONCOptions>
 
   /** Markdown linting */
   markdown?: BooleanSharedOptions<MarkdownOptions>
@@ -82,10 +82,10 @@ export function defineConfig(options: ConfigOptions = {}) {
 
   // Mapping of configuration keys to their respective factory functions
   const configFunctions = {
-    a11y,
     css,
     imports,
     javascript,
+    jsonc,
     markdown,
     node,
     perfectionist,
@@ -106,7 +106,9 @@ export function defineConfig(options: ConfigOptions = {}) {
     const resolved = resolveOptions(configOption ?? true, {})
 
     // If the configuration is enabled (resolved is truthy), append its resulting config items
-    if (resolved) configs.push(configFunction(resolved))
+    if (resolved) {
+      configs.push(configFunction(resolved))
+    }
   }
 
   // Initialize the composer that allows method chaining and plugins renaming
@@ -120,7 +122,7 @@ export function defineConfig(options: ConfigOptions = {}) {
       'better-tailwindcss': 'tailwind',
       'import-lite': 'imports',
       'n': 'node',
-      'vuejs-accessibility': 'a11y',
+      'vuejs-accessibility': 'vue-a11y',
       'yml': 'yaml',
     })
 

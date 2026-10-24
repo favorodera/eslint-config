@@ -79,8 +79,7 @@ An array passed to `ignores` is added to the default ignore patterns. A function
 | --- | --- |
 | `javascript` | Core JavaScript rules. |
 | `typescript` | TypeScript rules and parser setup. |
-| `vue` | Vue single-file component linting. |
-| `a11y` | Vue single-file based accessibility linting. |
+| `vue` | Vue single-file component and accessibility linting. |
 | `css` | CSS linting, including Tailwind CSS v4 syntax support. |
 | `tailwind` | Tailwind class validation, ordering, and consistency. |
 | `stylistic` | Code formatting and style rules. |
