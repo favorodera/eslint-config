@@ -84,9 +84,11 @@
     "yaml-eslint-parser": "catalog:"
   },
   "devDependencies": {
+    "@ai-sdk/google": "catalog:",
     "@eslint/config-inspector": "catalog:",
     "@types/node": "catalog:",
     "@vitest/ui": "catalog:",
+    "ai": "catalog:",
     "concurrently": "catalog:",
     "eslint": "catalog:",
     "eslint-typegen": "catalog:",
