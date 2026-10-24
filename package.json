@@ -4,7 +4,7 @@
   "version": "2.0.1",
   "private": false,
   "packageManager": "pnpm@12.14.0",
-  "description": "Opinionated, type-safe flat ESLint configuration factory for Vue, TypeScript, Tailwind, and more.",
+  "description": "An opinionated,type-safe ESLint flat configuration for JavaScript and TypeScript projects.",
   "author": "Favour Emeka <favorodera@gmail.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/favorodera",
@@ -20,16 +20,16 @@
     "access": "public"
   },
   "keywords": [
-    "nuxt",
-    "vue",
     "eslint",
-    "typescript",
-    "stylistic",
     "tooling",
-    "linter"
+    "linter",
+    "favorodera"
   ],
   "exports": {
     ".": "./dist/index.mjs",
+    "./globs": "./dist/globs.mjs",
+    "./types": "./dist/types.mjs",
+    "./utils": "./dist/utils.mjs",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.cts",

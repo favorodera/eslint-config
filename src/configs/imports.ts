@@ -3,8 +3,9 @@ import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config for imports linting
- * @returns Flat config items
+ * Creates flat config items for import ordering and import-quality rules.
+ * @param options Rule overrides for import linting.
+ * @returns Flat config items for this configuration group.
  */
 export async function imports(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const importsPlugin = await importModule(import('eslint-plugin-import-lite'))

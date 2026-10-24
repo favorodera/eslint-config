@@ -4,15 +4,17 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { mdGlob, mdInMdGlob } from '../globs'
 import { importModule } from '../utils'
 
-/** Shared configuration options for ESLint rules and Markdown settings */
+/** Options for Markdown linting and language settings. */
 export type MarkdownOptions = SharedOptions & {
+  /** Markdown language features, including GitHub Flavored Markdown. */
   settings?: MarkdownSettings
 }
 
-/** Options for configuring Markdown linting rules. */
+/** Options controlling Markdown language features. */
 interface MarkdownSettings {
   /**
    * Enable GitHub Flavored Markdown (GFM) support.
+   *
    * When true, applies additional linting rules specific to GFM extensions
    * like tables, task lists, and strikethrough.
    * @default true
@@ -20,6 +22,7 @@ interface MarkdownSettings {
   gfm?: boolean
 }
 
+/** Default Markdown settings. */
 const markdownDefaults = {
   overrides: undefined,
   settings: {
@@ -28,8 +31,9 @@ const markdownDefaults = {
 } satisfies MarkdownOptions
 
 /**
- * Constructs the flat config for markdown linting
- * @returns Flat config items
+ * Creates flat config items for Markdown linting.
+ * @param options Markdown language settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function markdown(options: MarkdownOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, markdownDefaults)

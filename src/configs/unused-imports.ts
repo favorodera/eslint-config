@@ -3,8 +3,9 @@ import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config for unused imports linting
- * @returns Flat config items
+ * Creates flat config items for unused import and variable detection.
+ * @param options Rule overrides for unused-import linting.
+ * @returns Flat config items for this configuration group.
  */
 export async function unusedImports(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const unusedImportsPlugin = await importModule(import('eslint-plugin-unused-imports'))

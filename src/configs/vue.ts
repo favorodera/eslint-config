@@ -5,23 +5,30 @@ import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOpti
 import { vueGlob } from '../globs'
 import { extractRules, importModule, resolveOptions } from '../utils'
 
-/** Shared configuration options for ESLint rules and Vue settings */
+/** Options for Vue single-file component linting and SFC processing. */
 export type VueOptions = SharedOptions & {
+  /**
+   * Enables Vue accessibility rules and their sub-options.
+   * @default true
+   */
   a11y?: BooleanSharedOptions
+
+  /** Settings for parsing Vue files and processing SFC blocks. */
   settings?: VueSettings
 }
 
-/** Options for configuring Vue linting rules. */
+/** Settings controlling how Vue single-file components are processed. */
 interface VueSettings {
   /**
    * Configuration for extracting and linting custom Single-File Component (SFC) blocks
    * such as `<style>`, `<route>`, or `<i18n>`.
    * Pass `false` to disable block processing, or an options object to customize block matching.
-   * @default { customBlocks: true, styles: true, template: false }
+   * @default { blocks: { customBlocks: true, styles: true, template: false } }
    */
   sfcBlocks?: false | VueBlocksOptions
 }
 
+/** Default Vue parser, processor, and accessibility settings. */
 const vueDefaults = {
   a11y: true,
   overrides: undefined,
@@ -37,18 +44,18 @@ const vueDefaults = {
 } satisfies VueOptions
 
 /**
- * Constructs the flat config for vue linting
- * @returns Flat config items
+ * Creates flat config items for Vue single-file components.
+ * @param options Vue settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, vueDefaults)
   const enableA11y = resolveOptions(resolvedOptions.a11y, {})
 
-  const [vuePlugin, typescriptPlugin, vueParser, a11yPlugin] = await Promise.all([
+  const [vuePlugin, typescriptPlugin, vueParser] = await Promise.all([
     importModule(import('eslint-plugin-vue')),
     importModule(import('typescript-eslint')),
     importModule(import('vue-eslint-parser')),
-    importModule(import('eslint-plugin-vuejs-accessibility')),
   ])
 
   const processor = resolvedOptions.settings.sfcBlocks === false
@@ -197,6 +204,8 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
   ]
 
   if (enableA11y) {
+    const a11yPlugin = await importModule(import('eslint-plugin-vuejs-accessibility'))
+
     config.push(
       {
         name: 'favorodera/vue/a11y/setup',

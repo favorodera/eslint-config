@@ -2,43 +2,53 @@ import type { Linter } from 'eslint'
 import type { ConfigWithExtends } from 'eslint-flat-config-utils'
 import type { RuleOptions } from './typegen'
 
-/** Shared configuration options for ESLint rules with boolean toggle */
+/**
+ * Allows a configuration group to be enabled/disabled or configured with options.
+ * @template Options - The option object accepted by the configuration group. Defaults to `SharedOptions`.
+ */
 export type BooleanSharedOptions<Options = SharedOptions> = boolean | Options
 
 /**
- * Patterns used to ignore files and directories from ESLint scanning.
- * Can be a list of glob patterns or a function that receives default patterns.
+ * Patterns used to exclude files and directories from ESLint scanning.
+ *
+ * An array is appended to the built-in patterns. A callback receives the built-in
+ * patterns and must return the complete set of ignore patterns to use.
  */
 export type IgnoresPatterns = ((defaults: string[]) => string[]) | string[]
 
-/** Return type for individual configs */
+/** Promise resolving to the flat config items produced by one configuration group. */
 export type PromisedTypedConfigFlatItemArray = Promise<TypedFlatConfigItem[]>
 
-/** ESLint rules configuration with type-safe autocompletion */
+/**
+ * ESLint rule map with autocomplete for the rules generated from the active plugins.
+ *
+ * Values may be omitted to make a rule explicitly undefined in a typed config.
+ */
 export type Rules = Record<string, Linter.RuleEntry<any> | undefined> & RuleOptions
 
-/** Shared configuration options for ESLint rules */
+/** Common options supported by configuration groups. */
 export interface SharedOptions {
-  /** Override rules configuration */
+  /** Rule overrides merged after the configuration group's built-in rules. */
   overrides?: TypedFlatConfigItem['rules']
 }
 
 /**
- * An updated version of ESLint's `Linter.Config`, which provides autocompletion
- * for `rules` and relaxes type limitations for `plugins` and `rules`, because
- * many plugins still lack proper type definitions.
+ * An extended flat-config item based on `eslint-flat-config-utils`'s `ConfigWithExtends`.
+ *
+ * It provides type-safe rule autocomplete and relaxes plugin and rule typing where
+ * plugins do not yet provide complete type declarations.
  */
 export type TypedFlatConfigItem = Omit<ConfigWithExtends, 'plugins' | 'rules'> & {
   /**
-   * An object containing a name-value mapping of plugin names to plugin objects.
-   * When `files` is specified, these plugins are only available to the matching files.
-   * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
+   * Maps plugin names to plugin objects. When `files` is specified, these plugins
+   * are only available to matching files.
+   * @see https://eslint.org/docs/latest/use/configure/plugins
    */
   plugins?: Record<string, any>
 
   /**
-   * An object containing the configured rules. When `files` or `ignores` are
-   * specified, these rule configurations are only available to the matching files.
+   * Configured rules. When `files` or `ignores` are specified, these rules apply
+   * only to matching files.
    */
   rules?: Rules
 }

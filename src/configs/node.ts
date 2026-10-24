@@ -3,8 +3,9 @@ import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config for Node.js linting
- * @returns Flat config items
+ * Creates flat config items for Node.js-specific linting rules.
+ * @param options Rule overrides for Node.js linting.
+ * @returns Flat config items for this configuration group.
  */
 export async function node(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const nodePlugin = await importModule(import('eslint-plugin-n'))

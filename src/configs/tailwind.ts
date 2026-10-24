@@ -5,8 +5,9 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
-/** Shared configuration options for ESLint rules and Tailwind settings */
+/** Options for Tailwind CSS linting and plugin settings. */
 export type TailwindOptions = SharedOptions & {
+  /** Tailwind-aware class detection and reporting settings. */
   settings?: TailwindSettings
 }
 
@@ -48,6 +49,7 @@ interface TailwindSettings {
   selectors?: Selectors
 }
 
+/** Default Tailwind settings and additional class-detection selectors. */
 const tailwindDefaults = {
   overrides: undefined,
   settings: {
@@ -72,13 +74,22 @@ const tailwindDefaults = {
         ],
         name: '^defineAppConfig$',
       },
+      {
+        kind: SelectorKind.Tag,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+        ],
+        name: '^ui$',
+      },
     ],
   },
 } satisfies TailwindOptions
 
 /**
- * Constructs the flat config for tailwind linting
- * @returns Flat config items
+ * Creates flat config items for Tailwind CSS linting.
+ * @param options Tailwind settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function tailwind(options: TailwindOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, tailwindDefaults)

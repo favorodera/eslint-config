@@ -4,11 +4,16 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
-/** Shared configuration options for ESLint rules and Tailwind settings */
+/**
+ * Options for Stylistic formatting rules.
+ * @template isInternal - Allows the internal `pluginName` option when `true`.
+ */
 export type StylisticOptions<isInternal extends boolean = false> = SharedOptions & {
+  /** Options passed to the Stylistic plugin customization helper. */
   settings?: isInternal extends true ? StylisticCustomizeOptions : Omit<StylisticCustomizeOptions, 'pluginName'>
 }
 
+/** Default code-style settings used by the Stylistic plugin. */
 const stylisticDefaults: StylisticOptions<true> = {
   overrides: undefined,
   settings: {
@@ -28,8 +33,9 @@ const stylisticDefaults: StylisticOptions<true> = {
 }
 
 /**
- * Constructs the flat config for Stylistic linting
- * @returns Flat config items
+ * Creates flat config items for code style and formatting rules.
+ * @param options Stylistic settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function stylistic(options: StylisticOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, stylisticDefaults)

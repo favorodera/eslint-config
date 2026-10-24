@@ -3,8 +3,9 @@ import { tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config for core typescript linting
- * @returns Flat config items
+ * Creates flat config items for TypeScript linting.
+ * @param options Rule overrides for TypeScript linting.
+ * @returns Flat config items for this configuration group.
  */
 export async function typescript(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const typescriptPlugin = await importModule(import('typescript-eslint'))

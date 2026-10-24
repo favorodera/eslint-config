@@ -3,8 +3,9 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
-/** Shared configuration options for ESLint rules and Perfectionist settings */
+/** Options for Perfectionist sorting rules and plugin settings. */
 export type PerfectionistOptions = SharedOptions & {
+  /** Sorting behavior passed to the Perfectionist plugin. */
   settings?: PerfectionistSettings
 }
 
@@ -111,6 +112,7 @@ interface PerfectionistSettings {
   type?: 'alphabetical' | 'custom' | 'line-length' | 'natural'
 }
 
+/** Default settings for Perfectionist sorting. */
 const perfectionistDefaults = {
   overrides: undefined,
   settings: {
@@ -134,8 +136,9 @@ const perfectionistDefaults = {
 } satisfies PerfectionistOptions
 
 /**
- * Constructs the flat config for perfectionist linting
- * @returns Flat config items
+ * Creates flat config items for Perfectionist sorting rules.
+ * @param options Sorting settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function perfectionist(options: PerfectionistOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, perfectionistDefaults)

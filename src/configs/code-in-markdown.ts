@@ -2,8 +2,9 @@ import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { codeInMdGlob } from '../globs'
 
 /**
- * Constructs the flat config for code blocks in markdown linting
- * @returns Flat config items
+ * Creates rules for supported code blocks embedded in Markdown files.
+ * @param options Shared rule overrides for embedded code.
+ * @returns Flat config items for this configuration group.
  */
 export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const files = [codeInMdGlob]

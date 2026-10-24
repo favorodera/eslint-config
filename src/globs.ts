@@ -34,7 +34,10 @@ export const json5Glob = '**/*.json5'
 /** Glob pattern for matching JSON with Comments files */
 export const jsoncGlob = '**/*.jsonc'
 
-/** Glob patterns for matching TypeScript configuration files */
+/**
+ * Glob patterns matching standard and named TypeScript configuration files.
+ * Both `tsconfig.json` and files such as `tsconfig.build.json` are included.
+ */
 export const tsConfigGlob = [
   '**/tsconfig.*.json',
   '**/tsconfig.json',

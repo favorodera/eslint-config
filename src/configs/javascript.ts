@@ -4,8 +4,9 @@ import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config for core javascript linting
- * @returns Flat config items
+ * Creates flat config items for JavaScript linting.
+ * @param options Rule overrides for JavaScript linting.
+ * @returns Flat config items for this configuration group.
  */
 export async function javascript(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const javascriptPlugin = await importModule(import('@eslint/js'))

@@ -3,20 +3,32 @@ import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOpti
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
 import { importModule, resolveOptions } from '../utils'
 
-/** Shared configuration options for ESLint rules and JSONC settings */
+/** Options for JSON-family and related configuration-file linting. */
 export type JSONCOptions = SharedOptions & {
+  /**
+   * Enables extra rules for package.json files.
+   * @default true
+   */
   packageJson?: BooleanSharedOptions
+
+  /**
+   * Enables extra rules for tsconfig files.
+   * @default true
+   */
   tsConfig?: BooleanSharedOptions
 }
 
+/** Default options for JSON-family linting. */
 const jsoncDefaults = {
+  overrides: undefined,
   packageJson: true,
   tsConfig: true,
 } satisfies JSONCOptions
 
 /**
- * Constructs the flat config for JSON, JSON5, and JSONC linting
- * @returns Flat config items
+ * Creates flat config items for JSON, JSON5, JSONC, and supported configuration files.
+ * @param options JSON-related settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
 export async function jsonc(options: JSONCOptions): PromisedTypedConfigFlatItemArray {
   const resolvedOptions = defu(options, jsoncDefaults)
@@ -45,6 +57,7 @@ export async function jsonc(options: JSONCOptions): PromisedTypedConfigFlatItemA
         'jsonc/array-bracket-newline': [
           'error',
           {
+            // eslint-disable-next-line unicorn/no-null
             minItems: null,
             multiline: true,
           },
@@ -123,7 +136,7 @@ export async function jsonc(options: JSONCOptions): PromisedTypedConfigFlatItemA
   if (enablePackageJson) {
     config.push({
       files: [packageJsonGlob],
-      name: 'favorodera/jsonc/package-json',
+      name: 'favorodera/jsonc/package-json/rules',
       rules: {
         'jsonc/sort-array-values': [
           'error',
@@ -235,7 +248,7 @@ export async function jsonc(options: JSONCOptions): PromisedTypedConfigFlatItemA
   if (enableTsConfig) {
     config.push({
       files: tsConfigGlob,
-      name: 'favorodera/jsonc/sort/tsconfig-json',
+      name: 'favorodera/jsonc/tsconfig/rules',
       rules: {
         'jsonc/sort-keys': [
           'error',
