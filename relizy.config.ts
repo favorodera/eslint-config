@@ -8,8 +8,8 @@ export default defineConfig({
     providerRelease: { enabled: true },
     providers: {
       'ai-sdk': {
-        model: google('gemini-3.6-flash'),
-        reasoning: 'medium',
+        model: google('gemini-3.5-flash-lite'),
+        reasoning: 'high',
       },
     },
   },
