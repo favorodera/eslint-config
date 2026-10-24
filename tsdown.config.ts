@@ -8,7 +8,7 @@ export default defineConfig({
     types: 'src/types.ts',
     utils: 'src/utils.ts',
   },
-  exports: true,
+  // exports: true,
   fromVite: 'vitest',
   minify: true,
 })
