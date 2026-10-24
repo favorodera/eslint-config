@@ -1,5 +1,192 @@
 # Changelog
 
+## v2.0.1...v3.0.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v2.0.1...v3.0.0)
+
+### Added
+
+- **import:** Add rules for consistent imports ([a3192b1](https://github.com/favorodera/eslint-config/commit/a3192b1))
+
+  - Enforce cleaner module structure and exports
+  - Disallow duplicate imports and mutable exports
+
+- **css): add CSS linting configuration and rules feat(imports): implement imports linting configuration and rules refactor(ignores): update ignores function to return PromisedTypedConfigFlatItemArray chore(globs:** Clean up ignored glob patterns ([9435285](https://github.com/favorodera/eslint-config/commit/9435285))
+- Add core javascript and typescript linting configurations; improve css and imports config comments ([96ff4d0](https://github.com/favorodera/eslint-config/commit/96ff4d0))
+- **typescript:** Add prefer lint rules ([33473f7](https://github.com/favorodera/eslint-config/commit/33473f7))
+
+  - Enforce modern TypeScript best practices
+  - Improve code quality and consistency
+
+- **typescript:** Enable additional strict lint rules ([ff965df](https://github.com/favorodera/eslint-config/commit/ff965df))
+
+  - Enforce safer enum members and signature merging
+  - Disallow legacy triple-slash references
+
+- **config:** Add unused-imports rule setup ([4d88cd5](https://github.com/favorodera/eslint-config/commit/4d88cd5))
+
+  - Add unused-imports plugin for ESLint config
+  - Replace ts/no-unused-vars with unused-imports
+  - Support vueGlob files in typescript config
+  - Expose unusedImports option in defineConfig
+
+- Introduce optional Perfectionist config ([5034d96](https://github.com/favorodera/eslint-config/commit/5034d96))
+
+  - Integrate optional sorting rules for improved code consistency
+  - Refactor internal config loading for better maintainability
+  - Reorder setup plugins to load after rules
+  - Enhance type definition for boolean options
+
+- **tailwind:** Add Tailwind CSS linting support ([03fb1ff](https://github.com/favorodera/eslint-config/commit/03fb1ff))
+
+  - Add Tailwind CSS config using better-tailwindcss
+  - Integrate tailwind config into main config options
+  - Refactor perfectionist options and shared types
+
+- **tailwind:** Add custom callee selectors ([65237fc](https://github.com/favorodera/eslint-config/commit/65237fc))
+
+  - Support class detection in computed and config
+  - Preserve default better-tailwindcss selectors
+
+- **tailwind:** Add rules for class ordering and validation ([c390ae0](https://github.com/favorodera/eslint-config/commit/c390ae0))
+
+  - Enforce class order, variant order, and wrapping
+  - Prevent duplicate, conflicting, and unknown classes
+
+- **stylistic:** Add ESLint stylistic rules ([c5312e7](https://github.com/favorodera/eslint-config/commit/c5312e7))
+
+  - Add stylistic plugin configuration and options
+  - Format codebase using updated stylistic rules
+
+- **markdown:** Add code block linting config ([27c3e4d](https://github.com/favorodera/eslint-config/commit/27c3e4d))
+
+  - Disable strict rules inside markdown code blocks
+  - Expose codeInMarkdown option in defineConfig
+
+- **markdown:** Add markdown linting config ([a6d4450](https://github.com/favorodera/eslint-config/commit/a6d4450))
+
+  - Add ESLint rules for CommonMark and GFM
+  - Expose markdown linting option in main setup
+  - Standardize default options resolution pattern
+
+- **vue:** Add Vue ESLint flat config ([60fc7f0](https://github.com/favorodera/eslint-config/commit/60fc7f0))
+
+  - Add linting rules and processor for Vue SFCs
+  - Add Vue compiler macros as readonly globals
+
+- **config:** Add a11y rule set and use presets ([feb5561](https://github.com/favorodera/eslint-config/commit/feb5561))
+
+  - Add Vue accessibility linting support
+  - Extend recommended rule presets across configs
+  - Ensure setup blocks load before rule blocks
+  - Add utility to extract rules from flat configs
+  - Fix plugin rename mapping for import-lite
+
+- **config:** Add Node.js linting support ([fe30600](https://github.com/favorodera/eslint-config/commit/fe30600))
+
+  - Add node config using eslint-plugin-n
+  - Export node option in defineConfig
+  - Fix incorrect config name and clean up a11y setup
+
+- **config:** Add jsonc support and integrate vue a11y ([d7ea7da](https://github.com/favorodera/eslint-config/commit/d7ea7da))
+
+  - Add flat config for JSON, JSON5, and JSONC
+  - Move accessibility rules into Vue config option
+
+- **config:** Add new lint groups and JSDoc ([c029466](https://github.com/favorodera/eslint-config/commit/c029466))
+
+  - Add jsdoc, pnpm, unicorn, vitest, and yaml rules
+  - Support enhanced CSS linting configurations
+  - Improve developer DX with comprehensive JSDoc annotations
+  - Update build targets and workspace test coverage
+
+- **relizy:** Add Google Gemini AI provider ([8204806](https://github.com/favorodera/eslint-config/commit/8204806))
+
+  - Add AI SDK packages to workspace catalog
+  - Set up Gemini model in relizy config
+  - Clean up duplicate PR template items
+
+
+### Fixed
+
+- **deps:** Lock vitest and eslint-cssicorn versions ([d14de6c](https://github.com/favorodera/eslint-config/commit/d14de6c))
+
+  - Ensure compatibility with ecosystem
+  - Downgrade vitest packages to 5.0.3
+  - Downgrade eslint-cssicorn to 0.1.0
+
+
+### Refactors
+
+- **config:** Streamline config presets and rename factory ([537cec4](https://github.com/favorodera/eslint-config/commit/537cec4))
+
+  - Replace factory with defineConfig entry point
+  - Simplify configuration presets and typegen
+  - Update CI scripts and engine requirements
+
+- **rules:** Migrate overlapping rules to typescript ([0826d7d](https://github.com/favorodera/eslint-config/commit/0826d7d))
+
+  - delegate shared rules from js to typescript
+  - configure comprehensive typescript rule set
+
+- **configs:** Move rules to typescript config ([b65e414](https://github.com/favorodera/eslint-config/commit/b65e414))
+
+  - Avoid false positives by using TS equivalents
+  - Add wrapper object types rule for TypeScript
+
+- **types:** Modernize array syntax and linting ([7ba1e04](https://github.com/favorodera/eslint-config/commit/7ba1e04))
+
+  - Simplify type definitions with array shorthand
+  - Adjust eslint rules to allow numeric literals
+  - Harmonize callback formatting in tests and scripts
+
+- **ts:** Rename plugin prefix to typescript ([0327643](https://github.com/favorodera/eslint-config/commit/0327643))
+
+  - Rename @typescript-eslint plugin prefix
+  - Update rule names across config files
+  - Update README and contribution docs
+
+
+### Chores
+
+- **pnpm:** Update package manager to v12.14.0 ([0941db8](https://github.com/favorodera/eslint-config/commit/0941db8))
+
+  - update pnpm engine requirement to >=12.0.0
+  - update lockfile for pnpm v12
+
+- Update eslint rules and release workflows ([8be2ed2](https://github.com/favorodera/eslint-config/commit/8be2ed2))
+
+  - Add comprehensive standard JavaScript lint rules
+  - Refactor release workflows and CI setup
+  - Clean up repo settings and issue templates
+
+- **eslint:** Remove dump directory from ignores ([0bc0d18](https://github.com/favorodera/eslint-config/commit/0bc0d18))
+- **config:** Update AI model configuration ([12ecef5](https://github.com/favorodera/eslint-config/commit/12ecef5))
+
+  - Switch to gemini-3.5-flash-lite
+  - Increase reasoning level to improve quality
+
+
+### Tests
+
+- Remove tests for omitted utility function ([96f04f1](https://github.com/favorodera/eslint-config/commit/96f04f1))
+
+  - Remove tests for unused omit utility function
+  - Clean up unused eslint-disable comment
+
+
+### Styling
+
+- Sort node config imports and options ([21c5289](https://github.com/favorodera/eslint-config/commit/21c5289))
+
+  - Reorder node imports and options alphabetically
+  - Remove obsolete dump directory from gitignore
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v2.0.0...v2.0.1
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v2.0.0...v2.0.1)
