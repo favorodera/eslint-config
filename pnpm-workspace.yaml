@@ -12,7 +12,7 @@ catalog:
   '@types/node': ^26.6.5
   '@vitest/eslint-plugin': ^1.6.28
   '@vitest/ui': 5.0.3
-  ai: ^7.0.150
+  ai: ^7.0.151
   concurrently: ^10.0.6
   defu: ^6.1.7
   eslint: ^10.13.0
