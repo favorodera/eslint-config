@@ -1,13 +1,13 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule } from '../utils'
 
 /**
- * Constructs the flat config items for Unicorn linting, providing a collection of
- * awesome ESLint rules to improve code quality and enforce best practices.
- * @returns Promise resolving to Unicorn ESLint config items.
+ * Creates flat config items for Unicorn code-quality rules.
+ * @param options Rule overrides for Unicorn linting.
+ * @returns Flat config items for this configuration group.
  */
-export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
+export async function unicorn(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const unicornPlugin = await importModule(import('eslint-plugin-unicorn'))
 
   const files = [
@@ -16,26 +16,22 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
     vueGlob,
   ]
 
-  const recommendedConfig = unicornPlugin.configs.recommended
-
-  const { rules = {} } = recommendedConfig
-  const rest = omit(recommendedConfig, [
-    'rules',
-    'files',
-    'name',
-  ])
-
   return [
     {
-      ...rest,
       name: 'favorodera/unicorn/setup',
+      plugins: { unicorn: unicornPlugin },
     },
     {
       files,
       name: 'favorodera/unicorn/rules',
       rules: {
-        ...rules,
+        ...unicornPlugin.configs.recommended.rules,
 
+        'unicorn/filename-case': 'off',
+        'unicorn/name-replacements': 'off',
+        'unicorn/no-asterisk-prefix-in-documentation-comments': 'off',
+        'unicorn/no-process-exit': 'off',
+        'unicorn/no-top-level-side-effects': 'off',
         'unicorn/prefer-query-selector': [
           'error',
           {
@@ -46,6 +42,8 @@ export async function unicorn(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           'single-line',
         ],
+
+        ...options.overrides,
       },
     },
   ]

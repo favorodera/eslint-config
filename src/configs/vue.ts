@@ -1,75 +1,74 @@
 import { defu } from 'defu'
 import { mergeProcessors } from 'eslint-merge-processors'
 import vueBlocksProcessor, { type Options as VueBlocksOptions } from 'eslint-processor-vue-blocks'
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOptions, TypedFlatConfigItem } from '../types'
 import { vueGlob } from '../globs'
-import { extractRules, importModule, omit, resolveOptions } from '../utils'
+import { extractRules, importModule, resolveOptions } from '../utils'
 
-/** Options for configuring Vue single-file component linting rules. */
-export interface VueConfigOptions {
+/** Options for Vue single-file component linting and SFC processing. */
+export type VueOptions = SharedOptions & {
+  /**
+   * Enables Vue accessibility rules and their sub-options.
+   * @default true
+   */
+  a11y?: BooleanSharedOptions
+
+  /** Settings for parsing Vue files and processing SFC blocks. */
+  settings?: VueSettings
+}
+
+/** Settings controlling how Vue single-file components are processed. */
+interface VueSettings {
   /**
    * Configuration for extracting and linting custom Single-File Component (SFC) blocks
    * such as `<style>`, `<route>`, or `<i18n>`.
    * Pass `false` to disable block processing, or an options object to customize block matching.
+   * @default { blocks: { customBlocks: true, styles: true, template: false } }
    */
-  sfcBlocks?: boolean | VueBlocksOptions
+  sfcBlocks?: false | VueBlocksOptions
 }
 
-const sfcBlocksDefaults: VueBlocksOptions = {
-  blocks: { customBlocks: true, styles: true, template: false },
-}
-
-const vueDefaults: VueConfigOptions = {
-  sfcBlocks: sfcBlocksDefaults,
-}
+/** Default Vue parser, processor, and accessibility settings. */
+const vueDefaults = {
+  a11y: true,
+  overrides: undefined,
+  settings: {
+    sfcBlocks: {
+      blocks: {
+        customBlocks: true,
+        styles: true,
+        template: false,
+      },
+    },
+  },
+} satisfies VueOptions
 
 /**
- * Constructs the flat config items for Vue and accessibility linting, setting up the custom template parser,
- * Vue block processors, and rules to enforce recommended component syntax.
- * @param options Vue configuration options.
- * @returns Promise resolving to Vue ESLint config items.
+ * Creates flat config items for Vue single-file components.
+ * @param options Vue settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
-export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, vueDefaults)
-  const sfcBlocks = resolveOptions(resolved.sfcBlocks, sfcBlocksDefaults)
+export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, vueDefaults)
+  const enableA11y = resolveOptions(resolvedOptions.a11y, {})
 
-  const [
-    vuePlugin,
-    vueParser,
-    tsEsLint,
-    a11yPlugin,
-  ] = await Promise.all([
+  const [vuePlugin, typescriptPlugin, vueParser] = await Promise.all([
     importModule(import('eslint-plugin-vue')),
-    importModule(import('vue-eslint-parser')),
     importModule(import('typescript-eslint')),
-    importModule(import('eslint-plugin-vuejs-accessibility')),
+    importModule(import('vue-eslint-parser')),
   ])
 
-  const vueRecommendedConfig = vuePlugin.configs['flat/recommended-error']
-  const a11yRecommendedConfig = a11yPlugin.configs['flat/recommended']
-
-  const [vueBase] = vueRecommendedConfig
-  const vueBaseRest = omit(vueBase, [
-    'rules',
-    'files',
-    'name',
-  ])
-  const vueRules = extractRules(vueRecommendedConfig as any)
-
-  const [a11yBase] = a11yRecommendedConfig
-  const a11yBaseRest = omit(a11yBase, ['name'])
-  const a11yRules = extractRules(a11yRecommendedConfig as any)
-
-  const processor = sfcBlocks === false
+  const processor = resolvedOptions.settings.sfcBlocks === false
     ? vuePlugin.processors['.vue']
     : mergeProcessors([
+        vueBlocksProcessor(resolvedOptions.settings.sfcBlocks),
         vuePlugin.processors['.vue'],
-        vueBlocksProcessor(sfcBlocks),
       ])
 
-  return [
+  const files = [vueGlob]
+
+  const config: TypedFlatConfigItem[] = [
     {
-      ...vueBaseRest,
       languageOptions: {
         globals: {
           computed: 'readonly',
@@ -89,25 +88,23 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         },
       },
       name: 'favorodera/vue/setup',
+      plugins: { vue: vuePlugin },
     },
+
     {
-      ...a11yBaseRest,
-      name: 'favorodera/vue/a11y/setup',
-    },
-    {
-      files: [vueGlob],
+      files,
       languageOptions: {
         parser: vueParser,
         parserOptions: {
           extraFileExtensions: ['.vue'],
-          parser: tsEsLint.parser,
+          parser: typescriptPlugin.parser,
           sourceType: 'module',
         },
       },
       name: 'favorodera/vue/rules',
       processor,
       rules: {
-        ...vueRules,
+        ...extractRules(vuePlugin.configs['flat/recommended-error']),
 
         'vue/block-lang': [
           'error',
@@ -115,11 +112,13 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         ],
         'vue/block-order': [
           'error',
-          { order: [
-            'script',
-            'template',
-            'style',
-          ] },
+          {
+            order: [
+              'script',
+              'template',
+              'style',
+            ],
+          },
         ],
         'vue/block-tag-newline': [
           'error',
@@ -137,8 +136,8 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
               'defineOptions',
               'definePage',
               'defineSlots',
-              'defineEmits',
               'defineProps',
+              'defineEmits',
               'defineModel',
             ],
           },
@@ -151,6 +150,7 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
           'error',
           { destructure: 'never' },
         ],
+        'vue/multi-word-component-names': 'off',
         'vue/next-tick-style': [
           'error',
           'promise',
@@ -176,7 +176,13 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
         'vue/padding-line-between-blocks': 'error',
         'vue/padding-line-between-tags': [
           'error',
-          [{ blankLine: 'always', next: '*', prev: '*' }],
+          [
+            {
+              blankLine: 'always',
+              next: '*',
+              prev: '*',
+            },
+          ],
         ],
         'vue/prefer-prop-type-boolean-first': 'error',
         'vue/prefer-separate-static-class': 'error',
@@ -190,38 +196,57 @@ export async function vue(options: VueConfigOptions): Promise<Array<TypedFlatCon
           'error',
           'in',
         ],
-      },
-    },
-    {
-      files: [vueGlob],
-      name: 'favorodera/vue/a11y/rules',
-      rules: {
-        ...a11yRules,
 
-        'vue-a11y/form-control-has-label': [
-          'error',
-          {
-            controlComponents: [],
-            labelComponents: [],
-          },
-        ],
-        'vue-a11y/label-has-for': [
-          'error',
-          {
-            allowChildren: true,
-            components: [],
-            controlComponents: [],
-            required: {
-              some: [
-                'nesting',
-                'id',
-              ],
-            },
-          },
-        ],
-        'vue-a11y/no-aria-hidden-on-focusable': 'error',
-        'vue-a11y/no-role-presentation-on-focusable': 'error',
+        ...resolvedOptions.overrides,
+
       },
     },
   ]
+
+  if (enableA11y) {
+    const a11yPlugin = await importModule(import('eslint-plugin-vuejs-accessibility'))
+
+    config.push(
+      {
+        name: 'favorodera/vue/a11y/setup',
+        plugins: { 'vue-a11y': a11yPlugin },
+      },
+
+      {
+        files,
+        name: 'favorodera/vue/a11y/rules',
+        rules: {
+          ...extractRules(a11yPlugin.configs['flat/recommended'] as any),
+
+          'vue-a11y/form-control-has-label': [
+            'error',
+            {
+              controlComponents: [],
+              labelComponents: [],
+            },
+          ],
+          'vue-a11y/label-has-for': [
+            'error',
+            {
+              allowChildren: true,
+              components: [],
+              controlComponents: [],
+              required: {
+                some: [
+                  'nesting',
+                  'id',
+                ],
+              },
+            },
+          ],
+          'vue-a11y/no-aria-hidden-on-focusable': 'error',
+          'vue-a11y/no-role-presentation-on-focusable': 'error',
+
+          ...enableA11y.overrides,
+        },
+      },
+    )
+  }
+
+  return config
 }

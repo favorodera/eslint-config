@@ -1,13 +1,13 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule } from '../utils'
 
 /**
- * Constructs the flat config items for Node.js linting, providing rules
- * to enforce best practices for Node.js environments.
- * @returns Promise resolving to Node ESLint config items.
+ * Creates flat config items for Node.js-specific linting rules.
+ * @param options Rule overrides for Node.js linting.
+ * @returns Flat config items for this configuration group.
  */
-export async function node(): Promise<Array<TypedFlatConfigItem>> {
+export async function node(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const nodePlugin = await importModule(import('eslint-plugin-n'))
 
   const files = [
@@ -16,25 +16,17 @@ export async function node(): Promise<Array<TypedFlatConfigItem>> {
     vueGlob,
   ]
 
-  const recommendedConfig = nodePlugin.configs['flat/recommended-module']
-
-  const { rules = {} } = recommendedConfig
-  const rest = omit(recommendedConfig, [
-    'rules',
-    'files',
-    'name',
-  ])
-
   return [
     {
-      ...rest,
       name: 'favorodera/node/setup',
+      plugins: { node: nodePlugin },
     },
+
     {
       files,
       name: 'favorodera/node/rules',
       rules: {
-        ...rules,
+        ...nodePlugin.configs['flat/recommended-module'].rules,
 
         'node/callback-return': 'error',
         'node/handle-callback-err': [
@@ -42,8 +34,11 @@ export async function node(): Promise<Array<TypedFlatConfigItem>> {
           '^(err|error)$',
         ],
         'node/no-callback-literal': 'error',
+        'node/no-missing-import': 'off',
+        'node/no-missing-require': 'off',
         'node/no-new-require': 'error',
         'node/no-path-concat': 'error',
+        'node/no-process-exit': 'off',
         'node/no-unpublished-import': 'error',
         'node/prefer-global/buffer': 'error',
         'node/prefer-global/console': 'error',
@@ -57,6 +52,8 @@ export async function node(): Promise<Array<TypedFlatConfigItem>> {
         'node/prefer-node-protocol': 'error',
         'node/prefer-promises/dns': 'error',
         'node/prefer-promises/fs': 'error',
+
+        ...options.overrides,
       },
     },
   ]

@@ -1,13 +1,13 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
 
 /**
- * Constructs the flat config items for unused imports linting, providing plugin setup and
- * specific rules to detect and remove unused imports and variables.
- * @returns Promise resolving to unused imports ESLint config items.
+ * Creates flat config items for unused import and variable detection.
+ * @param options Rule overrides for unused-import linting.
+ * @returns Flat config items for this configuration group.
  */
-export async function unusedImports(): Promise<Array<TypedFlatConfigItem>> {
+export async function unusedImports(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const unusedImportsPlugin = await importModule(import('eslint-plugin-unused-imports'))
 
   const files = [
@@ -19,10 +19,9 @@ export async function unusedImports(): Promise<Array<TypedFlatConfigItem>> {
   return [
     {
       name: 'favorodera/unused-imports/setup',
-      plugins: {
-        'unused-imports': unusedImportsPlugin,
-      },
+      plugins: { 'unused-imports': unusedImportsPlugin },
     },
+
     {
       files,
       name: 'favorodera/unused-imports/rules',
@@ -38,6 +37,8 @@ export async function unusedImports(): Promise<Array<TypedFlatConfigItem>> {
             varsIgnorePattern: '^_',
           },
         ],
+
+        ...options.overrides,
       },
     },
   ]

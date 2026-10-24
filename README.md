@@ -1,165 +1,103 @@
-<div align="center">
-  <h1>ESLint Config</h1>
-  <p><strong>Opinionated, type-safe flat ESLint configuration factory</strong></p>
-  <p>
-    <a href="https://github.com/favorodera/eslint-config/blob/main/LICENSE"><img src="https://img.shields.io/github/license/favorodera/eslint-config.svg?style=plastic&label=License&color=blue" alt="License"></a>
-    <a href="https://github.com/favorodera/eslint-config/stargazers"><img src="https://img.shields.io/github/stars/favorodera/eslint-config.svg?style=plastic&label=Stars&color=blue" alt="GitHub Stars"></a>
-    <a href="https://npmx.dev/package/@favorodera/eslint-config"><img src="https://img.shields.io/npm/dt/@favorodera/eslint-config.svg?style=plastic&label=NPM%20Downloads&color=blue" alt="NPM Downloads"></a>
-    <a href="https://npmx.dev/package/@favorodera/eslint-config"><img src="https://img.shields.io/npm/v/@favorodera/eslint-config.svg?style=plastic&label=Version&color=blue" alt="NPM Version"></a>
-  </p>
-</div>
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/transparent.svg?title=%40favorodera%2Feslint-config&amp;subtitle=An+opinionated%2C+type-safe+ESLint+flat+configuration+for+JavaScript+and+TypeScript+projects.&amp;size=wide&amp;mode=dark" /><img alt="@favorodera/eslint-config" src="https://shieldcn.dev/header/transparent.svg?title=%40favorodera%2Feslint-config&amp;subtitle=An+opinionated%2C+type-safe+ESLint+flat+configuration+for+JavaScript+and+TypeScript+projects.&amp;size=wide&amp;mode=light" /></picture>
+</p>
 
-<br>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@favorodera/eslint-config"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/npm/@favorodera/eslint-config.svg?variant=outline&amp;size=xs" /><img alt="npm version" src="https://shieldcn.dev/npm/@favorodera/eslint-config.svg?variant=outline&amp;size=xs&amp;mode=light" /></picture></a>
+  <a href="https://www.npmjs.com/package/@favorodera/eslint-config"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/npm/dm/@favorodera/eslint-config.svg?variant=outline&amp;size=xs" /><img alt="npm downloads" src="https://shieldcn.dev/npm/dm/@favorodera/eslint-config.svg?variant=outline&amp;size=xs&amp;mode=light" /></picture></a>
+  <a href="https://github.com/favorodera/eslint-config/actions"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/github/favorodera/eslint-config/ci.svg?variant=outline&amp;size=xs" /><img alt="CI status" src="https://shieldcn.dev/github/favorodera/eslint-config/ci.svg?variant=outline&amp;size=xs&amp;mode=light" /></picture></a>
+</p>
 
-An opinionated, highly customizable ESLint flat configuration factory. It provides a seamless, type-safe linting experience out-of-the-box for Vue, TypeScript, Tailwind CSS, Markdown, and more.
+`@favorodera/eslint-config` is an opinionated, type-safe ESLint flat configuration for JavaScript and TypeScript projects. It combines code-quality, sorting, and style rules with support for common project file formats and tooling.
 
 ## Features
 
-- **Flat Config First** — Built from the ground up for ESLint's new flat config system.
-- **TypeScript Support** — Robust linting for TypeScript out of the box.
-- **Vue Integration** — First-class support for Vue 3 single-file components.
-- **Stylistic Rules** — Consistent code styling powered by ESLint Stylistic.
-- **Tailwind CSS** — Built-in rules for Tailwind classes sorting and best practices.
-- **Auto-formatting** — Formats JSON, JSONC, Markdown, and JS/TS automatically.
-- **Type-safe Rules** — Rules are generated with JSDoc comments, giving you rich auto-complete and descriptions right in your IDE.
-- **Highly Configurable** — Easily enable or disable specific rulesets based on your project's needs.
+- Type-safe flat config with rule autocomplete.
+- Configurable rule groups with sensible defaults.
+- JavaScript, TypeScript, and Vue single-file component linting.
+- CSS and Tailwind CSS linting.
+- Markdown and embedded-code linting.
+- Import hygiene, sorting, and unused-import detection.
+- JSON-family, YAML, pnpm, Node.js, JSDoc, Unicorn, and Vitest rules.
 
-## Supported Configs
+## Installation
 
-The following configurations are bundled and enabled by default (they can be individually disabled or customized):
+**Requirements:** Node.js 24 or later and ESLint 10.
 
-- **JavaScript** — Core ESLint rules (`@eslint/js`)
-- **TypeScript** — Type-aware linting (`typescript-eslint`)
-- **Vue** — Single-file component support and accessibility linting (`eslint-plugin-vue`, `vue-eslint-parser`, `eslint-plugin-vuejs-accessibility`)
-- **Stylistic** — Formatting rules (`@stylistic/eslint-plugin`)
-- **CSS** — CSS linting and best practices (`@eslint/css` and `eslint-cssicorn`)
-- **Tailwind CSS** — Utility class linting and sorting (`eslint-plugin-better-tailwindcss`)
-- **Test** — Test and Vitest specific linting (`@vitest/eslint-plugin`)
-- **Imports** — Auto-sorting and import quality rules (`eslint-plugin-import-lite`)
-- **Unused Imports** — Unused imports and variables detection and cleanup (`eslint-plugin-unused-imports`)
-- **Markdown** — Linting for markdown files and embedded code blocks (`@eslint/markdown`)
-- **JSON/JSONC/JSON5** — Formatting and sorting for JSON files like `package.json` (`eslint-plugin-jsonc`)
-- **JSDoc** — Standardized comment formatting (`eslint-plugin-jsdoc`)
-- **Unicorn** — Various code quality improvements (`eslint-plugin-unicorn`)
-- **Perfectionist** — Sorting objects, imports, classes, etc. (`eslint-plugin-perfectionist`)
-- **Node** — Node.js specific linting rules (`eslint-plugin-n`)
-
+```sh
+pnpm add -D eslint@^10 @favorodera/eslint-config
+```
 
 ## Usage
 
-### Install
-
-<details>
-<summary><b>pnpm</b></summary>
-
-```bash
-pnpm install -D eslint @favorodera/eslint-config
-```
-</details>
-
-<details>
-<summary><b>npm</b></summary>
-
-```bash
-npm install -D eslint @favorodera/eslint-config
-```
-</details>
-
-<details>
-<summary><b>yarn</b></summary>
-
-```bash
-yarn add -D eslint @favorodera/eslint-config
-```
-</details>
-
-<details>
-<summary><b>bun</b></summary>
-
-```bash
-bun add -D eslint @favorodera/eslint-config
-```
-</details>
-
-### Configure
-
-Create an `eslint.config.ts` file in the root of your project. Since all configurations are enabled by default, you only need to pass options if you want to disable or customize something.
-
-The `factory()` function returns a `FlatConfigComposer` instance (powered by [`eslint-flat-config-utils`](https://github.com/antfu/eslint-flat-config-utils)), which acts as a powerful composer. This makes it incredibly easy to append your own configurations, override existing rules, or insert plugins seamlessly.
+Create `eslint.config.ts` in your project root:
 
 ```ts
-import { factory } from '@favorodera/eslint-config'
+import { defineConfig } from '@favorodera/eslint-config'
 
-export default factory({
-  // All configs are true by default!
-
-  // Example: Customize specific rulesets
-  stylistic: {
-    indent: 4,
-    quotes: 'double',
-  },
-
-  // Example: Disable tailwind if you aren't using it
-  tailwind: false,
-})
-  // You can seamlessly chain methods to compose your config
-  .append({
-    // Add your own custom ESLint configs
-    ignores: ['src/types/rules.d.ts'],
-  })
-  .overrides({
-    // Easily override predefined rules by their name
-    'favorodera/typescript/rules': {
-      rules: {
-        'ts/no-explicit-any': 'off',
-      },
-    },
-  })
+export default defineConfig()
 ```
+
+All configuration groups are enabled by default. Disable groups you do not need or pass options to customize them:
+
+```ts
+import { defineConfig } from '@favorodera/eslint-config'
+
+export default defineConfig({
+  ignores: (defaults) => {
+    return [...defaults, '**/generated/**']
+  },
+  stylistic: {
+    settings: {
+      indent: 2,
+      quotes: 'single',
+      semi: false,
+    },
+  },
+  tailwind: {
+    settings: {
+      entryPoint: 'src/styles.css',
+    },
+  },
+  typescript: {
+    overrides: {
+      'typescript/no-explicit-any': 'off',
+    },
+  },
+  vue: false,
+})
+```
+
+Use `overrides` for rule changes and `settings` for configuration-specific settings where supported. Ignore arrays are appended to the built-in patterns; an ignore callback receives the defaults and returns the complete list.
+
+## Configuration groups
+
+| Option | Purpose |
+| --- | --- |
+| `javascript` | Core JavaScript rules. |
+| `typescript` | TypeScript linting. |
+| `vue` | Vue single-file components and accessibility rules. |
+| `stylistic` | Code style and formatting. |
+| `css` | CSS linting, including Tailwind CSS v4 syntax. |
+| `tailwind` | Tailwind class validation and consistency. |
+| `imports` | Import ordering and import quality. |
+| `unusedImports` | Unused imports and variables. |
+| `perfectionist` | Sorting rules for code structures. |
+| `jsdoc` | JSDoc validation and style. |
+| `jsonc` | JSON, JSON5, JSONC, `package.json`, and TypeScript config files. |
+| `yaml` | YAML linting and `pnpm-workspace.yaml` key ordering. |
+| `pnpm` | pnpm rules for `package.json` and `pnpm-workspace.yaml`. |
+| `node` | Node.js-specific rules. |
+| `unicorn` | Additional JavaScript and TypeScript code-quality rules. |
+| `vitest` | Rules for Vitest test files. |
+| `markdown` | Markdown linting; GitHub Flavored Markdown is enabled by default. |
+| `codeInMarkdown` | Rules for supported code blocks embedded in Markdown. |
+| `ignores` | Adds to or customizes the default ignored paths. Always applied. |
 
 ## Development
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) v22 or later
-- [pnpm](https://pnpm.io/installation) v11 or later
-
-### Getting Started
-
-```bash
-# Install all dependencies
-pnpm install
-
-# Start compiler in watch mode and open ESLint config inspector
-pnpm dev
-
-# Build the project
-pnpm build
-
-# Lint, typecheck, build, and test in one go
-pnpm ready
-```
-
-### Useful Commands
-
-| Command | What it does |
-|---------|-------------|
-| `pnpm dev` | Generates types, starts watch mode, and opens `@eslint/config-inspector` |
-| `pnpm build` | Production build using `tsdown` |
-| `pnpm script:generate-rules-types` | Extracts and generates type definitions for all ESLint rules |
-| `pnpm lint` | Lint the repository |
-| `pnpm typecheck` | Type-check without emitting files |
-| `pnpm test` | Run test suites with Vitest |
-| `pnpm ready` | Full pipeline: install → build → lint → typecheck → test |
-
-## Contributing & Issues
-
-Feel free to open an issue or submit a pull request if you'd like to improve the rules, add new features, or fix a bug. Please ensure you run `pnpm ready` before submitting your PR to make sure tests and linting pass.
-
-## Inspiration
-
-This project takes heavy inspiration from [antfu/eslint-config](https://github.com/antfu/eslint-config) and similar modern ESLint presets, adapting their best patterns into a custom set of opinionated rules.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development and contribution guidelines.
 
 ## License
 
-[MIT](./LICENSE) &copy; [Favour Emeka](https://github.com/favorodera)
+[MIT](./LICENSE) © [Favour Emeka](https://github.com/favorodera)

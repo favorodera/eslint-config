@@ -1,46 +1,43 @@
+import { defu } from 'defu'
 import { tailwind4 } from 'tailwind-csstree'
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOptions, TypedFlatConfigItem } from '../types'
 import { cssGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule, resolveOptions } from '../utils'
+
+/** Options for CSS linting and its optional CSSicorn rule set. */
+export type CSSOptions = SharedOptions & {
+  /**
+   * Enables the optional CSSicorn rule set.
+   * @default true
+   */
+  cssicorn?: BooleanSharedOptions
+}
+
+/** Default CSS settings, including enabled CSSicorn rules. */
+const cssDefaults = {
+  cssicorn: true,
+  overrides: undefined,
+} satisfies CSSOptions
 
 /**
- * Constructs the flat config items for CSS linting, providing a collection of
- * awesome ESLint rules to improve code quality and enforce best practices.
- * @returns Promise resolving to CSS ESLint config items.
+ * Creates flat config items for CSS linting.
+ * @param options CSS-specific settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
-export async function css(): Promise<Array<TypedFlatConfigItem>> {
+export async function css(options: CSSOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, cssDefaults)
+  const enableCssicorn = resolveOptions(resolvedOptions.cssicorn, {})
+
   const cssPlugin = await importModule(import('@eslint/css'))
-  const cssicornPlugin = await importModule(import('eslint-cssicorn'))
 
   const files = [cssGlob]
 
-  const cssRecommendedConfig = cssPlugin.configs.recommended
-  const cssicornRecommendedConfig = cssicornPlugin.configs.recommended
-
-  const { rules: cssRules = {} } = cssRecommendedConfig
-  const cssRest = omit(cssRecommendedConfig, [
-    'rules',
-    'name',
-  ])
-
-  const { rules: cssicornRules = {} } = cssicornRecommendedConfig
-  const cssicornRest = omit(cssicornRecommendedConfig, [
-    'rules',
-    'name',
-    'files',
-    'language',
-    'languageOptions',
-  ])
-
-  return [
+  const config: TypedFlatConfigItem[] = [
     {
-      ...cssRest,
       name: 'favorodera/css/setup',
+      plugins: { css: cssPlugin },
     },
-    {
-      ...cssicornRest,
-      name: 'favorodera/css/cssicorn/setup',
-    },
+
     {
       files,
       language: 'css/css',
@@ -50,23 +47,41 @@ export async function css(): Promise<Array<TypedFlatConfigItem>> {
       },
       name: 'favorodera/css/rules',
       rules: {
-        ...cssRules,
+        ...cssPlugin.configs.recommended.rules,
 
         'css/prefer-logical-properties': 'error',
         'css/relative-font-units': 'error',
-      },
-    },
-    {
-      files,
-      language: 'css/css',
-      languageOptions: {
-        customSyntax: tailwind4,
-        tolerant: true,
-      },
-      name: 'favorodera/css/cssicorn/rules',
-      rules: {
-        ...cssicornRules,
+
+        ...options.overrides,
       },
     },
   ]
+
+  if (enableCssicorn) {
+    const cssicornPlugin = await importModule(import('eslint-cssicorn'))
+
+    config.push(
+      {
+        name: 'favorodera/css/cssicorn/setup',
+        plugins: { cssicorn: cssicornPlugin },
+      },
+
+      {
+        files,
+        language: 'css/css',
+        languageOptions: {
+          customSyntax: tailwind4,
+          tolerant: true,
+        },
+        name: 'favorodera/css/cssicorn/rules',
+        rules: {
+          ...cssicornPlugin.configs.recommended.rules,
+
+          ...enableCssicorn.overrides,
+        },
+      },
+    )
+  }
+
+  return config
 }

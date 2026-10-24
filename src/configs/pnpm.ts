@@ -1,29 +1,53 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import { defu } from 'defu'
+import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, TypedFlatConfigItem } from '../types'
 import { packageJsonGlob, pnpmWorkspaceGlob } from '../globs'
-import { importModule } from '../utils'
+import { importModule, resolveOptions } from '../utils'
+
+/** Options for pnpm package and workspace linting. */
+export type PNPMOptions = {
+  /**
+   * Enables pnpm rules for package.json files.
+   * @default true
+   */
+  packageJson?: BooleanSharedOptions
+
+  /**
+   * Enables pnpm rules for pnpm-workspace.yaml.
+   * @default true
+   */
+  pnpmWorkspace?: BooleanSharedOptions
+}
+
+/** Default options for pnpm linting. */
+const pnpmDefaults = {
+  packageJson: true,
+  pnpmWorkspace: true,
+} satisfies PNPMOptions
 
 /**
- * Constructs the flat config items for pnpm linting.
- * @returns Promise resolving to pnpm ESLint config items.
+ * Creates flat config items for pnpm package and workspace rules.
+ * @param options Options for package.json and pnpm-workspace.yaml rules.
+ * @returns Flat config items for this configuration group.
  */
-export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
-  const [
-    pnpmPlugin,
-    yamlParser,
-  ] = await Promise.all([
-    importModule(import('eslint-plugin-pnpm')),
-    importModule(import('yaml-eslint-parser')),
-  ])
+export async function pnpm(options: PNPMOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, pnpmDefaults)
+  const enablePackageJson = resolveOptions(resolvedOptions.packageJson, {})
+  const enablePnpmWorkspace = resolveOptions(resolvedOptions.pnpmWorkspace, {})
 
-  return [
+  const pnpmPlugin = await importModule(import('eslint-plugin-pnpm'))
+
+  const config: TypedFlatConfigItem[] = [
     {
       name: 'favorodera/pnpm/setup',
       plugins: { pnpm: pnpmPlugin },
     },
-    {
+  ]
+
+  if (enablePackageJson) {
+    config.push({
       files: [packageJsonGlob],
       language: 'jsonc/x',
-      name: 'favorodera/pnpm/package-json',
+      name: 'favorodera/pnpm/package-json/rules',
       rules: {
         'pnpm/json-enforce-catalog': [
           'error',
@@ -44,14 +68,21 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
           'error',
           { autofix: false },
         ],
+
+        ...enablePackageJson.overrides,
       },
-    },
-    {
+    })
+  }
+
+  if (enablePnpmWorkspace) {
+    const yamlParser = await importModule(import('yaml-eslint-parser'))
+
+    config.push({
       files: [pnpmWorkspaceGlob],
       languageOptions: {
         parser: yamlParser,
       },
-      name: 'favorodera/pnpm/pnpm-workspace-yaml',
+      name: 'favorodera/pnpm/pnpm-workspace/rules',
       rules: {
         'pnpm/yaml-enforce-settings': [
           'error',
@@ -68,7 +99,11 @@ export async function pnpm(): Promise<Array<TypedFlatConfigItem>> {
         ],
         'pnpm/yaml-no-unused-catalog-item': 'error',
         'pnpm/yaml-valid-packages': 'error',
+
+        ...enablePnpmWorkspace.overrides,
       },
-    },
-  ]
+    })
+  }
+
+  return config
 }

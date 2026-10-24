@@ -1,62 +1,74 @@
 import { defu } from 'defu'
 import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { mdGlob, mdInMdGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule } from '../utils'
 
-/** Options for configuring Markdown linting rules. */
-export interface MarkdownConfigOptions {
+/** Options for Markdown linting and language settings. */
+export type MarkdownOptions = SharedOptions & {
+  /** Markdown language features, including GitHub Flavored Markdown. */
+  settings?: MarkdownSettings
+}
+
+/** Options controlling Markdown language features. */
+interface MarkdownSettings {
   /**
    * Enable GitHub Flavored Markdown (GFM) support.
+   *
    * When true, applies additional linting rules specific to GFM extensions
    * like tables, task lists, and strikethrough.
+   * @default true
    */
   gfm?: boolean
 }
 
-const markdownDefaults: MarkdownConfigOptions = {
-  gfm: true,
-}
+/** Default Markdown settings. */
+const markdownDefaults = {
+  overrides: undefined,
+  settings: {
+    gfm: true,
+  },
+} satisfies MarkdownOptions
 
 /**
- * Constructs the flat config items for Markdown linting, extracting and linting
- * embedded code blocks within the document according to specified rules.
- * @param options Markdown configuration options.
- * @returns Promise resolving to Markdown ESLint config items.
+ * Creates flat config items for Markdown linting.
+ * @param options Markdown language settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
-export async function markdown(options: MarkdownConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, markdownDefaults)
+export async function markdown(options: MarkdownOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, markdownDefaults)
 
   const markdownPlugin = await importModule(import('@eslint/markdown'))
 
-  const [recommendedConfig] = markdownPlugin.configs.recommended
-
-  const { rules = {} } = recommendedConfig
-  const rest = omit(recommendedConfig, [
-    'rules',
-    'files',
-    'name',
-    'language',
-  ])
+  const files = [mdGlob]
+  const ignores = [mdInMdGlob]
 
   return [
     {
-      ...rest,
       name: 'favorodera/markdown/setup',
+      plugins: { markdown: markdownPlugin },
     },
+
     {
-      files: [mdGlob],
-      ignores: [mdInMdGlob],
-      language: resolved.gfm ? 'md/gfm' : 'md/commonmark',
+      files,
+      ignores,
+      language: resolvedOptions.settings.gfm ? 'markdown/gfm' : 'markdown/commonmark',
       languageOptions: {
         frontmatter: 'yaml',
+        math: true,
       },
       name: 'favorodera/markdown/rules',
       processor: mergeProcessors([
         markdownPlugin.processors?.markdown,
         processorPassThrough,
       ]),
-      rules,
+      rules: {
+        ...markdownPlugin.configs.recommended[0].rules,
+
+        'markdown/no-missing-atx-heading-space': 'off',
+
+        ...resolvedOptions.overrides,
+      },
     },
   ]
 }

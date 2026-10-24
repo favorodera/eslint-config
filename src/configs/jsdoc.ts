@@ -1,13 +1,13 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule } from '../utils'
 
 /**
- * Constructs the flat config items for JSDoc linting, ensuring comments follow
- * proper styling, parameter checks, and types alignment.
- * @returns Promise resolving to JSDoc ESLint config items.
+ * Creates flat config items for JSDoc validation and style rules.
+ * @param options Rule overrides for JSDoc linting.
+ * @returns Flat config items for this configuration group.
  */
-export async function jsdoc(): Promise<Array<TypedFlatConfigItem>> {
+export async function jsdoc(options: SharedOptions): PromisedTypedConfigFlatItemArray {
   const jsdocPlugin = await importModule(import('eslint-plugin-jsdoc'))
 
   const files = [
@@ -16,42 +16,18 @@ export async function jsdoc(): Promise<Array<TypedFlatConfigItem>> {
     vueGlob,
   ]
 
-  const recommendedConfig = jsdocPlugin.configs['flat/recommended-typescript-error']
-  const stylisticConfig = jsdocPlugin.configs['flat/stylistic-typescript-error']
-
-  const { rules: recommendedRules = {} } = recommendedConfig
-  const recommendedRest = omit(recommendedConfig, [
-    'rules',
-    'files',
-    'name',
-  ])
-
-  const { rules: stylisticRules = {} } = stylisticConfig
-  const stylisticRest = omit(stylisticConfig, [
-    'rules',
-    'files',
-    'name',
-  ])
-
-  const rules = {
-    ...recommendedRules,
-    ...stylisticRules,
-  }
-
   return [
     {
-      ...recommendedRest,
-      name: 'favorodera/jsdoc/recommended/setup',
+      name: 'favorodera/jsdoc/setup',
+      plugins: { jsdoc: jsdocPlugin },
     },
-    {
-      ...stylisticRest,
-      name: 'favorodera/jsdoc/stylistic/setup',
-    },
+
     {
       files,
       name: 'favorodera/jsdoc/rules',
       rules: {
-        ...rules,
+        ...jsdocPlugin.configs['flat/recommended-typescript-error'].rules,
+        ...jsdocPlugin.configs['flat/stylistic-typescript-error'].rules,
 
         'jsdoc/check-indentation': 'error',
         'jsdoc/check-template-names': 'error',
@@ -64,7 +40,11 @@ export async function jsdoc(): Promise<Array<TypedFlatConfigItem>> {
         'jsdoc/no-bad-blocks': 'error',
         'jsdoc/no-blank-block-descriptions': 'error',
         'jsdoc/no-blank-blocks': 'error',
+        'jsdoc/require-jsdoc': 'off',
+        'jsdoc/require-throws-type': 'off',
         'jsdoc/sort-tags': 'error',
+
+        ...options.overrides,
       },
     },
   ]

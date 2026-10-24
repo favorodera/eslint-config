@@ -1,57 +1,43 @@
-import type { TypedFlatConfigItem } from '../types/utils'
-import { tsGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
+import { tsGlob, vueGlob } from '../globs'
+import { importModule } from '../utils'
 
 /**
- * Constructs the flat config items for TypeScript linting, initializing the parser
- * and extending the recommended and strict type-aware rule sets.
- * @returns Promise resolving to TypeScript ESLint config items.
+ * Creates flat config items for TypeScript linting.
+ * @param options Rule overrides for TypeScript linting.
+ * @returns Flat config items for this configuration group.
  */
-export async function typescript(): Promise<Array<TypedFlatConfigItem>> {
-  const tsEsLint = await importModule(import('typescript-eslint'))
+export async function typescript(options: SharedOptions): PromisedTypedConfigFlatItemArray {
+  const typescriptPlugin = await importModule(import('typescript-eslint'))
 
-  const files = [tsGlob]
-
-  // Both arrays share base + eslint-recommended, only the 3rd element differs
-  const [
-    baseConfig,
-    eslintRecommended,
-    strictConfig,
-  ] = tsEsLint.configs.strict
-  const stylisticConfig = tsEsLint.configs.stylistic[2]
-
-  const baseRest = omit(baseConfig, [
-    'rules',
-    'name',
-  ])
-
-  // Merge rules from eslint-recommended (core overrides), strict, and stylistic
-  const rules = {
-    ...eslintRecommended?.rules,
-    ...strictConfig?.rules,
-    ...stylisticConfig?.rules,
-  }
+  const files = [tsGlob, vueGlob]
 
   return [
     {
-      ...baseRest,
+      languageOptions: {
+        parser: typescriptPlugin.parser,
+      },
       name: 'favorodera/typescript/setup',
+      plugins: { typescript: typescriptPlugin.plugin },
     },
+
     {
       files,
       name: 'favorodera/typescript/rules',
       rules: {
-        ...rules,
+        ...typescriptPlugin.configs.strict[1].rules,
+        ...typescriptPlugin.configs.strict[2].rules,
+        ...typescriptPlugin.configs.strict[2].rules,
 
-        'ts/array-type': [
-          'error',
-          { default: 'generic', readonly: 'generic' },
-        ],
-        'ts/consistent-type-imports': 'error',
-        'ts/default-param-last': 'error',
-        'ts/method-signature-style': 'error',
-        'ts/no-import-type-side-effects': 'error',
-        'ts/no-redeclare': 'error',
+        'typescript/array-type': 'error',
+        'typescript/consistent-type-imports': 'error',
+        'typescript/default-param-last': 'error',
+        'typescript/method-signature-style': 'error',
+        'typescript/no-import-type-side-effects': 'error',
+        'typescript/no-redeclare': 'error',
+        'typescript/no-unused-vars': 'off',
+
+        ...options.overrides,
       },
     },
   ]

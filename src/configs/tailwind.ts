@@ -1,32 +1,31 @@
-import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from 'defu'
-import type { TypedFlatConfigItem } from '../types/utils'
+import { getDefaultSelectors } from 'eslint-plugin-better-tailwindcss/defaults'
+import { MatcherType, SelectorKind, type Selectors } from 'eslint-plugin-better-tailwindcss/types'
+import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
-import { importModule, omit } from '../utils'
+import { importModule } from '../utils'
+
+/** Options for Tailwind CSS linting and plugin settings. */
+export type TailwindOptions = SharedOptions & {
+  /** Tailwind-aware class detection and reporting settings. */
+  settings?: TailwindSettings
+}
 
 /**
  * Options for configuring Tailwind CSS linting rules.
  * @see https://github.com/schoero/eslint-plugin-better-tailwindcss/blob/main/docs/settings/settings.md
  */
-export interface TailwindConfigOptions {
-  /**
-   * Working directory used to resolve Tailwind config files.
-   * Useful for monorepos where linting runs from the root but each project has its own setup.
-   * Relative to the ESLint process's cwd; defaults to that cwd if not specified.
-   */
+interface TailwindSettings {
+  /** Working directory used to resolve Tailwind config files. */
   cwd?: string
 
   /**
-   * Whether to detect custom component classes (like `card`, `btn`) defined in Tailwind CSS v4,
-   * so they are not reported as unknown classes.
+   * Whether to detect and not report custom component classes (like `card`, `btn`) defined in Tailwind CSS v4.
    * @default true
    */
   detectComponentClasses?: boolean
 
-  /**
-   * Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory.
-   * Falls back to the default configuration when omitted.
-   */
+  /** Path to the CSS entry file (e.g. `src/global.css`), relative to the current working directory. */
   entryPoint?: string
 
   /**
@@ -41,66 +40,84 @@ export interface TailwindConfigOptions {
 
   /**
    * Font size of the `<html>` element in pixels (default 16px).
+   *
    * Used to determine if arbitrary values can be replaced with predefined sizing scales.
    */
   rootFontSize?: number
 
-  /**
-   * Flat list of AST selectors that determine which string literals are linted as Tailwind classes.
-   * Only matches are treated as class candidates.
-   */
+  /** Flat list of AST selectors that determine which string literals are linted as Tailwind classes. */
   selectors?: Selectors
 }
 
-const tailwindDefaults: TailwindConfigOptions = {
-  detectComponentClasses: true,
-}
+/** Default Tailwind settings and additional class-detection selectors. */
+const tailwindDefaults = {
+  overrides: undefined,
+  settings: {
+    detectComponentClasses: true,
+    selectors: [
+      ...getDefaultSelectors(),
+      {
+        kind: SelectorKind.Callee,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+          { type: MatcherType.String },
+        ],
+        name: '^computed$',
+      },
+      {
+        kind: SelectorKind.Callee,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+          { type: MatcherType.String },
+        ],
+        name: '^defineAppConfig$',
+      },
+      {
+        kind: SelectorKind.Tag,
+        match: [
+          { type: MatcherType.ObjectKey },
+          { type: MatcherType.ObjectValue },
+        ],
+        name: '^ui$',
+      },
+    ],
+  },
+} satisfies TailwindOptions
 
 /**
- * Constructs the flat config items for Tailwind CSS linting, providing custom settings
- * to parse and lint utility classes, and enforcing consistent ordering.
- * @param options Tailwind configuration options.
- * @returns Promise resolving to Tailwind ESLint config items.
+ * Creates flat config items for Tailwind CSS linting.
+ * @param options Tailwind settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
-export async function tailwind(options: TailwindConfigOptions): Promise<Array<TypedFlatConfigItem>> {
-  const resolved = defu(options, tailwindDefaults)
+export async function tailwind(options: TailwindOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, tailwindDefaults)
+
   const tailwindPlugin = await importModule(import('eslint-plugin-better-tailwindcss'))
 
   const files = [
+    cssGlob,
     jsGlob,
     tsGlob,
     vueGlob,
-    cssGlob,
   ]
-
-  const recommendedConfig = tailwindPlugin.configs['recommended-error']
-  const stylisticConfig = tailwindPlugin.configs['stylistic-error']
-
-  const { rules: recommendedRules } = recommendedConfig
-  const recommendedRest = omit(recommendedConfig, ['rules'])
-
-  const { rules: stylisticRules } = stylisticConfig
-  const stylisticRest = omit(stylisticConfig, ['rules'])
-
-  const rules = {
-    ...recommendedRules,
-    ...stylisticRules,
-  }
 
   return [
     {
-      ...recommendedRest,
-      name: 'favorodera/tailwind/recommended/setup',
+      name: 'favorodera/tailwind/setup',
+      plugins: { tailwind: tailwindPlugin },
+      settings: {
+        'better-tailwindcss': resolvedOptions.settings,
+      },
     },
-    {
-      ...stylisticRest,
-      name: 'favorodera/tailwind/stylistic/setup',
-    },
+
     {
       files,
       name: 'favorodera/tailwind/rules',
       rules: {
-        ...rules,
+        ...tailwindPlugin.configs['recommended-error'].rules,
+        ...tailwindPlugin.configs['stylistic-error'].rules,
 
         'tailwind/enforce-consistent-class-order': [
           'error',
@@ -112,15 +129,17 @@ export async function tailwind(options: TailwindConfigOptions): Promise<Array<Ty
             unknownClassPosition: 'start',
           },
         ],
+        'tailwind/enforce-consistent-important-position': 'off',
         'tailwind/enforce-consistent-line-wrapping': [
           'error',
           { group: 'emptyLine' },
         ],
+        'tailwind/enforce-consistent-variable-syntax': 'off',
         'tailwind/enforce-consistent-variant-order': 'error',
         'tailwind/enforce-logical-properties': 'error',
-      },
-      settings: {
-        'better-tailwindcss': resolved,
+        'tailwind/enforce-shorthand-classes': 'off',
+
+        ...resolvedOptions.overrides,
       },
     },
   ]

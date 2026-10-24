@@ -1,18 +1,23 @@
 import type { Awaitable } from 'eslint-flat-config-utils'
 import { defu } from 'defu'
+import type { Rules } from './types'
 
 /**
- * Extracts and merges the rules from multiple ESLint configuration arrays.
- * @param configArrays Rest parameter representing multiple arrays of ESLint flat config items.
- * @returns A single object containing all the merged rules from the provided configurations.
+ * Extracts and merges rules from multiple arrays of flat config items.
+ *
+ * Later configurations take precedence when the same rule appears more than once.
+ * @param configArrays Flat config arrays whose `rules` objects should be merged.
+ * @returns A new rule map containing the merged rules.
  */
-export function extractRules(...configArrays: Array<Array<{ rules?: Record<string, unknown> }>>): Record<string, unknown> {
+export function extractRules(...configArrays: { rules?: Record<string, unknown> }[][]): Rules {
   return Object.assign(
     {},
     // Flatten the array of config arrays, then map over each config to extract its 'rules' object (or an empty object if undefined).
     ...configArrays
       .flat()
-      .map(config => config?.rules || {}),
+      .map((config) => {
+        return config?.rules ?? {}
+      }),
   )
 }
 
@@ -22,53 +27,39 @@ export function extractRules(...configArrays: Array<Array<{ rules?: Record<strin
  *
  * Handles both ESM modules (which wrap exports under `.default`) and
  * CJS / plain-object modules uniformly.
- * @template TModule The type of the module being imported.
- * @param module A module or a promise that resolves to one.
- * @returns The `.default` export if it exists, otherwise the module itself.
+ * @template TModule - The type of the resolved module.
+ * @param module A module value or promise-like value to normalize.
+ * @returns The module's default export when present; otherwise, the resolved module.
  */
 export async function importModule<TModule>(module: Awaitable<TModule>): Promise<TModule extends { default: infer TModuleDefault } ? TModuleDefault : TModule> {
-  const resolved = await module
+  const resolvedModule = await module
 
   // If the resolved module is an object and has a 'default' property, extract it (handles ESM default exports)
-  if (resolved !== null && typeof resolved === 'object' && 'default' in resolved) {
-    return (resolved as any).default
+  if (resolvedModule !== null && resolvedModule !== undefined && typeof resolvedModule === 'object' && 'default' in resolvedModule) {
+    return (resolvedModule as any).default
   }
 
   // Otherwise, return the module directly (handles CJS and plain objects)
-  return resolved as any
+  return resolvedModule as any
 }
 
 /**
- * Normalize boolean or options value into merged options or null.
- * Returns null when the input is false or undefined.
- * @template TOptions The type of the options object.
- * @param value The configuration value, which can be a boolean, an options object, or undefined.
- * @param defaults The default options to merge with if `value` is true or an object.
- * @returns The merged options object, or false if the feature is disabled.
+ * Resolves a boolean-or-options value against a set of defaults.
+ *
+ * A falsy value disables the configuration. `true` enables it with defaults,
+ * while an options object is merged over the defaults (provided values win).
+ * @template TOptions - The shape of the configuration group's options.
+ * @param value Whether the group is enabled, its custom options, or `undefined`.
+ * @param defaults Default options applied when the group is enabled.
+ * @returns `false` when disabled, or the merged options when enabled.
  */
-export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined, defaults: TOptions) {
+export function resolveOptions<TOptions extends object>(value: boolean | TOptions | undefined, defaults: TOptions): false | TOptions {
   // If the value is falsy (false, undefined, null), the feature is considered disabled
   if (!value) return false
 
-  // If value is exactly true, use an empty object to merge with defaults.
-  // Otherwise, value is an options object, so merge it with the default options using defu.
+  /*
+   * If value is exactly true, use an empty object to merge with defaults.
+   * Otherwise, value is an options object, so merge it with the default options using defu.
+   */
   return defu(value === true ? {} : value, defaults) as TOptions
-}
-
-/**
- * Creates a new object that omits the specified keys from the target object.
- * @template TTarget The type of the target object.
- * @template TTargetKeys The type of the keys to omit from the target object.
- * @param target The target object from which to omit the specified keys.
- * @param keys An array of keys to omit from the target object.
- * @returns A new object that contains all properties of the target object except for the specified keys.
- */
-export function omit<TTarget extends object, TTargetKeys extends keyof TTarget>(target: TTarget, keys: Array<TTargetKeys>): Omit<TTarget, TTargetKeys> {
-  const targetClone = { ...target }
-
-  for (const key of keys) {
-    Reflect.deleteProperty(targetClone, key)
-  }
-
-  return targetClone
 }

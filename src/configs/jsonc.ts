@@ -1,13 +1,40 @@
-import type { TypedFlatConfigItem } from '../types/utils'
+import { defu } from 'defu'
+import type { BooleanSharedOptions, PromisedTypedConfigFlatItemArray, SharedOptions, TypedFlatConfigItem } from '../types'
 import { json5Glob, jsoncGlob, jsonGlob, packageJsonGlob, tsConfigGlob } from '../globs'
-import { importModule } from '../utils'
+import { importModule, resolveOptions } from '../utils'
+
+/** Options for JSON-family and related configuration-file linting. */
+export type JSONCOptions = SharedOptions & {
+  /**
+   * Enables extra rules for package.json files.
+   * @default true
+   */
+  packageJson?: BooleanSharedOptions
+
+  /**
+   * Enables extra rules for tsconfig files.
+   * @default true
+   */
+  tsConfig?: BooleanSharedOptions
+}
+
+/** Default options for JSON-family linting. */
+const jsoncDefaults = {
+  overrides: undefined,
+  packageJson: true,
+  tsConfig: true,
+} satisfies JSONCOptions
 
 /**
- * Constructs the flat config items for JSON, JSON5, and JSONC linting, setting up
- * the custom parser, rule validations, and sorting rules for package.json/tsconfig.json.
- * @returns Promise resolving to JSONC ESLint config items.
+ * Creates flat config items for JSON, JSON5, JSONC, and supported configuration files.
+ * @param options JSON-related settings and rule overrides.
+ * @returns Flat config items for this configuration group.
  */
-export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
+export async function jsonc(options: JSONCOptions): PromisedTypedConfigFlatItemArray {
+  const resolvedOptions = defu(options, jsoncDefaults)
+  const enablePackageJson = resolveOptions(resolvedOptions.packageJson, {})
+  const enableTsConfig = resolveOptions(resolvedOptions.tsConfig, {})
+
   const jsoncPlugin = await importModule(import('eslint-plugin-jsonc'))
 
   const files = [
@@ -16,22 +43,33 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
     jsonGlob,
   ]
 
-  return [
+  const config: TypedFlatConfigItem[] = [
     {
       name: 'favorodera/jsonc/setup',
       plugins: { jsonc: jsoncPlugin },
     },
+
     {
       files,
       language: 'jsonc/x',
       name: 'favorodera/jsonc/rules',
       rules: {
-        'jsonc/array-bracket-newline': 'error',
+        'jsonc/array-bracket-newline': [
+          'error',
+          {
+            // eslint-disable-next-line unicorn/no-null
+            minItems: null,
+            multiline: true,
+          },
+        ],
         'jsonc/array-bracket-spacing': [
           'error',
           'never',
         ],
-        'jsonc/array-element-newline': 'error',
+        'jsonc/array-element-newline': [
+          'error',
+          'always',
+        ],
         'jsonc/comma-dangle': [
           'error',
           'never',
@@ -89,11 +127,16 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
         'jsonc/space-unary-ops': 'error',
         'jsonc/valid-json-number': 'error',
         'jsonc/vue-custom-block/no-parsing-error': 'error',
+
+        ...options.overrides,
       },
     },
-    {
+  ]
+
+  if (enablePackageJson) {
+    config.push({
       files: [packageJsonGlob],
-      name: 'favorodera/jsonc/sort/package-json',
+      name: 'favorodera/jsonc/package-json/rules',
       rules: {
         'jsonc/sort-array-values': [
           'error',
@@ -196,11 +239,16 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
             pathPattern: '^(?:gitHooks|husky|simple-git-hooks)$',
           },
         ],
+
+        ...enablePackageJson.overrides,
       },
-    },
-    {
+    })
+  }
+
+  if (enableTsConfig) {
+    config.push({
       files: tsConfigGlob,
-      name: 'favorodera/jsonc/sort/tsconfig-json',
+      name: 'favorodera/jsonc/tsconfig/rules',
       rules: {
         'jsonc/sort-keys': [
           'error',
@@ -224,6 +272,7 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'disableSourceOfProjectReferenceRedirect',
               'disableSolutionSearching',
               'disableReferencedProjectLoad',
+
               // Language and Environment
               'target',
               'jsx',
@@ -238,6 +287,7 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'emitDecoratorMetadata',
               'experimentalDecorators',
               'libReplacement',
+
               // Modules
               'baseUrl',
               'rootDir',
@@ -256,10 +306,12 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'allowArbitraryExtensions',
               'allowImportingTsExtensions',
               'allowUmdGlobalAccess',
+
               // JavaScript Support
               'allowJs',
               'checkJs',
               'maxNodeModuleJsDepth',
+
               // Type Checking
               'strict',
               'strictBindCallApply',
@@ -280,6 +332,7 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'noUnusedLocals',
               'noUnusedParameters',
               'useUnknownInCatchVariables',
+
               // Emit
               'declaration',
               'declarationDir',
@@ -304,6 +357,7 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'sourceMap',
               'sourceRoot',
               'stripInternal',
+
               // Interop Constraints
               'allowSyntheticDefaultImports',
               'esModuleInterop',
@@ -313,6 +367,7 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
               'preserveSymlinks',
               'verbatimModuleSyntax',
               'erasableSyntaxOnly',
+
               // Completeness
               'skipDefaultLibCheck',
               'skipLibCheck',
@@ -320,7 +375,11 @@ export async function jsonc(): Promise<Array<TypedFlatConfigItem>> {
             pathPattern: '^compilerOptions$',
           },
         ],
+
+        ...enableTsConfig.overrides,
       },
-    },
-  ]
+    })
+  }
+
+  return config
 }

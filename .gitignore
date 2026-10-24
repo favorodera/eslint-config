@@ -50,4 +50,5 @@ coverage/
 temp/
 tmp/
 
-src/types/rules.d.ts
+# Types
+src/typegen.d.ts

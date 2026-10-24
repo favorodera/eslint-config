@@ -1,6 +1,18 @@
+import { google } from '@ai-sdk/google'
 import { defineConfig } from 'relizy'
 
 export default defineConfig({
+  ai: {
+    fallback: 'fail',
+    provider: 'ai-sdk',
+    providerRelease: { enabled: true },
+    providers: {
+      'ai-sdk': {
+        model: google('gemini-3.5-flash-lite'),
+        reasoning: 'high',
+      },
+    },
+  },
   projectName: '@favorodera/eslint-config',
   publish: {
     access: 'public',

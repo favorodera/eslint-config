@@ -1,57 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { factory } from '../src/factory'
-import { extractRules, importModule, omit, resolveOptions } from '../src/utils'
-
-describe('omit', () => {
-  it('returns a new object without the specified keys', () => {
-    const source = { a: 1, b: 2, c: 3 }
-    const result = omit(source, [
-      'a',
-      'c',
-    ])
-
-    expect(result).toStrictEqual({ b: 2 })
-  })
-
-  it('does not mutate the original object', () => {
-    const source = { a: 1, b: 2 }
-    const result = omit(source, ['a'])
-
-    expect(source).toStrictEqual({ a: 1, b: 2 })
-    expect(result).toStrictEqual({ b: 2 })
-  })
-
-  it('returns a shallow copy when no keys are omitted', () => {
-    const source = { a: 1, b: 2 }
-    const result = omit(source, [])
-
-    expect(result).toStrictEqual({ a: 1, b: 2 })
-    expect(result).not.toBe(source)
-  })
-
-  it('handles single key omission', () => {
-    const source = { name: 'test', plugins: {}, rules: {} }
-    const result = omit(source, ['rules'])
-
-    expect(result).toStrictEqual({ name: 'test', plugins: {} })
-    expect('rules' in result).toBe(false)
-  })
-
-  it('works with symbol keys', () => {
-    const sym = Symbol('hidden')
-    const source = { a: 1, [sym]: 2 }
-    const result = omit(source, ['a'])
-
-    expect(result).toStrictEqual({ [sym]: 2 })
-  })
-
-  it('returns empty object when all keys are omitted', () => {
-    const source = { a: 1 }
-    const result = omit(source, ['a'])
-
-    expect(result).toStrictEqual({})
-  })
-})
+import { defineConfig } from '../src/'
+import { extractRules, importModule, resolveOptions } from '../src/utils'
 
 describe('resolveOptions', () => {
   it('returns false when value is false', () => {
@@ -78,41 +27,15 @@ describe('resolveOptions', () => {
 })
 
 describe('extractRules', () => {
-  it('extracts rules from a single config array', () => {
-    const result = extractRules([{ rules: { 'no-console': 'error' } }])
-
-    expect(result).toStrictEqual({ 'no-console': 'error' })
+  it('merges rules from multiple config arrays with later rules taking precedence', () => {
+    expect(extractRules(
+      [{ rules: { quotes: 'warn', semi: 'error' } }],
+      [{ rules: { quotes: 'error' } }],
+    )).toStrictEqual({ quotes: 'error', semi: 'error' })
   })
 
-  it('merges rules across multiple config arrays', () => {
-    const result = extractRules(
-      [{ rules: { 'no-console': 'error' } }],
-      [{ rules: { 'no-debugger': 'warn' } }],
-    )
-
-    expect(result).toStrictEqual({ 'no-console': 'error', 'no-debugger': 'warn' })
-  })
-
-  it('later rules overwrite earlier ones (last-write-wins)', () => {
-    const result = extractRules(
-      [{ rules: { 'no-console': 'warn' } }],
-      [{ rules: { 'no-console': 'error' } }],
-    )
-
-    expect(result['no-console']).toBe('error')
-  })
-
-  it('handles configs without rules gracefully', () => {
-    const result = extractRules(
-      [{}],
-      [{ rules: { 'no-undef': 'error' } }],
-    )
-
-    expect(result).toStrictEqual({ 'no-undef': 'error' })
-  })
-
-  it('returns empty object for empty input', () => {
-    expect(extractRules([])).toStrictEqual({})
+  it('ignores config items without a rules object', () => {
+    expect(extractRules([{ rules: { semi: 'error' } }, {}])).toStrictEqual({ semi: 'error' })
   })
 })
 
@@ -131,86 +54,210 @@ describe('importModule', () => {
     expect(result).toBe(fakeModule)
   })
 
-  it('handles null without throwing', async () => {
-    // null has no .default property check — returns as-is
-    // eslint-disable-next-line unicorn/no-null
-    const result = await importModule(Promise.resolve(null))
+  it('handles null/undefined without throwing', async () => {
+    const result = await importModule(Promise.resolve())
 
-    expect(result).toBeNull()
+    expect(result).toBeNullable()
   })
 })
 
-describe('factory', () => {
+describe('defineConfig', () => {
   it('resolves to a non-empty array of configs', async () => {
-    const resolved = await factory()
+    const resolved = await defineConfig()
 
     expect(Array.isArray(resolved)).toBe(true)
     expect(resolved.length).toBeGreaterThan(0)
   })
 
   it('always includes the ignores config first', async () => {
-    const resolved = await factory()
+    const resolved = await defineConfig()
 
-    expect(resolved[0]?.name).toBe('favorodera/ignores')
+    expect(resolved[0].name).toBe('favorodera/ignores')
   })
 
-  it('disabling typescript excludes its config', async () => {
-    const withTs = await factory({ typescript: true })
-    const withoutTs = await factory({ typescript: false })
+  it('includes configuration groups by default', async () => {
+    const resolved = await defineConfig()
 
-    const withNames = withTs.map(config => config.name)
-    const withoutNames = withoutTs.map(config => config.name)
+    const names = resolved
+      .map((config) => {
+        return config.name
+      })
+      .filter(Boolean)
 
-    expect(withNames).toContain('favorodera/typescript/rules')
-    expect(withNames).toContain('favorodera/typescript/setup')
+    const groups = [
+      'code-in-markdown',
+      'css',
+      'imports',
+      'ignores',
+      'javascript',
+      'jsdoc',
+      'jsonc',
+      'markdown',
+      'node',
+      'perfectionist',
+      'pnpm',
+      'stylistic',
+      'tailwind',
+      'typescript',
+      'unicorn',
+      'unused-imports',
+      'vitest',
+      'vue',
+      'yaml',
+    ]
 
-    expect(withoutNames).not.toContain('favorodera/typescript/rules')
-    expect(withoutNames).not.toContain('favorodera/typescript/setup')
+    const hasAllGroups = groups.every((group) => {
+      return names.some((name) => {
+        return name?.startsWith(`favorodera/${group}`)
+      })
+    })
+
+    expect(hasAllGroups).toBe(true)
   })
 
-  it('disabling vue excludes its config', async () => {
-    const withVue = await factory({ vue: true })
-    const withoutVue = await factory({ vue: false })
-
-    expect(withVue.map(config => config.name)).toContain('favorodera/vue/rules')
-    expect(withVue.map(config => config.name)).toContain('favorodera/vue/setup')
-
-    expect(withoutVue.map(config => config.name)).not.toContain('favorodera/vue/rules')
-    expect(withoutVue.map(config => config.name)).not.toContain('favorodera/vue/setup')
-  })
-
-  it('disabling multiple configs reduces count', async () => {
-    const full = await factory()
-    const stripped = await factory({
-      jsdoc: false,
-      markdown: false,
-      tailwind: false,
-      vue: false,
+  it('can disable groups', async () => {
+    const resolved = await defineConfig({
+      pnpm: false,
+      unicorn: false,
+      vitest: false,
       yaml: false,
     })
 
-    expect(stripped.length).toBeLessThan(full.length)
+    const names = resolved
+      .map((config) => {
+        return config.name
+      })
+      .filter(Boolean)
+
+    const disabledGroups = ['pnpm', 'unicorn', 'vitest', 'yaml']
+
+    const hasMatchingGroup = names.some((name) => {
+      return disabledGroups.some((group) => {
+        return name?.startsWith(`favorodera/${group}/`)
+      })
+    })
+
+    expect(hasMatchingGroup).toBe(false)
+  })
+
+  it('can disable sub groups', async () => {
+    const resolved = await defineConfig({
+      pnpm: {
+        packageJson: false,
+        pnpmWorkspace: false,
+      },
+    })
+
+    const names = resolved
+      .map((config) => {
+        return config.name
+      })
+      .filter(Boolean)
+
+    const disabledSubGroups = new Set([
+      'favorodera/pnpm/package-json/rules',
+      'favorodera/pnpm/pnpm-workspace/rules',
+    ])
+
+    const hasSubGroup = names.some((name) => {
+      return name !== undefined && disabledSubGroups.has(name)
+    })
+
+    expect(hasSubGroup).toBe(false)
+  })
+
+  it('disabling a sub group does not affect the main group setup config', async () => {
+    const resolved = await defineConfig({
+      pnpm: {
+        packageJson: false,
+        pnpmWorkspace: false,
+      },
+    })
+
+    const names = resolved.map((config) => {
+      return config.name
+    }).filter(Boolean)
+
+    const hasMainSetup = names.includes('favorodera/pnpm/setup')
+
+    expect(hasMainSetup).toBe(true)
+  })
+
+  it('applies overrides to main groups and sub groups independently without affecting each other', async () => {
+    const resolved = await defineConfig({
+      jsonc: {
+        overrides: {
+          'jsonc/main-rule': 'error',
+        },
+        packageJson: {
+          overrides: {
+            'jsonc/package-json-rule': 'warn',
+          },
+        },
+        tsConfig: {
+          overrides: {
+            'jsonc/tsconfig-rule': 'off',
+          },
+        },
+      },
+    })
+
+    const mainRules = resolved.find((config) => {
+      return config.name === 'favorodera/jsonc/rules'
+    })?.rules
+    const pkgJsonRules = resolved.find((config) => {
+      return config.name === 'favorodera/jsonc/package-json/rules'
+    })?.rules
+    const tsconfigRules = resolved.find((config) => {
+      return config.name === 'favorodera/jsonc/tsconfig/rules'
+    })?.rules
+
+    expect(mainRules?.['jsonc/main-rule']).toBe('error')
+    expect(pkgJsonRules?.['jsonc/package-json-rule']).toBe('warn')
+    expect(tsconfigRules?.['jsonc/tsconfig-rule']).toBe('off')
+  })
+
+  it('defaults nested sub group configurations to true when only main group properties are altered', async () => {
+    const resolved = await defineConfig({
+      jsonc: {
+        overrides: {
+          'jsonc/some-rule': 'error',
+        },
+      },
+    })
+
+    const names = resolved.map((config) => {
+      return config.name
+    }).filter(Boolean)
+
+    expect(names).toContain('favorodera/jsonc/package-json/rules')
+    expect(names).toContain('favorodera/jsonc/tsconfig/rules')
   })
 
   it('custom ignore patterns are merged', async () => {
-    const resolved = await factory({
+    const resolved = await defineConfig({
       ignores: ['**/my-custom-dir/**'],
     })
-    const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
+    const ignoresConfig = resolved.find((config) => {
+      return config.name === 'favorodera/ignores'
+    })
 
     expect(ignoresConfig?.ignores).toContain('**/my-custom-dir/**')
-    // default patterns still present
     expect(ignoresConfig?.ignores).toContain('**/node_modules/**')
   })
 
   it('ignores accepts a function to transform default patterns', async () => {
-    const resolved = await factory({
-      ignores: defaults => [
-        ...defaults,
-        '**/generated/**',
-      ],
+    const resolved = await defineConfig({
+      ignores: (defaults) => {
+        return [
+          ...defaults,
+          '**/generated/**',
+        ]
+      },
     })
-    const ignoresConfig = resolved.find(config => config.name === 'favorodera/ignores')
+    const ignoresConfig = resolved.find((config) => {
+      return config.name === 'favorodera/ignores'
+    })
 
     expect(ignoresConfig?.ignores).toContain('**/generated/**')
     expect(ignoresConfig?.ignores).toContain('**/node_modules/**')

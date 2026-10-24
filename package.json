@@ -3,8 +3,8 @@
   "type": "module",
   "version": "2.0.1",
   "private": false,
-  "packageManager": "pnpm@11.28.6",
-  "description": "Opinionated, type-safe flat ESLint configuration factory for Vue, TypeScript, Tailwind, and more.",
+  "packageManager": "pnpm@12.14.0",
+  "description": "An opinionated,type-safe ESLint flat configuration for JavaScript and TypeScript projects.",
   "author": "Favour Emeka <favorodera@gmail.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/favorodera",
@@ -20,37 +20,35 @@
     "access": "public"
   },
   "keywords": [
-    "nuxt",
-    "vue",
     "eslint",
-    "typescript",
-    "stylistic",
     "tooling",
-    "linter"
+    "linter",
+    "favorodera"
   ],
   "exports": {
     ".": "./dist/index.mjs",
+    "./globs": "./dist/globs.mjs",
+    "./types": "./dist/types.mjs",
+    "./utils": "./dist/utils.mjs",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.cts",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "engines": {
-    "node": ">=22.0.0",
-    "pnpm": ">=11.0.0"
+    "node": ">=24.0.0",
+    "pnpm": ">=12.0.0"
   },
   "scripts": {
-    "generate-rules-types": "tsx scripts/generate-rules-types.ts",
-    "dev:inspector": "pnpm dlx @eslint/config-inspector@latest",
-    "prebuild": "pnpm generate-rules-types",
-    "build": "tsdown",
-    "dev": "pnpm prebuild && concurrently \"tsdown --watch\" \"pnpm dev:inspector\"",
+    "typegen": "tsx scripts/typegen.ts",
+    "dev:inspector": "eslint --inspect-config",
+    "build": "pnpm typegen && tsdown",
+    "dev": "pnpm typegen && concurrently \"tsdown --watch\" \"pnpm dev:inspector\"",
     "test": "vitest run",
     "test:watch": "vitest --watch --ui",
-    "typecheck": "pnpm generate-rules-types && tsc --noEmit",
+    "typecheck": "pnpm typegen && tsc --noEmit",
     "prepublishOnly": "pnpm build",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "ready": "pnpm install && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
   "peerDependencies": {
@@ -86,11 +84,15 @@
     "yaml-eslint-parser": "catalog:"
   },
   "devDependencies": {
+    "@ai-sdk/google": "catalog:",
+    "@eslint/config-inspector": "catalog:",
     "@types/node": "catalog:",
     "@vitest/ui": "catalog:",
+    "ai": "catalog:",
     "concurrently": "catalog:",
     "eslint": "catalog:",
     "eslint-typegen": "catalog:",
+    "pkg-pr-new": "catalog:",
     "relizy": "catalog:",
     "tsdown": "catalog:",
     "tsx": "catalog:",

@@ -34,10 +34,13 @@ export const json5Glob = '**/*.json5'
 /** Glob pattern for matching JSON with Comments files */
 export const jsoncGlob = '**/*.jsonc'
 
-/** Glob patterns for matching TypeScript configuration files */
+/**
+ * Glob patterns matching standard and named TypeScript configuration files.
+ * Both `tsconfig.json` and files such as `tsconfig.build.json` are included.
+ */
 export const tsConfigGlob = [
-  '**/tsconfig.json',
   '**/tsconfig.*.json',
+  '**/tsconfig.json',
 ]
 
 /** Glob pattern for matching YAML files */
@@ -54,45 +57,52 @@ export const packageJsonGlob = '**/package.json'
  * Includes node_modules, build outputs, lock files, temporary files, and tool-specific caches.
  */
 export const ignoresGlob = [
+  // Dependencies & Package Managers
   '**/node_modules/**',
-  '**/dist/**',
   '**/package-lock.json',
-  '**/yarn.lock',
   '**/pnpm-lock.yaml',
-  '**/bun.lockb',
 
-  '**/output',
-  '**/coverage',
-  '**/temp',
-  '**/.temp',
-  '**/tmp',
-  '**/.tmp',
-  '**/.history',
-  '**/.vitepress/cache',
-  '**/.nuxt',
-  '**/.next',
-  '**/.svelte-kit',
-  '**/.vercel',
-  '**/.changeset',
-  '**/.idea',
-  '**/.cache',
-  '**/.output',
-  '**/.vite-inspect',
-  '**/.yarn',
-
-  '**/CHANGELOG*.md',
-  '**/LICENSE*',
+  // Build Outputs & Distribution
   '**/*.min.*',
-  '**/__snapshots__',
+  '**/.output',
+  '**/cache',
+  '**/dist/**',
+  '**/output',
 
-  // Tools temp files
-  '**/vite.config.*.timestamp-*',
+  // Testing & Coverage
+  '**/__snapshots__',
+  '**/coverage',
+
+  // Framework Caches & Build Tools (Vite, Nuxt, Vercel, Turbo)
+  '**/.nuxt',
+  '**/.turbo',
+  '**/.vercel',
+  '**/.vite-inspect',
+  '**/.vitepress/cache',
+
+  // IDEs, Editors & System Files
+  '**/.data',
+  '**/.history',
+  '**/.idea',
+
+  // Temporary Files & Directories
+  '**/.temp',
+  '**/.tmp',
+  '**/temp',
+  '**/tmp',
+
+  // Tool-Generated & Auto-Generated Files
   '**/auto-import?(s).d.ts',
   '**/components.d.ts',
+  '**/vite.config.*.timestamp-*',
 
-  // AI related
-  '**/.context',
-  '**/.claude',
-  '**/.agents',
+  // Repository Documentation
+  '**/CHANGELOG*.md',
+  '**/LICENSE*',
+
+  // AI & Assistant Workspace Metadata
   '**/.*/skills',
+  '**/.agents',
+  '**/.claude',
+  '**/.context',
 ]

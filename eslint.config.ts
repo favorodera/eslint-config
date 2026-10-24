@@ -1,12 +1,11 @@
-import { factory } from './src'
+import { defineConfig } from './src'
 
-export default factory({
-  ignores: ['src/types/rules.d.ts'],
-})
-  .overrides({
-    'favorodera/typescript/rules': {
-      rules: {
-        'ts/no-explicit-any': 'off',
-      },
+export default defineConfig({
+  ignores: ['src/typegen.d.ts'],
+  typescript: {
+    overrides: {
+      'typescript/no-explicit-any': 'off',
+      'typescript/no-magic-numbers': 'off',
     },
-  })
+  },
+})
