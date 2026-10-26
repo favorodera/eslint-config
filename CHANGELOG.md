@@ -1,5 +1,22 @@
 # Changelog
 
+## v3.0.0...v3.1.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.0.0...v3.1.0)
+
+### Refactors
+
+- **exports:** Disable auto exports in tsdown ([19507fc](https://github.com/favorodera/eslint-config/commit/19507fc))
+
+  - Prevent build tool from overwriting exports field
+
+- **package:** Simplify files array in package.json ([f63d18d](https://github.com/favorodera/eslint-config/commit/f63d18d))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v2.0.1...v3.0.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v2.0.1...v3.0.0)
