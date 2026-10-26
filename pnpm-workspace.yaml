@@ -11,12 +11,12 @@ catalog:
   '@stylistic/eslint-plugin': ^5.10.0
   '@types/node': ^26.6.5
   '@vitest/eslint-plugin': ^1.6.28
-  '@vitest/ui': 5.0.3
+  '@vitest/ui': 5.0.5
   ai: ^7.0.151
   concurrently: ^10.0.6
   defu: ^6.1.7
   eslint: ^10.13.0
-  eslint-cssicorn: ^0.1.0
+  eslint-cssicorn: ^0.2.0
   eslint-flat-config-utils: ^3.2.0
   eslint-merge-processors: ^2.0.0
   eslint-plugin-better-tailwindcss: ^4.10.0
@@ -34,7 +34,7 @@ catalog:
   eslint-processor-vue-blocks: ^2.0.0
   eslint-typegen: ^2.3.1
   globals: ^17.13.0
-  pkg-pr-new: ^0.0.90
+  pkg-pr-new: ^0.0.91
   relizy: ^1.11.0
   tailwind-csstree: ^0.4.1
   tsdown: ^0.23.2
