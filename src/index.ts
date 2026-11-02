@@ -174,7 +174,6 @@ export function defineConfig(options: ConfigOptions = {}) {
 
   /** Maps each public configuration option to its config builder. */
   const configFunctions = {
-    codeInMarkdown,
     css,
     imports,
     javascript,
@@ -192,6 +191,9 @@ export function defineConfig(options: ConfigOptions = {}) {
     vitest,
     vue,
     yaml,
+
+    // Must be last
+    codeInMarkdown,
   } satisfies Record<Exclude<keyof ConfigOptions, 'ignores'>, ConfigBuilder>
 
   for (const [key, configFunction] of Object.entries(configFunctions)) {
