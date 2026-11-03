@@ -1,3 +1,4 @@
+import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from 'defu'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
