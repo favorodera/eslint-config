@@ -1,5 +1,45 @@
 # Changelog
 
+## v3.1.0...v3.2.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.1.0...v3.2.0)
+
+### Fixed
+
+- **rules:** Move codeInMarkdown to run last ([ad79876](https://github.com/favorodera/eslint-config/commit/ad79876))
+
+  - Ensures markdown rules run after all other builders
+
+- **tailwind:** Remove custom selector settings ([0717e1a](https://github.com/favorodera/eslint-config/commit/0717e1a))
+
+  - Remove custom selector definitions for tailwind
+  - Rely on default plugin configuration
+
+- **unicorn:** Disable prefer-ternary rule ([0a77cef](https://github.com/favorodera/eslint-config/commit/0a77cef))
+
+  - turn off rule to avoid forced ternary syntax
+
+- **rules:** Reorder and adjust ESLint rules ([95266d7](https://github.com/favorodera/eslint-config/commit/95266d7))
+
+  - Relocates unicode-bom rule in `code-in-markdown`
+  - Reorders jsdoc/require-jsdoc rule in `code-in-markdown`
+  - Moves unicorn/prefer-ternary in `unicorn` config
+  - Adjusts package.json files array for clarity
+
+- **tailwind:** Import missing Selectors type ([43e0a02](https://github.com/favorodera/eslint-config/commit/43e0a02))
+
+  - add type import for tailwind rule configuration
+
+
+### Styling
+
+- **markdown:** Remove rule category comments ([9f35e38](https://github.com/favorodera/eslint-config/commit/9f35e38))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.0.0...v3.1.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.0.0...v3.1.0)
