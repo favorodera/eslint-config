@@ -38,6 +38,7 @@ export async function unicorn(options: SharedOptions): PromisedTypedConfigFlatIt
             allowWithVariables: true,
           },
         ],
+        'unicorn/prefer-ternary': 'off',
         'unicorn/single-line-block-comment-style': [
           'error',
           'single-line',

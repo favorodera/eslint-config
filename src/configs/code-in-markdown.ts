@@ -23,7 +23,7 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
       files,
       name: 'favorodera/code-in-markdown/rules',
       rules: {
-        // Javascript
+        'jsdoc/require-jsdoc': 'off',
         'no-alert': 'off',
         'no-console': 'off',
         'no-continue': 'off',
@@ -34,19 +34,12 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
         'no-unused-expressions': 'off',
         'no-unused-labels': 'off',
         'no-unused-vars': 'off',
-        'unicode-bom': 'off',
-
-        // Node
         'node/no-extraneous-import': 'off',
         'node/prefer-global/process': 'off',
-
-        // Stylistic
         'stylistic/comma-dangle': 'off',
         'stylistic/eol-last': 'off',
         'stylistic/line-comment-position': 'off',
         'stylistic/padding-line-between-statements': 'off',
-
-        // Typescript
         'typescript/consistent-type-imports': 'off',
         'typescript/explicit-function-return-type': 'off',
         'typescript/no-namespace': 'off',
@@ -55,16 +48,10 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
         'typescript/no-unused-expressions': 'off',
         'typescript/no-unused-vars': 'off',
         'typescript/no-use-before-define': 'off',
-
-        // Unused imports
+        'unicode-bom': 'off',
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
-
-        // Vue
         'vue/no-unused-vars': 'off',
-
-        // JsDocs
-        'jsdoc/require-jsdoc': 'off',
 
         ...options.overrides,
       },

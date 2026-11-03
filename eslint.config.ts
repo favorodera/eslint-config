@@ -9,3 +9,7 @@ export default defineConfig({
     },
   },
 })
+  .append({
+    files: ['package.json'],
+    rules: { 'jsonc/array-bracket-newline': 'off' },
+  })

@@ -1,6 +1,5 @@
+import type { Selectors } from 'eslint-plugin-better-tailwindcss/api/types'
 import { defu } from 'defu'
-import { getDefaultSelectors } from 'eslint-plugin-better-tailwindcss/defaults'
-import { MatcherType, SelectorKind, type Selectors } from 'eslint-plugin-better-tailwindcss/types'
 import type { PromisedTypedConfigFlatItemArray, SharedOptions } from '../types'
 import { cssGlob, jsGlob, tsGlob, vueGlob } from '../globs'
 import { importModule } from '../utils'
@@ -54,35 +53,6 @@ const tailwindDefaults = {
   overrides: undefined,
   settings: {
     detectComponentClasses: true,
-    selectors: [
-      ...getDefaultSelectors(),
-      {
-        kind: SelectorKind.Callee,
-        match: [
-          { type: MatcherType.ObjectKey },
-          { type: MatcherType.ObjectValue },
-          { type: MatcherType.String },
-        ],
-        name: '^computed$',
-      },
-      {
-        kind: SelectorKind.Callee,
-        match: [
-          { type: MatcherType.ObjectKey },
-          { type: MatcherType.ObjectValue },
-          { type: MatcherType.String },
-        ],
-        name: '^defineAppConfig$',
-      },
-      {
-        kind: SelectorKind.Tag,
-        match: [
-          { type: MatcherType.ObjectKey },
-          { type: MatcherType.ObjectValue },
-        ],
-        name: '^ui$',
-      },
-    ],
   },
 } satisfies TailwindOptions
 
