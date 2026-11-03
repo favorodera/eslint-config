@@ -32,13 +32,13 @@ export async function unicorn(options: SharedOptions): PromisedTypedConfigFlatIt
         'unicorn/no-asterisk-prefix-in-documentation-comments': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-top-level-side-effects': 'off',
-        'unicorn/prefer-ternary': 'off',
         'unicorn/prefer-query-selector': [
           'error',
           {
             allowWithVariables: true,
           },
         ],
+        'unicorn/prefer-ternary': 'off',
         'unicorn/single-line-block-comment-style': [
           'error',
           'single-line',

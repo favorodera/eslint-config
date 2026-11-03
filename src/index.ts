@@ -146,9 +146,6 @@ export interface ConfigOptions {
   yaml?: BooleanSharedOptions<YAMLOptions>
 }
 
-/** Internal signature used to keep the public option list and builder map in sync. */
-type ConfigBuilder = (options: never) => Awaitable<TypedFlatConfigItem[]>
-
 /**
  * Creates the ESLint flat configuration for a project.
  *
@@ -194,7 +191,7 @@ export function defineConfig(options: ConfigOptions = {}) {
 
     // Must be last
     codeInMarkdown,
-  } satisfies Record<Exclude<keyof ConfigOptions, 'ignores'>, ConfigBuilder>
+  } satisfies Record<Exclude<keyof ConfigOptions, 'ignores'>, (options: never) => Awaitable<TypedFlatConfigItem[]>>
 
   for (const [key, configFunction] of Object.entries(configFunctions)) {
     const configOption = (options as Record<string, boolean | object | undefined>)[key]
