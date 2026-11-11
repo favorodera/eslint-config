@@ -76,6 +76,8 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
         'stylistic/function-call-spacing': 'error',
         'stylistic/function-paren-newline': 'error',
         'stylistic/implicit-arrow-linebreak': 'error',
+        'stylistic/key-spacing': 'error',
+        'stylistic/keyword-spacing': 'error',
         'stylistic/linebreak-style': 'error',
         'stylistic/multiline-comment-style': 'error',
         'stylistic/newline-per-chained-call': 'error',
