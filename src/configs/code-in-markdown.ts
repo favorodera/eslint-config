@@ -40,6 +40,7 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
         'stylistic/eol-last': 'off',
         'stylistic/line-comment-position': 'off',
         'stylistic/padding-line-between-statements': 'off',
+        'tailwind/no-unknown-classes': 'off',
         'typescript/consistent-type-imports': 'off',
         'typescript/explicit-function-return-type': 'off',
         'typescript/no-namespace': 'off',
@@ -49,8 +50,10 @@ export async function codeInMarkdown(options: SharedOptions): PromisedTypedConfi
         'typescript/no-unused-vars': 'off',
         'typescript/no-use-before-define': 'off',
         'unicode-bom': 'off',
+        'unicorn/max-nested-calls': 'off',
         'unused-imports/no-unused-imports': 'off',
         'unused-imports/no-unused-vars': 'off',
+        'vue/no-root-v-if': 'off',
         'vue/no-unused-vars': 'off',
 
         ...options.overrides,
