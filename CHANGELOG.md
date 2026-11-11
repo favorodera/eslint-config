@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.4.0...v3.5.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.4.0...v3.5.0)
+
+### Fixed
+
+- **rules:** Update stylistic and Vue rule configs ([19396bc](https://github.com/favorodera/eslint-config/commit/19396bc))
+
+  - Add object-curly-spacing rule
+  - Remove vue/no-literals-in-template
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.3.0...v3.4.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.3.0...v3.4.0)
