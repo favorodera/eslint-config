@@ -85,6 +85,7 @@ export async function stylistic(options: StylisticOptions): PromisedTypedConfigF
         'stylistic/no-extra-semi': 'error',
         'stylistic/nonblock-statement-body-position': 'error',
         'stylistic/object-curly-newline': 'error',
+        'stylistic/object-curly-spacing': ['error', 'always'],
         'stylistic/semi-style': 'error',
         'stylistic/switch-colon-spacing': 'error',
         'stylistic/wrap-regex': 'error',

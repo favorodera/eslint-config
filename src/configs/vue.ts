@@ -185,7 +185,6 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
         'vue/no-empty-pattern': 'error',
         'vue/no-import-compiler-macros': 'error',
         'vue/no-irregular-whitespace': 'error',
-        'vue/no-literals-in-template': 'error',
         'vue/no-loss-of-precision': 'error',
         'vue/no-multiple-objects-in-class': 'error',
         'vue/no-negated-condition': 'error',
@@ -221,6 +220,7 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
         'vue/no-useless-v-bind': 'error',
         'vue/no-v-text': 'error',
         'vue/object-curly-newline': 'error',
+        'vue/object-curly-spacing': ['error', 'always'],
         'vue/object-shorthand': [
           'error',
           'always',
