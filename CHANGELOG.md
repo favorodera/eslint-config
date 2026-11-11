@@ -1,5 +1,18 @@
 # Changelog
 
+## v3.3.0...v3.4.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.3.0...v3.4.0)
+
+### Fixed
+
+- **rules:** Relax Node.js runtime version constraint ([1321631](https://github.com/favorodera/eslint-config/commit/1321631))
+
+### ❤️ Contributors
+
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.2.0...v3.3.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.2.0...v3.3.0)
