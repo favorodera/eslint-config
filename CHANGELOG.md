@@ -1,5 +1,25 @@
 # Changelog
 
+## v3.2.0...v3.3.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.2.0...v3.3.0)
+
+### Added
+
+- **rules:** Expand Vue and stylistic ESLint rules ([7b8a75d](https://github.com/favorodera/eslint-config/commit/7b8a75d))
+
+  - Add additional formatting rules for Vue and style
+  - Disable noisy rules in markdown code blocks
+  - Configure devEngines requirements in package.json
+
+- **rules:** Expand Vue and stylistic ESLint rules ([#47](https://github.com/favorodera/eslint-config/pull/47))
+
+### ❤️ Contributors
+
+- Favour  Emeka ([@favorodera](https://github.com/favorodera))
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.1.0...v3.2.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.1.0...v3.2.0)
