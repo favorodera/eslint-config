@@ -249,7 +249,7 @@ export async function vue(options: VueOptions): PromisedTypedConfigFlatItemArray
         'vue/prefer-use-template-ref': 'error',
         'vue/prefer-v-model': 'error',
         'vue/quote-props': ['error', 'consistent-as-needed'],
-        'vue/require-explicit-slots': 'error',
+        'vue/require-explicit-slots': 'off',
         'vue/require-macro-variable-name': 'error',
         'vue/require-typed-ref': 'error',
         'vue/slot-name-casing': [
