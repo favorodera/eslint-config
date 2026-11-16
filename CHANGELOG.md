@@ -1,5 +1,20 @@
 # Changelog
 
+## v3.5.0...v3.6.0
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.5.0...v3.6.0)
+
+### Fixed
+
+- **vue:** Disable require-explicit-slots rule ([7dc2a73](https://github.com/favorodera/eslint-config/commit/7dc2a73))
+- **vue:** Disable require-explicit-slots rule ([#50](https://github.com/favorodera/eslint-config/pull/50))
+
+### ❤️ Contributors
+
+- Favour  Emeka ([@favorodera](https://github.com/favorodera))
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.4.0...v3.5.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.4.0...v3.5.0)
