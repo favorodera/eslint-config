@@ -1,5 +1,30 @@
 # Changelog
 
+## v3.6.1 [2026-11-23]
+
+[compare changes](https://github.com/favorodera/eslint-config/compare/v3.6.0...v3.6.1)
+
+### Chores
+
+- Update release config and repo templates ([7927490](https://github.com/favorodera/eslint-config/commit/7927490))
+
+  Update workspace release configuration, repo documentation,
+  and GitHub templates.
+
+  - Update relizy config and bump to v2.4.0
+  - Simplify GitHub PR and issue templates
+  - Streamline contributing guidelines
+
+- Update release config and repo templates ([#51](https://github.com/favorodera/eslint-config/pull/51))
+- **deps:** Update non-major dependencies ([8168547](https://github.com/favorodera/eslint-config/commit/8168547))
+- **deps:** Update non-major dependencies ([#52](https://github.com/favorodera/eslint-config/pull/52))
+
+### ❤️ Contributors
+
+- Favour  Emeka ([@favorodera](https://github.com/favorodera))
+- Favour Emeka ([@favorodera](https://github.com/favorodera))
+
+
 ## v3.5.0...v3.6.0
 
 [compare changes](https://github.com/favorodera/eslint-config/compare/v3.5.0...v3.6.0)
